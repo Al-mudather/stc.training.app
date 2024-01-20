@@ -47,7 +47,7 @@ class MarketingSection extends HookWidget {
           ),
         ),
         const SizedBox(
-          height: 20,
+          height: 10,
         ),
         Wrap(
           children: List.generate(

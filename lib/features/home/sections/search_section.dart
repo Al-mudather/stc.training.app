@@ -4,8 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:stc_training/helper/app_colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:stc_training/utils/big_text.dart';
-import 'package:stc_training/utils/custom_text.dart';
+import 'package:stc_training/utils/big_text_util.dart';
 
 class SearchSection extends HookWidget {
   const SearchSection({super.key});
@@ -50,7 +49,7 @@ class SearchSection extends HookWidget {
           _SHOW_result_in_bottomSheet(context);
         },
         decoration: InputDecoration(
-          hintText: "What are you loking for ?",
+          hintText: "What are you looking for ?",
           hintStyle: const TextStyle(
             color: Color(0xFF989898),
           ),
@@ -152,10 +151,10 @@ class SearchSection extends HookWidget {
             const SizedBox(
               width: 10,
             ),
-            Expanded(
-              child: BigText(
+            const Expanded(
+              child: BigTextUtil(
                 text: "MRCOG part1 and local OBS and GYNE course",
-                color: const Color(0xFF707070),
+                color: Color(0xFF707070),
                 size: 20,
                 maxLines: 2,
                 textAlign: TextAlign.left,

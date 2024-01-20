@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:stc_training/helper/app_colors.dart';
-import 'package:stc_training/utils/custom_text.dart';
+import 'package:stc_training/utils/custom_text_util.dart';
 
-class CustomTextField extends StatelessWidget {
-  const CustomTextField({
+class CustomTextFieldUtil extends StatelessWidget {
+  const CustomTextFieldUtil({
     super.key,
     required this.label,
     required this.hintText,
@@ -35,7 +35,7 @@ class CustomTextField extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           hasLabel
-              ? CustomText(
+              ? CustomTextUtil(
                   text1: label,
                   fontSize1: 16,
                   hasAnotherText: false,

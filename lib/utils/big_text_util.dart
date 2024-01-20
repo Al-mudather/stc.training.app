@@ -1,28 +1,28 @@
 import 'package:flutter/material.dart';
 
-class BigText extends StatelessWidget {
-  BigText({
+class BigTextUtil extends StatelessWidget {
+  const BigTextUtil({
     super.key,
     this.color = Colors.white,
     this.overflow = TextOverflow.ellipsis,
     this.familyName = "somarM",
     this.fontWeight = FontWeight.w400,
-    this.size = 0,
+    this.size = 26,
     this.softWrap = false,
     this.maxLines = 1,
     required this.text,
     this.textAlign = TextAlign.end,
   });
 
-  FontWeight fontWeight;
-  String familyName;
-  Color color;
+  final FontWeight fontWeight;
+  final String familyName;
+  final Color color;
   final String text;
-  double size;
-  TextOverflow overflow;
-  TextAlign textAlign;
-  bool softWrap;
-  int maxLines;
+  final double size;
+  final TextOverflow overflow;
+  final TextAlign textAlign;
+  final bool softWrap;
+  final int maxLines;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,7 @@ class BigText extends StatelessWidget {
         fontWeight: fontWeight,
         wordSpacing: 1.5,
         letterSpacing: 0.5,
-        fontSize: size == 0 ? 26 : size,
+        fontSize: size,
         fontFamily: familyName,
       ),
     );

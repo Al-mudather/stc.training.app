@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stc_training/helper/app_colors.dart';
-import 'package:stc_training/utils/big_text.dart';
+import 'package:stc_training/utils/big_text_util.dart';
 
 class MarketingCardComponent extends StatelessWidget {
   const MarketingCardComponent({super.key});
@@ -29,10 +29,10 @@ class MarketingCardComponent extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              BigText(
+              const BigTextUtil(
                 text: "USMLE STEP 1 Course by Subjects Part 2",
                 fontWeight: FontWeight.bold,
-                size: 24,
+                size: 20,
               ),
               const SizedBox(height: 10),
               SizedBox(
@@ -56,7 +56,7 @@ class MarketingCardComponent extends StatelessWidget {
                   borderRadius: BorderRadius.circular(30),
                   color: Colors.white,
                 ),
-                child: BigText(
+                child: const BigTextUtil(
                   text: "Details",
                   color: AppColors.secondary,
                   size: 20,

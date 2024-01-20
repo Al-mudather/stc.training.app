@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:stc_training/features/home/components/marketing_section.dart';
-import 'package:stc_training/features/home/components/search_section.dart';
+import 'package:stc_training/features/home/sections/courses_section.dart';
+import 'package:stc_training/features/home/sections/marketing_section.dart';
+import 'package:stc_training/features/home/sections/search_section.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -16,6 +17,10 @@ class HomePage extends StatelessWidget {
             height: 15,
           ),
           MarketingSection(),
+          SizedBox(
+            height: 15,
+          ),
+          CoursesSection()
         ],
       ),
     );

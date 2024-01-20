@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:stc_training/helper/app_colors.dart';
 
-class CustomText extends StatelessWidget {
-  const CustomText({
+class CustomTextUtil extends StatelessWidget {
+  const CustomTextUtil({
     super.key,
     required this.text1,
     this.fontSize1 = 18,
