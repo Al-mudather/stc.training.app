@@ -1,0 +1,17 @@
+<svg id="shopping-cart" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20.347 15.495">
+  <g id="Group_61299" data-name="Group 61299" transform="translate(0 0)">
+    <path id="Path_125589" data-name="Path 125589" d="M16.386,22.878h-7.1a2.855,2.855,0,0,1-2.5-1.7l-2.87-7.285a1.353,1.353,0,0,0-1.1-.748H.752a.752.752,0,1,1,0-1.5H2.817a2.855,2.855,0,0,1,2.5,1.7l2.87,7.285a1.353,1.353,0,0,0,1.1.748h7.1a1.263,1.263,0,0,0,1.046-.739l1.384-3.91a.147.147,0,0,0-.168-.238H8.853a.752.752,0,1,1,0-1.5h9.795a1.62,1.62,0,0,1,1.586,2.244l-1.384,3.91A2.762,2.762,0,0,1,16.386,22.878Z" transform="translate(0 -11.639)" fill="#292828"/>
+  </g>
+  <g id="Group_61300" data-name="Group 61300" transform="translate(5.679 12.152)">
+    <circle id="Ellipse_2685" data-name="Ellipse 2685" cx="1.672" cy="1.672" r="1.672" fill="#292828"/>
+  </g>
+  <g id="Group_61301" data-name="Group 61301" transform="translate(16.397 12.152)">
+    <circle id="Ellipse_2686" data-name="Ellipse 2686" cx="1.672" cy="1.672" r="1.672" fill="#292828"/>
+  </g>
+  <g id="Group_61302" data-name="Group 61302" transform="translate(9.339 5.899)">
+    <path id="Path_125590" data-name="Path 125590" d="M51.828,40.7H45.184a.376.376,0,1,1,0-.752h6.644a.376.376,0,0,1,0,.752Z" transform="translate(-44.808 -39.944)" fill="#292828"/>
+  </g>
+  <g id="Group_61303" data-name="Group 61303" transform="translate(10.017 7.78)">
+    <path id="Path_125591" data-name="Path 125591" d="M53.894,49.718H48.436a.376.376,0,1,1,0-.752h5.458a.376.376,0,1,1,0,.752Z" transform="translate(-48.06 -48.966)" fill="#292828"/>
+  </g>
+</svg>

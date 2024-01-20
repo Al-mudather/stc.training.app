@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="39" height="36" viewBox="0 0 39 36">
+  <defs>
+    <filter id="Rectangle_180" x="0" y="0" width="39" height="36" filterUnits="userSpaceOnUse">
+      <feOffset dy="4" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="1.5" result="blur"/>
+      <feFlood flood-opacity="0.051"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Group_65893" data-name="Group 65893" transform="translate(-321.5 -782.5)">
+    <g transform="matrix(1, 0, 0, 1, 321.5, 782.5)" filter="url(#Rectangle_180)">
+      <rect id="Rectangle_180-2" data-name="Rectangle 180" width="30" height="27" transform="translate(4.5 0.5)" fill="#fbc74b"/>
+    </g>
+    <g id="vuesax_bold_unlock" data-name="vuesax/bold/unlock" transform="translate(95 535)">
+      <g id="Group_65892" data-name="Group 65892">
+        <path id="Vector" d="M2.717,1.358A1.358,1.358,0,1,1,1.358,0,1.358,1.358,0,0,1,2.717,1.358Z" transform="translate(244.642 263.742)" fill="#6d5720"/>
+        <path id="Vector-2" data-name="Vector" d="M12.208,6.2H4.267V5.233c0-2.442.692-4.067,4.067-4.067,3.608,0,4.067.758,4.067,2.292a.583.583,0,0,0,1.167,0C13.567.5,11.808,0,8.333,0,3.642,0,3.1,2.983,3.1,5.233V6.275C.767,6.567,0,7.75,0,10.658v1.55c0,3.417,1.042,4.458,4.458,4.458h7.75c3.417,0,4.458-1.042,4.458-4.458v-1.55C16.667,7.242,15.625,6.2,12.208,6.2ZM8.333,13.95a2.517,2.517,0,1,1,2.517-2.517A2.52,2.52,0,0,1,8.333,13.95Z" transform="translate(237.667 253.667)" fill="#6d5720"/>
+      </g>
+      <path id="Vector-3" data-name="Vector" d="M0,0H20V20H0Z" transform="translate(256 272) rotate(180)" fill="none" opacity="0"/>
+    </g>
+  </g>
+</svg>

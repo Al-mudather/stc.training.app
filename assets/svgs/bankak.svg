@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="87" height="87" viewBox="0 0 87 87">
+  <defs>
+    <pattern id="pattern" width="1" height="1" viewBox="12.272 12.272 62.455 62.455">
+      <image preserveAspectRatio="xMidYMid slice" width="87" height="87" xlink:href="../img/bankak.png"/>
+    </pattern>
+  </defs>
+  <circle id="bankak" cx="43.5" cy="43.5" r="43.5" fill="url(#pattern)"/>
+</svg>
