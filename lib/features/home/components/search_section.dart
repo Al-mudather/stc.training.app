@@ -28,7 +28,6 @@ class SearchSection extends HookWidget {
     /// Hook Functions
     ///////////////////////////////////////////////
     return Container(
-      // height: 47,
       margin: const EdgeInsets.symmetric(horizontal: 24),
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
