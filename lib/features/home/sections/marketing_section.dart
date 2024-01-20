@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:stc_training/features/home/components/marketing_card.dart';
+import 'package:stc_training/features/home/components/marketing_card_component.dart';
 import 'package:stc_training/helper/app_colors.dart';
 
 class MarketingSection extends HookWidget {

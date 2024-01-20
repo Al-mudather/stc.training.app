@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stc_training/features/home/components/course_card.dart';
+import 'package:stc_training/features/home/components/course_card_component.dart';
 import 'package:stc_training/helper/app_colors.dart';
 import 'package:stc_training/utils/big_text_util.dart';
 import 'package:stc_training/utils/title_text_util.dart';

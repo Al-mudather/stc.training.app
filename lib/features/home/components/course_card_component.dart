@@ -60,7 +60,7 @@ class CourseCardComponent extends StatelessWidget {
     return const BigTextUtil(
       text: "ECG interpretation course ",
       color: Color(0xFF292828),
-      size: 20,
+      size: 18,
       textAlign: TextAlign.start,
     );
   }
