@@ -54,7 +54,7 @@ class CoursesSection extends StatelessWidget {
             children: [
               const BigTextUtil(
                 text: "All Courses",
-                size: 16,
+                fontSize: 16,
                 color: AppColors.brown,
                 fontWeight: FontWeight.bold,
               ),

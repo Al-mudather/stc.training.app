@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:stc_training/features/course_details/course_details_page.dart';
 import 'package:stc_training/features/home/home_page.dart';
 import 'package:stc_training/helper/app_colors.dart';
 
@@ -30,7 +31,8 @@ class MainLayoutPage extends HookWidget {
         title: SvgPicture.asset("assets/svgs/logo-small.svg"),
         centerTitle: true,
       ),
-      body: const HomePage(),
+      // body: const HomePage(),
+      body: const CourseDetailsPage(),
       bottomNavigationBar: Container(
         height: 75,
         clipBehavior: Clip.hardEdge,

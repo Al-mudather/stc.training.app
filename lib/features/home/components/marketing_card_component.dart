@@ -32,7 +32,7 @@ class MarketingCardComponent extends StatelessWidget {
               const BigTextUtil(
                 text: "USMLE STEP 1 Course by Subjects Part 2",
                 fontWeight: FontWeight.bold,
-                size: 20,
+                fontSize: 20,
               ),
               const SizedBox(height: 10),
               SizedBox(
@@ -59,7 +59,7 @@ class MarketingCardComponent extends StatelessWidget {
                 child: const BigTextUtil(
                   text: "Details",
                   color: AppColors.secondary,
-                  size: 20,
+                  fontSize: 20,
                 ),
               )
             ],

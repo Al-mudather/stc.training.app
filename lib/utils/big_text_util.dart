@@ -7,7 +7,7 @@ class BigTextUtil extends StatelessWidget {
     this.overflow = TextOverflow.ellipsis,
     this.familyName = "somarM",
     this.fontWeight = FontWeight.w400,
-    this.size = 26,
+    this.fontSize = 26,
     this.softWrap = false,
     this.maxLines = 1,
     required this.text,
@@ -18,7 +18,7 @@ class BigTextUtil extends StatelessWidget {
   final String familyName;
   final Color color;
   final String text;
-  final double size;
+  final double fontSize;
   final TextOverflow overflow;
   final TextAlign textAlign;
   final bool softWrap;
@@ -37,7 +37,7 @@ class BigTextUtil extends StatelessWidget {
         fontWeight: fontWeight,
         wordSpacing: 1.5,
         letterSpacing: 0.5,
-        fontSize: size,
+        fontSize: fontSize,
         fontFamily: familyName,
       ),
     );

@@ -49,7 +49,7 @@ class InstructorCardComponent extends StatelessWidget {
       ),
       child: BigTextUtil(
         text: "More",
-        size: 16,
+        fontSize: 16,
       ),
     );
   }

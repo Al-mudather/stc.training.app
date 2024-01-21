@@ -155,7 +155,7 @@ class SearchSection extends HookWidget {
               child: BigTextUtil(
                 text: "MRCOG part1 and local OBS and GYNE course",
                 color: Color(0xFF707070),
-                size: 20,
+                fontSize: 20,
                 maxLines: 2,
                 textAlign: TextAlign.left,
               ),

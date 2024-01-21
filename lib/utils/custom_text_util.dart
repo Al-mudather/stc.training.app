@@ -8,6 +8,7 @@ class CustomTextUtil extends StatelessWidget {
     this.fontSize1 = 18,
     this.fontSize2 = 16,
     this.text2,
+    this.identifier = "k",
     this.hasAnotherText = false,
     this.textColor = AppColors.blacklight2,
     this.text2Color = AppColors.blacklight2,
@@ -19,6 +20,7 @@ class CustomTextUtil extends StatelessWidget {
 
   final String text1;
   final String? text2;
+  final String? identifier;
   final Color textColor;
   final Color text2Color;
   final bool hasAnotherText;
@@ -47,14 +49,28 @@ class CustomTextUtil extends StatelessWidget {
           ),
           hasAnotherText
               ? TextSpan(
-                  text: text2,
-                  style: TextStyle(
-                    color: text2Color,
-                    fontWeight: fontWeight2,
-                    fontSize: fontSize2,
-                    fontFamily: "Inter",
-                    height: lineHeight,
-                  ),
+                  children: [
+                    TextSpan(
+                      text: text2,
+                      style: TextStyle(
+                        color: text2Color,
+                        fontWeight: fontWeight2,
+                        fontSize: fontSize2,
+                        fontFamily: "Inter",
+                        height: lineHeight,
+                      ),
+                    ),
+                    TextSpan(
+                      text: identifier,
+                      style: TextStyle(
+                        color: AppColors.secondary,
+                        fontWeight: FontWeight.bold,
+                        fontSize: fontSize2,
+                        fontFamily: "Inter",
+                        height: lineHeight,
+                      ),
+                    )
+                  ],
                 )
               : const TextSpan(),
         ],
