@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stc_training/features/course_details/course_details_page.dart';
 import 'package:stc_training/helper/app_colors.dart';
 import 'package:stc_training/layout/main_layout_page.dart';
 
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primary),
         useMaterial3: true,
       ),
-      home: const MainLayoutPage(),
+      home: const CourseDetailsPage(),
     );
   }
 }

@@ -31,8 +31,8 @@ class MainLayoutPage extends HookWidget {
         title: SvgPicture.asset("assets/svgs/logo-small.svg"),
         centerTitle: true,
       ),
-      // body: const HomePage(),
-      body: const CourseDetailsPage(),
+      body: const HomePage(),
+      // body: const CourseDetailsPage(),
       bottomNavigationBar: Container(
         height: 75,
         clipBehavior: Clip.hardEdge,

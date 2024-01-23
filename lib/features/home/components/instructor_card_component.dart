@@ -110,22 +110,6 @@ class InstructorCardComponent extends StatelessWidget {
               fit: BoxFit.cover,
             ),
           ),
-          // Positioned(
-          //   top: 0,
-          //   left: 0,
-          //   right: 0,
-          //   bottom: 0,
-          //   child: ColorFiltered(
-          //     colorFilter: ColorFilter.mode(
-          //       Color(0xFFFCC74C).withOpacity(0.5),
-          //       BlendMode.srcATop,
-          //     ),
-          //     child: Image.asset(
-          //       "assets/images/Akashi.jpg",
-          //       fit: BoxFit.cover,
-          //     ),
-          //   ),
-          // ),
         ],
       ),
     );

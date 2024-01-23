@@ -5,8 +5,8 @@ class CustomTextUtil extends StatelessWidget {
   const CustomTextUtil({
     super.key,
     required this.text1,
-    this.fontSize1 = 18,
-    this.fontSize2 = 16,
+    this.fontSize1 = 16,
+    this.fontSize2 = 14,
     this.text2,
     this.identifier = "k",
     this.hasAnotherText = false,
