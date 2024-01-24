@@ -3,7 +3,9 @@ import 'package:stc_training/features/course_details/components/header_card_comp
 import 'package:stc_training/features/course_details/components/share_and_instructor_name_component.dart';
 import 'package:stc_training/features/course_details/sections/about_the_course_section.dart';
 import 'package:stc_training/features/course_details/sections/course_chapters_section.dart';
+import 'package:stc_training/features/course_details/sections/course_instructors_section.dart';
 import 'package:stc_training/features/course_details/sections/what_you_will_learn_section.dart';
+import 'package:stc_training/features/home/sections/instructors_section.dart';
 
 class CourseDetailsPage extends StatelessWidget {
   const CourseDetailsPage({super.key});
@@ -36,7 +38,11 @@ class CourseDetailsPage extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              CourseChaptersSection()
+              CourseChaptersSection(),
+              const SizedBox(
+                height: 20,
+              ),
+              CourseInstructorsSection(),
             ],
           ),
         ),

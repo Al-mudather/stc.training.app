@@ -8,7 +8,7 @@ class CustomTextUtil extends StatelessWidget {
     this.fontSize1 = 16,
     this.fontSize2 = 14,
     this.text2,
-    this.identifier = "k",
+    this.identifier = "",
     this.hasAnotherText = false,
     this.textColor = AppColors.blacklight2,
     this.text2Color = AppColors.blacklight2,
