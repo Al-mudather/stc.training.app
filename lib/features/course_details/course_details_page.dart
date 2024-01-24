@@ -5,7 +5,8 @@ import 'package:stc_training/features/course_details/sections/about_the_course_s
 import 'package:stc_training/features/course_details/sections/course_chapters_section.dart';
 import 'package:stc_training/features/course_details/sections/course_instructors_section.dart';
 import 'package:stc_training/features/course_details/sections/what_you_will_learn_section.dart';
-import 'package:stc_training/features/home/sections/instructors_section.dart';
+import 'package:stc_training/helper/app_colors.dart';
+import 'package:stc_training/utils/custom_btn_util.dart';
 
 class CourseDetailsPage extends StatelessWidget {
   const CourseDetailsPage({super.key});
@@ -19,6 +20,7 @@ class CourseDetailsPage extends StatelessWidget {
       ),
       body: Container(
         margin: EdgeInsets.all(16),
+        padding: EdgeInsets.only(bottom: 70),
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -44,6 +46,28 @@ class CourseDetailsPage extends StatelessWidget {
               ),
               CourseInstructorsSection(),
             ],
+          ),
+        ),
+      ),
+      bottomSheet: Container(
+        padding: const EdgeInsets.symmetric(
+          vertical: 14,
+          horizontal: 14,
+        ),
+        color: Colors.white,
+        child: SizedBox(
+          height: 48,
+          width: double.maxFinite,
+          child: CustomBtnUtil(
+            btnTitle: "Take it now",
+            btnColor: AppColors.primary,
+            onClicked: () {
+              // Get.toNamed(
+              //   RouteHelper.goToEmployeeCreateNewDatatPage(
+              //     enterPrisePk: enterprisePk,
+              //   ),
+              // );
+            },
           ),
         ),
       ),

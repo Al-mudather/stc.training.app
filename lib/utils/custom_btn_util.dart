@@ -13,6 +13,7 @@ class CustomBtnUtil extends StatelessWidget {
     this.iconFilled = AppColors.successDark,
     this.iconColor = AppColors.successDark,
     this.iconRadius = 8,
+    this.radius = 20,
     this.fontSize = 14,
     this.iconSize = 20,
     this.onClicked,
@@ -25,6 +26,7 @@ class CustomBtnUtil extends StatelessWidget {
   final Color iconColor;
   final Widget icon;
   final double iconRadius;
+  final double radius;
   final double fontSize;
   final double iconSize;
   final bool isLoading;
@@ -106,7 +108,7 @@ class CustomBtnUtil extends StatelessWidget {
           style: OutlinedButton.styleFrom(
             side: BorderSide(color: btnColor),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(radius),
             ),
           ),
           child: Text(
@@ -121,14 +123,14 @@ class CustomBtnUtil extends StatelessWidget {
       case BtnTypes.eleveatedWithIcon:
         return Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(radius),
           ),
           child: ElevatedButton(
             onPressed: isLoading ? () {} : onClicked,
             style: ElevatedButton.styleFrom(
               backgroundColor: btnColor,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(radius),
               ),
             ),
             child: isLoading
@@ -157,14 +159,14 @@ class CustomBtnUtil extends StatelessWidget {
       case BtnTypes.eleveated:
         return Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(radius),
           ),
           child: ElevatedButton(
             onPressed: isLoading ? () {} : onClicked,
             style: ElevatedButton.styleFrom(
               backgroundColor: btnColor,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(radius),
               ),
             ),
             child: isLoading
@@ -184,14 +186,14 @@ class CustomBtnUtil extends StatelessWidget {
       default:
         return Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(radius),
           ),
           child: ElevatedButton(
             onPressed: isLoading ? () {} : onClicked,
             style: ElevatedButton.styleFrom(
               backgroundColor: btnColor,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(radius),
               ),
             ),
             child: isLoading
