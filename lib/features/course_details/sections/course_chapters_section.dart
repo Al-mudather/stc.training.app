@@ -13,8 +13,16 @@ class CourseChaptersSection extends StatelessWidget {
         const SizedBox(
           height: 20,
         ),
-        CourseChapterExpandableCard(
-            cardTitle: "Chapter 1", cardSubTitle: "This is a text")
+        Wrap(
+          runSpacing: 2,
+          children: List.generate(
+            5,
+            (index) => CourseChapterExpandableCard(
+              cardTitle: "Chapter 1",
+              cardSubTitle: "This is a text",
+            ),
+          ),
+        ),
       ],
     );
   }
