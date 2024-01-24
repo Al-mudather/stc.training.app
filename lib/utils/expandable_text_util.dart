@@ -42,7 +42,7 @@ class _ExpandableTextUtilState extends State<ExpandableTextUtil> {
       child: secondHalf.isEmpty
           ? SmallTextUtil(
               text: firstHalf,
-              size: 16,
+              size: 14,
               heigth: 1.8,
             )
           : Column(
@@ -50,7 +50,7 @@ class _ExpandableTextUtilState extends State<ExpandableTextUtil> {
               children: [
                 SmallTextUtil(
                   text: hiddenText ? '$firstHalf...' : (firstHalf + secondHalf),
-                  size: 16,
+                  size: 14,
                   heigth: 1.8,
                 ),
                 InkWell(

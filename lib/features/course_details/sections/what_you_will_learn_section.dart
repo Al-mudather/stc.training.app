@@ -17,16 +17,6 @@ class WhatYouWillLearnSection extends StatelessWidget {
           height: 15,
         ),
         ExpandableListItemsUtil(),
-
-        // Wrap(
-        //   spacing: 10,
-        //   runSpacing: 10,
-        //   children: List.generate(10, (index) => _ITEM_list()),
-        // ),
-        // ExpandableTextUtil(
-        //   text:
-        //       "مشكلة البيسك Basic sciences بتواجهنا من ايام الجامعة الاولى ولمن نصل الكلينك بنلقى روحنا ما قادرين نربط وكمان بعد نتخرج لمن نجي لامتحانات التخصص بنلقى , مشكلة البيسك Basic sciences بتواجهنا من ايام الجامعة الاولى ولمن نصل الكلينك بنلقى روحنا ما قادرين نربط وكمان بعد نتخرج لمن نجي لامتحانات التخصص بنلقى ,مشكلة البيسك Basic sciences بتواجهنا من ايام الجامعة الاولى ولمن نصل الكلينك بنلقى روحنا ما قادرين نربط وكمان بعد نتخرج لمن نجي لامتحانات التخصص بنلقى ",
-        // ),
       ],
     );
   }

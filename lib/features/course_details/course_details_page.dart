@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:stc_training/features/course_details/components/header_card_component.dart';
 import 'package:stc_training/features/course_details/components/share_and_instructor_name_component.dart';
 import 'package:stc_training/features/course_details/sections/about_the_course_section.dart';
+import 'package:stc_training/features/course_details/sections/course_chapters_section.dart';
 import 'package:stc_training/features/course_details/sections/what_you_will_learn_section.dart';
 
 class CourseDetailsPage extends StatelessWidget {
@@ -32,6 +33,10 @@ class CourseDetailsPage extends StatelessWidget {
                 height: 20,
               ),
               WhatYouWillLearnSection(),
+              const SizedBox(
+                height: 10,
+              ),
+              CourseChaptersSection()
             ],
           ),
         ),
