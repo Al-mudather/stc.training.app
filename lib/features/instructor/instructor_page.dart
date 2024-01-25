@@ -57,24 +57,6 @@ class InstructorPage extends HookWidget {
                 ],
               ),
             ),
-            // TabBarView(
-            //   controller: tabController,
-            //   physics: NeverScrollableScrollPhysics(),
-            //   children: [
-            //     // SizedBox.shrink(child: QualificationsTabBarView()),
-            //     // SizedBox.shrink(child: CoursesTabBarView()),
-            //     SizedBox.shrink(
-            //       child: Container(
-            //         color: Colors.red,
-            //       ),
-            //     ),
-            //     SizedBox.shrink(
-            //       child: Container(
-            //         color: Colors.amber,
-            //       ),
-            //     ),
-            //   ],
-            // ),
           ],
         ),
       ),
@@ -82,7 +64,10 @@ class InstructorPage extends HookWidget {
   }
 
   TabBar _THE_tabs_bar(
-      tabController, PageController pageController, List<String> tabList) {
+    tabController,
+    PageController pageController,
+    List<String> tabList,
+  ) {
     return TabBar(
       isScrollable: true,
       controller: tabController,
