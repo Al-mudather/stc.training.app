@@ -6,6 +6,7 @@ import 'package:stc_training/features/course_details/sections/course_chapters_se
 import 'package:stc_training/features/course_details/sections/course_instructors_section.dart';
 import 'package:stc_training/features/course_details/sections/what_you_will_learn_section.dart';
 import 'package:stc_training/helper/app_colors.dart';
+import 'package:stc_training/utils/app_bar_util.dart';
 import 'package:stc_training/utils/custom_btn_util.dart';
 
 class CourseDetailsPage extends StatelessWidget {
@@ -14,10 +15,13 @@ class CourseDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Course Details"),
-        centerTitle: true,
+      appBar: AppBarUtil(
+        barText: "Course Details",
       ),
+      // appBar: AppBar(
+      //   title: Text("Course Details"),
+      //   centerTitle: true,
+      // ),
       body: Container(
         margin: EdgeInsets.all(16),
         padding: EdgeInsets.only(bottom: 70),
