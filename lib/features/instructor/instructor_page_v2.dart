@@ -20,7 +20,6 @@ class InstructorPage extends HookWidget {
     /// Controllers
     ///////////////////////////////////////////////
     var tabController = useTabController(initialLength: tabList.length);
-    PageController pageController = usePageController(initialPage: 0);
     ////////////////////////////////////////////////
     /// Functions
     ///////////////////////////////////////////////
@@ -37,52 +36,59 @@ class InstructorPage extends HookWidget {
           left: 16,
           right: 16,
         ),
-        child: Column(
-          children: [
-            InstructorPageHeaderCardSection(),
-            SizedBox(
-              height: 20,
+        child: CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(
+              child: InstructorPageHeaderCardSection(),
             ),
-            _THE_tabs_bar(tabController, pageController, tabList),
-            SizedBox(
-              height: 20,
+            SliverToBoxAdapter(
+              child: SizedBox(
+                height: 20,
+              ),
             ),
-            Expanded(
-              child: PageView(
-                controller: pageController,
-                physics: const NeverScrollableScrollPhysics(),
+            SliverToBoxAdapter(
+              child: _THE_tabs_bar(tabController, tabList),
+            ),
+            SliverToBoxAdapter(
+              child: SizedBox(
+                height: 20,
+              ),
+            ),
+            // SliverFillViewport(
+            //   delegate: SliverChildBuilderDelegate(
+            //     childCount: 1,
+            //     (context, index) => TabBarView(
+            //       controller: tabController,
+            //       physics: NeverScrollableScrollPhysics(),
+            //       children: [
+            //         QualificationsTabBarView(),
+            //         Container(
+            //           height: 50,
+            //           color: Colors.amber,
+            //         )
+            //       ],
+            //     ),
+            //   ),
+            // )
+
+            SliverFillRemaining(
+              // hasScrollBody: false,
+              child: TabBarView(
+                controller: tabController,
+                physics: NeverScrollableScrollPhysics(),
                 children: [
                   QualificationsTabBarView(),
                   CoursesTabBarView(),
                 ],
               ),
             ),
-            // TabBarView(
-            //   controller: tabController,
-            //   physics: NeverScrollableScrollPhysics(),
-            //   children: [
-            //     // SizedBox.shrink(child: QualificationsTabBarView()),
-            //     // SizedBox.shrink(child: CoursesTabBarView()),
-            //     SizedBox.shrink(
-            //       child: Container(
-            //         color: Colors.red,
-            //       ),
-            //     ),
-            //     SizedBox.shrink(
-            //       child: Container(
-            //         color: Colors.amber,
-            //       ),
-            //     ),
-            //   ],
-            // ),
           ],
         ),
       ),
     );
   }
 
-  TabBar _THE_tabs_bar(
-      tabController, PageController pageController, List<String> tabList) {
+  TabBar _THE_tabs_bar(tabController, List<String> tabList) {
     return TabBar(
       isScrollable: true,
       controller: tabController,
@@ -97,13 +103,6 @@ class InstructorPage extends HookWidget {
       indicatorPadding: const EdgeInsets.only(bottom: 4, top: 1),
       dividerColor: Colors.transparent,
       splashBorderRadius: BorderRadius.circular(30),
-      onTap: (value) {
-        pageController.animateToPage(
-          value,
-          duration: Duration(milliseconds: 500),
-          curve: Curves.linear,
-        );
-      },
       tabs: tabList
           .map(
             (state) => Tab(

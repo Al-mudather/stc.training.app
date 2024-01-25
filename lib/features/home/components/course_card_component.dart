@@ -5,12 +5,15 @@ import 'package:stc_training/utils/custom_btn_util.dart';
 import 'package:stc_training/utils/title_text_util.dart';
 
 class CourseCardComponent extends StatelessWidget {
-  const CourseCardComponent({super.key});
-
+  const CourseCardComponent({
+    super.key,
+    this.width = 161,
+  });
+  final double width;
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 161,
+      width: width,
       // height: 220,
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
