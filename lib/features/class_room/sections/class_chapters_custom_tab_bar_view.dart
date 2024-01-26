@@ -10,7 +10,7 @@ class ClassChapterCustomTabBarView extends StatelessWidget {
       child: Wrap(
         runSpacing: 2,
         children: List.generate(
-          5,
+          10,
           (index) => ClassChapterExpandableCard(
             cardTitle: "Chapter $index",
             cardSubTitle: "This is a text",

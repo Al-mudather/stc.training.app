@@ -3,9 +3,12 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:stc_training/features/class_room/components/class_chapter_expandable_card.dart';
 import 'package:stc_training/features/class_room/sections/class_chapters_custom_tab_bar_view.dart';
+import 'package:stc_training/features/class_room/sections/class_info_tab_bar_view.dart';
 import 'package:stc_training/features/course_details/components/course_chapter_expandable_card.dart';
 import 'package:stc_training/helper/app_colors.dart';
+import 'package:stc_training/helper/enumerations.dart';
 import 'package:stc_training/utils/app_bar_util.dart';
+import 'package:stc_training/utils/custom_btn_util.dart';
 import 'package:stc_training/utils/custom_text_util.dart';
 import 'package:stc_training/utils/small_text_util.dart';
 
@@ -24,7 +27,7 @@ class ClassRoomPage extends HookWidget {
     PageController pageController = usePageController(initialPage: 0);
     var current_index = useState(0);
 
-    List tabs = ["Lessons", "Questions", "Rating"];
+    List tabs = ["Lessons", "Info"];
     ////////////////////////////////////////////////
     /// Functions
     ///////////////////////////////////////////////
@@ -38,7 +41,7 @@ class ClassRoomPage extends HookWidget {
         child: Column(
           children: [
             Container(
-              height: 325,
+              height: 300,
               width: double.maxFinite,
               color: Colors.amber,
             ),
@@ -67,20 +70,13 @@ class ClassRoomPage extends HookWidget {
                   ),
                   Container(
                     height: 250,
-                    padding: EdgeInsets.only(bottom: 10),
+                    padding: EdgeInsets.only(bottom: 5),
                     child: PageView(
                       controller: pageController,
                       physics: NeverScrollableScrollPhysics(),
                       children: [
                         ClassChapterCustomTabBarView(),
-                        Container(
-                          height: 20,
-                          color: Colors.red,
-                        ),
-                        Container(
-                          height: 20,
-                          color: Colors.black,
-                        ),
+                        ClassInfoTabBarView(),
                       ],
                     ),
                   ),
@@ -139,11 +135,12 @@ class ClassRoomPage extends HookWidget {
     );
   }
 
-  GestureDetector _TAB_item(
-      {required String name,
-      index,
-      current_index,
-      required PageController pageController}) {
+  GestureDetector _TAB_item({
+    required String name,
+    index,
+    current_index,
+    required PageController pageController,
+  }) {
     print(name);
 
     return GestureDetector(
@@ -157,9 +154,9 @@ class ClassRoomPage extends HookWidget {
       },
       child: AnimatedContainer(
         duration: Duration(milliseconds: 300),
-        padding: EdgeInsets.only(
-          bottom: 13.5,
-        ),
+        // padding: EdgeInsets.only(
+        //   bottom: 13.5,
+        // ),
         decoration: BoxDecoration(
           border: Border(
             bottom: BorderSide(
@@ -170,10 +167,15 @@ class ClassRoomPage extends HookWidget {
             ),
           ),
         ),
-        child: SmallTextUtil(
-          text: name,
-          size: 13,
+        child: CustomBtnUtil(
+          btnTitle: name,
+          btnType: BtnTypes.text,
+          btnColor: AppColors.grey,
         ),
+        // child: SmallTextUtil(
+        //   text: name,
+        //   size: 13,
+        // ),
       ),
     );
   }
