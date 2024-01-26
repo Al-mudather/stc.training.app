@@ -5,10 +5,14 @@ class TitleTextUtil extends StatelessWidget {
   const TitleTextUtil({
     super.key,
     required this.firstText,
+    this.firstTextColor = AppColors.secondary,
+    this.firstTextSize = 16,
     this.secondText = "",
     this.showMarker = true,
   });
   final String firstText;
+  final double firstTextSize;
+  final Color firstTextColor;
   final String? secondText;
   final bool showMarker;
 
@@ -44,10 +48,11 @@ class TitleTextUtil extends StatelessWidget {
             children: [
               TextSpan(
                 text: firstText,
-                style: const TextStyle(
-                  color: AppColors.secondary,
+                style: TextStyle(
+                  color: firstTextColor,
                   fontWeight: FontWeight.bold,
                   letterSpacing: 1,
+                  fontSize: firstTextSize,
                 ),
               ),
               TextSpan(

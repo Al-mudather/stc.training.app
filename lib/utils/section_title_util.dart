@@ -7,11 +7,15 @@ class SectionTitleUtil extends StatelessWidget {
   const SectionTitleUtil({
     super.key,
     this.firstText = "",
+    this.firstTextColor = AppColors.secondary,
+    this.firstTextSize = 16,
     this.secondText = "",
     this.linkTitle = "",
     this.hasLink = false,
   });
 
+  final Color firstTextColor;
+  final double firstTextSize;
   final String firstText;
   final String secondText;
   final String linkTitle;
@@ -24,6 +28,8 @@ class SectionTitleUtil extends StatelessWidget {
       children: [
         TitleTextUtil(
           firstText: "  $firstText",
+          firstTextColor: firstTextColor,
+          firstTextSize: firstTextSize,
           secondText: secondText,
         ),
         hasLink == true
