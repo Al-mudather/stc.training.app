@@ -16,15 +16,15 @@ class AppColors {
     900: Color(0xff0a1e48)
   });
 
-  static const primary = Color(0xFF5666B9);
-  static const primaryLight1 = Color(0xFF2989DA);
-  static const primaryLight2 = Color(0xFF0C7AD8);
-  static const primaryDark = Color(0xFF5666B9);
-  static const primaryDark2 = Color(0xFF1C508D);
-  static const secondary = Color(0xFFFCC74C);
-  static const dark = Color(0xFF1E1E1E);
-  static const redLight = Color(0xFFFC9685);
-  static const brown = Color(0xFF707070);
+  static const Color primary = Color(0xFF5666B9);
+  static const Color primaryLight1 = Color(0xFF2989DA);
+  static const Color primaryLight2 = Color(0xFF0C7AD8);
+  static const Color primaryDark = Color(0xFF5666B9);
+  static const Color primaryDark2 = Color(0xFF1C508D);
+  static const Color secondary = Color(0xFFFCC74C);
+  static const Color dark = Color(0xFF1E1E1E);
+  static const Color redLight = Color(0xFFFC9685);
+  static const Color brown = Color(0xFF707070);
   static const Color errorDark = Color(0xFFED3241);
   static const Color errorLight = Color(0xFFFF616D);
   static const Color errorVeryLight = Color(0xFFFFE2E5);
@@ -32,6 +32,7 @@ class AppColors {
   static const Color greylight = Color(0xFFC5C6CC);
   static const Color greyLight2 = Color(0xFFD4D6DD);
   static const Color greyLight3 = Color(0xFFE8E9F1);
+  static const Color whiteLight = Color(0xFFFAF9F4);
 
   static const Color purple = Color(0xFF6A279A);
   static const Color successDark = Color(0xFF298267);

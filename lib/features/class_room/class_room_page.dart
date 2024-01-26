@@ -37,6 +37,7 @@ class ClassRoomPage extends HookWidget {
     ///////////////////////////////////////////////
     return Scaffold(
       appBar: AppBarUtil(barText: ""),
+      backgroundColor: AppColors.backgroundColor,
       body: SingleChildScrollView(
         child: Column(
           children: [
