@@ -5,7 +5,8 @@ import 'package:stc_training/utils/custom_text_util.dart';
 class CustomTextFieldUtil extends StatelessWidget {
   const CustomTextFieldUtil({
     super.key,
-    required this.label,
+    this.label = "",
+    this.radius = 12,
     required this.hintText,
     required this.controller,
     this.keyboardType = TextInputType.text,
@@ -16,6 +17,8 @@ class CustomTextFieldUtil extends StatelessWidget {
     this.maxLines = 1,
     this.icon,
   });
+
+  final double radius;
   final String errorMessage;
   final String label;
   final String hintText;
@@ -31,6 +34,16 @@ class CustomTextFieldUtil extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(top: 15),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(radius),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 0.5,
+            spreadRadius: 0.5,
+          ),
+        ],
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -42,9 +55,11 @@ class CustomTextFieldUtil extends StatelessWidget {
                   fontWeight1: FontWeight.w700,
                 )
               : Container(),
-          const SizedBox(
-            height: 5,
-          ),
+          hasLabel
+              ? const SizedBox(
+                  height: 5,
+                )
+              : Container(),
           TextFormField(
             controller: controller,
             // maxLines: null,
@@ -59,15 +74,26 @@ class CustomTextFieldUtil extends StatelessWidget {
                 top: 15,
               ),
               focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(radius),
                 borderSide: const BorderSide(color: AppColors.primary),
               ),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(color: AppColors.greylight),
+              // border: InputBorder.none,
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(radius),
+                borderSide: const BorderSide(
+                  color: Colors.transparent,
+                ),
               ),
+              // border: OutlineInputBorder(
+              //   borderRadius: BorderRadius.circular(radius),
+              //   borderSide: const BorderSide(
+              //     color: AppColors.greylight,
+              //   ),
+              // ),
               enabled: enable,
               suffixIcon: icon,
+              filled: true,
+              fillColor: Colors.white,
             ),
             validator: (value) {
               if (value == null || value.isEmpty) {

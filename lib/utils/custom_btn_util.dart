@@ -148,6 +148,7 @@ class CustomBtnUtil extends StatelessWidget {
       case BtnTypes.icon:
         return IconButton(
           icon: icon,
+          color: iconColor,
           iconSize: iconSize,
           onPressed: isLoading ? () {} : onClicked,
         );

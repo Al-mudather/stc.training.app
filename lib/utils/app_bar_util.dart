@@ -12,12 +12,16 @@ class AppBarUtil extends StatelessWidget implements PreferredSizeWidget {
     required this.barText,
     this.textSize = 18,
     this.textColor = AppColors.deepBlack,
+    this.iconColor = AppColors.deepBlack,
+    this.iconFilled = Colors.white,
     this.backgroundColor = Colors.transparent,
   });
 
   final String barText;
   final double textSize;
   final Color textColor;
+  final Color iconColor;
+  final Color iconFilled;
   final Color backgroundColor;
 
   @override
@@ -32,14 +36,17 @@ class AppBarUtil extends StatelessWidget implements PreferredSizeWidget {
       centerTitle: true,
       backgroundColor: backgroundColor,
       leading: Container(
-        margin: const EdgeInsets.only(left: 10),
+        margin: const EdgeInsets.only(left: 15),
         child: CustomBtnUtil(
           btnTitle: "",
           btnType: BtnTypes.filledIcon,
-          iconFilled: Colors.white,
+          iconFilled: iconFilled,
           iconRadius: 25,
           fontSize: 24,
-          icon: SvgPicture.asset("assets/svgs/app_bar_back_arrow.svg"),
+          icon: SvgPicture.asset(
+            "assets/svgs/app_bar_back_arrow.svg",
+            color: iconColor,
+          ),
           // icon: const Icon(
           //   Icons.arrow_back,
           //   color: AppColors.blacklight4,
