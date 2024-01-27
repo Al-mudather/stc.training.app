@@ -19,30 +19,4 @@ class WhatYouWillLearnSection extends StatelessWidget {
       ],
     );
   }
-
-  Row _ITEM_list() {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          height: 10,
-          width: 10,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: AppColors.brown,
-          ),
-        ),
-        const SizedBox(
-          width: 5,
-        ),
-        Expanded(
-          child: SmallTextUtil(
-            size: 14,
-            text:
-                "Become an advanced, confident, and modern React developer from scratch",
-          ),
-        ),
-      ],
-    );
-  }
 }

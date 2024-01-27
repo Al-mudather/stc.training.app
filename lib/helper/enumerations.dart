@@ -1,9 +1,11 @@
 enum BtnTypes {
   outlined,
   eleveated,
+  eleveatedWithIcon,
   text,
+  textWithIcon,
   icon,
   filledIcon,
-  eleveatedWithIcon,
-  textWithIcon
+  gradientBtn,
+  gradientBtnWithIcon,
 }

@@ -7,6 +7,7 @@ class CustomBtnUtil extends StatelessWidget {
   const CustomBtnUtil({
     super.key,
     required this.btnTitle,
+    this.btnTitleColor = Colors.white,
     this.btnType = BtnTypes.eleveated,
     this.btnColor = AppColors.successLight,
     this.icon = const Icon(Icons.home_filled),
@@ -18,8 +19,10 @@ class CustomBtnUtil extends StatelessWidget {
     this.iconSize = 20,
     this.onClicked,
     this.isLoading = false,
+    this.loadingColor = Colors.white,
   });
   final String btnTitle;
+  final Color btnTitleColor;
   final BtnTypes btnType;
   final Color iconFilled;
   final Color btnColor;
@@ -30,12 +33,100 @@ class CustomBtnUtil extends StatelessWidget {
   final double fontSize;
   final double iconSize;
   final bool isLoading;
+  final Color loadingColor;
 
   final VoidCallback? onClicked;
 
   @override
   Widget build(BuildContext context) {
     switch (btnType) {
+      case BtnTypes.gradientBtn:
+        return ElevatedButton(
+          onPressed: isLoading ? null : onClicked,
+          style: ElevatedButton.styleFrom(
+            padding: EdgeInsets.zero,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(radius),
+            ),
+          ),
+          child: Ink(
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                colors: [
+                  Color(0xFF52CFCB),
+                  Color(0xFF149EE2),
+                ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
+              borderRadius: BorderRadius.circular(radius),
+            ),
+            child: Container(
+              // width: 200,
+              // height: 20,
+              alignment: Alignment.center,
+              child: isLoading
+                  ? const SpinKitWave(
+                      color: Colors.white,
+                    )
+                  : Text(
+                      btnTitle,
+                      style: TextStyle(
+                        color: btnTitleColor,
+                        fontSize: fontSize,
+                      ),
+                    ),
+            ),
+          ),
+        );
+      case BtnTypes.gradientBtnWithIcon:
+        return ElevatedButton(
+          onPressed: isLoading ? null : onClicked,
+          style: ElevatedButton.styleFrom(
+            padding: EdgeInsets.zero,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(radius),
+            ),
+          ),
+          child: Ink(
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                colors: [
+                  Color(0xFF52CFCB),
+                  Color(0xFF149EE2),
+                ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
+              borderRadius: BorderRadius.circular(radius),
+            ),
+            child: Container(
+              // width: 200,
+              // height: 50,
+              alignment: Alignment.center,
+              child: isLoading
+                  ? const SpinKitWave(
+                      color: Colors.white,
+                    )
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          btnTitle,
+                          style: TextStyle(
+                            color: btnTitleColor,
+                            fontSize: fontSize,
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        icon
+                      ],
+                    ),
+            ),
+          ),
+        );
       case BtnTypes.filledIcon:
         return Center(
           child: Ink(
@@ -64,8 +155,8 @@ class CustomBtnUtil extends StatelessWidget {
         return TextButton(
           onPressed: isLoading ? () {} : onClicked,
           child: isLoading
-              ? const SpinKitWave(
-                  color: Colors.white,
+              ? SpinKitWave(
+                  color: loadingColor,
                 )
               : Text(
                   btnTitle,
@@ -80,8 +171,8 @@ class CustomBtnUtil extends StatelessWidget {
         return TextButton(
           onPressed: isLoading ? () {} : onClicked,
           child: isLoading
-              ? const SpinKitWave(
-                  color: Colors.white,
+              ? SpinKitWave(
+                  color: loadingColor,
                 )
               : Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -134,8 +225,8 @@ class CustomBtnUtil extends StatelessWidget {
               ),
             ),
             child: isLoading
-                ? const SpinKitWave(
-                    color: Colors.white,
+                ? SpinKitWave(
+                    color: loadingColor,
                   )
                 : Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -143,7 +234,7 @@ class CustomBtnUtil extends StatelessWidget {
                       Text(
                         btnTitle,
                         style: TextStyle(
-                          color: Colors.white,
+                          color: btnTitleColor,
                           fontSize: fontSize,
                           fontWeight: FontWeight.w600,
                         ),
@@ -170,13 +261,13 @@ class CustomBtnUtil extends StatelessWidget {
               ),
             ),
             child: isLoading
-                ? const SpinKitWave(
-                    color: Colors.white,
+                ? SpinKitWave(
+                    color: loadingColor,
                   )
                 : Text(
                     btnTitle,
                     style: TextStyle(
-                      color: Colors.white,
+                      color: btnTitleColor,
                       fontSize: fontSize,
                       fontWeight: FontWeight.w600,
                     ),
@@ -197,13 +288,13 @@ class CustomBtnUtil extends StatelessWidget {
               ),
             ),
             child: isLoading
-                ? const SpinKitWave(
-                    color: Colors.white,
+                ? SpinKitWave(
+                    color: loadingColor,
                   )
                 : Text(
                     btnTitle,
                     style: TextStyle(
-                      color: Colors.white,
+                      color: btnTitleColor,
                       fontSize: fontSize,
                       fontWeight: FontWeight.w600,
                       fontFamily: "inter",
