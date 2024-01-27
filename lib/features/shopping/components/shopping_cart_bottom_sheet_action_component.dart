@@ -8,10 +8,12 @@ class ShoppingCartBottomSheetActionComponent extends StatelessWidget {
   const ShoppingCartBottomSheetActionComponent({
     super.key,
     required this.nextStepTitle,
+    this.iconName = Icons.arrow_forward_sharp,
     this.goToNextStep,
   });
 
   final String nextStepTitle;
+  final IconData iconName;
   final VoidCallback? goToNextStep;
 
   @override
@@ -96,8 +98,8 @@ class ShoppingCartBottomSheetActionComponent extends StatelessWidget {
             btnColor: Colors.white,
             radius: 1,
             isLoading: false,
-            icon: const Icon(
-              Icons.arrow_forward_sharp,
+            icon: Icon(
+              iconName,
               color: Colors.white,
             ),
             onClicked: goToNextStep,

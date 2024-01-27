@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:stc_training/features/shopping/components/shopping_cart_bottom_sheet_action_component.dart';
 import 'package:stc_training/features/shopping/components/shopping_cart_course_card_component.dart';
 import 'package:stc_training/helper/app_colors.dart';
-import 'package:stc_training/helper/enumerations.dart';
 import 'package:stc_training/utils/app_bar_util.dart';
-import 'package:stc_training/utils/custom_btn_util.dart';
 
 class ShoppingCartPage extends StatelessWidget {
   const ShoppingCartPage({super.key});
