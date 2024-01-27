@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stc_training/features/shopping/shopping_cart_bankak_payment_method_page.dart';
+import 'package:stc_training/features/shopping/shopping_cart_payment_success_page.dart';
 import 'package:stc_training/helper/app_colors.dart';
 import 'package:stc_training/helper/dependencies.dart' as dep;
 
@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primary),
         useMaterial3: true,
       ),
-      home: const ShoppingCartBankakPaymentMethodPage(),
+      home: const ShoppingCartpaymentSuccessPage(),
     );
   }
 }

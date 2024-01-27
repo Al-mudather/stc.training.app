@@ -9,7 +9,7 @@ class CustomBtnUtil extends StatelessWidget {
     required this.btnTitle,
     this.btnTitleColor = Colors.white,
     this.btnType = BtnTypes.eleveated,
-    this.btnColor = AppColors.successLight,
+    this.btnColor = AppColors.primary,
     this.icon = const Icon(Icons.home_filled),
     this.iconFilled = AppColors.successDark,
     this.iconColor = AppColors.successDark,
@@ -266,6 +266,7 @@ class CustomBtnUtil extends StatelessWidget {
                   )
                 : Text(
                     btnTitle,
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                       color: btnTitleColor,
                       fontSize: fontSize,
@@ -293,6 +294,7 @@ class CustomBtnUtil extends StatelessWidget {
                   )
                 : Text(
                     btnTitle,
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                       color: btnTitleColor,
                       fontSize: fontSize,
