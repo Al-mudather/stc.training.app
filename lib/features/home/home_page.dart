@@ -4,6 +4,7 @@ import 'package:stc_training/features/home/sections/courses_section.dart';
 import 'package:stc_training/features/home/sections/instructors_section.dart';
 import 'package:stc_training/features/home/sections/marketing_section.dart';
 import 'package:stc_training/features/home/sections/search_section.dart';
+import 'package:stc_training/helper/app_constants.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -15,21 +16,24 @@ class HomePage extends StatelessWidget {
       child: SingleChildScrollView(
         child: const Column(
           children: [
+            SizedBox(
+              height: AppConstants.height_20,
+            ),
             SearchSection(),
             SizedBox(
-              height: 20,
+              height: AppConstants.height_20,
             ),
             MarketingSection(),
             SizedBox(
-              height: 20,
+              height: AppConstants.height_20,
             ),
             CoursesSection(),
             SizedBox(
-              height: 20,
+              height: AppConstants.height_20,
             ),
             InstructorsSection(),
             SizedBox(
-              height: 15,
+              height: AppConstants.height_20,
             ),
           ],
         ),

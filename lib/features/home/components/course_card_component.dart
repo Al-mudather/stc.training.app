@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stc_training/helper/app_colors.dart';
 import 'package:stc_training/helper/enumerations.dart';
 import 'package:stc_training/utils/big_text_util.dart';
 import 'package:stc_training/utils/custom_btn_util.dart';
@@ -45,6 +46,7 @@ class CourseCardComponent extends StatelessWidget {
         CustomBtnUtil(
           btnTitle: "",
           btnType: BtnTypes.icon,
+          iconColor: AppColors.brown,
           onClicked: () => {},
           icon: Icon(
             Icons.shopping_cart_outlined,

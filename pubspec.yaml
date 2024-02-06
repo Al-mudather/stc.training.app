@@ -38,9 +38,10 @@ dependencies:
   shared_preferences: ^2.2.2
   graphql_flutter: ^5.1.2
   http_parser: ^4.0.2
-
   flutter_hooks: ^0.20.3
-  share_plus: ^7.2.1
+  flutter_zoom_drawer: ^3.1.2
+
+  # share_plus: ^7.2.1
   flutter_svg: ^2.0.4
   flutter_svg_provider: ^1.0.7
   flutter_spinkit: ^5.2.0

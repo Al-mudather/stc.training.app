@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:stc_training/features/course_details/course_details_page.dart';
+import 'package:get/get.dart';
 import 'package:stc_training/features/home/home_page.dart';
+import 'package:stc_training/features/settings/controller/drawer_layout_controller.dart';
 import 'package:stc_training/helper/app_colors.dart';
+import 'package:stc_training/helper/enumerations.dart';
+import 'package:stc_training/utils/custom_btn_util.dart';
 
 class MainLayoutPage extends HookWidget {
   const MainLayoutPage({super.key});
@@ -13,7 +16,7 @@ class MainLayoutPage extends HookWidget {
     ///////////////////////////////////////////////
     /// Controllers
     ///////////////////////////////////////////////
-
+    DrawerLayoutController drawerLayoutCtl = Get.find<DrawerLayoutController>();
     ///////////////////////////////////////////////
     /// Parameters
     ///////////////////////////////////////////////
@@ -30,6 +33,18 @@ class MainLayoutPage extends HookWidget {
       appBar: AppBar(
         title: SvgPicture.asset("assets/svgs/logo-small.svg"),
         centerTitle: true,
+        leading: CustomBtnUtil(
+          btnTitle: "",
+          btnType: BtnTypes.icon,
+          icon: Icon(
+            Icons.menu,
+            color: AppColors.deepBlack,
+            size: 24,
+          ),
+          onClicked: () {
+            drawerLayoutCtl.toggleDrawer();
+          },
+        ),
       ),
       body: const HomePage(),
       // body: const CourseDetailsPage(),

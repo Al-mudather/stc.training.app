@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:stc_training/features/account/profile_page.dart';
-import 'package:stc_training/features/authentication/login_auth_page.dart';
 import 'package:stc_training/helper/app_colors.dart';
 import 'package:stc_training/helper/dependencies.dart' as dep;
+import 'package:stc_training/layout/drawer_layout_page.dart';
+import 'package:stc_training/layout/main_layout_page.dart';
 
 void main() async {
   // To ensure the dependenses are loaded
@@ -26,8 +26,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primary),
         useMaterial3: true,
       ),
-      // home: const ProfilePage(),
-      home: const LoginAuthPage(),
+      home: const DrawerLayoutPage(),
+      // home: const MainLayoutPage(),
     );
   }
 }
