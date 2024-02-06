@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:stc_training/helper/app_colors.dart';
@@ -23,14 +24,27 @@ class ProfilePage extends HookWidget {
     ///////////////////////////////////////////////
     /// Controllers
     ///////////////////////////////////////////////
-    TextEditingController fullNameTextCtl = useTextEditingController();
-    TextEditingController emailTextCtl = useTextEditingController();
-    TextEditingController whatsAppNumberTextCtl = useTextEditingController();
-    TextEditingController telegramNumberTextCtl = useTextEditingController();
+    final TextEditingController fullNameTextCtl = useTextEditingController();
+    final TextEditingController emailTextCtl = useTextEditingController();
+    final TextEditingController whatsAppNumberTextCtl =
+        useTextEditingController();
+    final TextEditingController telegramNumberTextCtl =
+        useTextEditingController();
     ///////////////////////////////////////////////
     /// Parameters
     ///////////////////////////////////////////////
     var genderTypes = useState<Gender>(Gender.NOTHING);
+    final fullName = useState("");
+    final email = useState("");
+    final whatsAppNumber = useState("");
+    final telegramNumber = useState("");
+
+    //TODO: To get the image from the network
+    // final image = useFuture(NetworkAssetBundle(Uri.parse("")))
+    //     .load("")
+    //     .then((data) => data.buffer.asUint8List())
+    //     .then((data) => Image.memory(data));
+
     ////////////////////////////////////////////////
     /// Functions
     ///////////////////////////////////////////////
@@ -38,6 +52,33 @@ class ProfilePage extends HookWidget {
     ////////////////////////////////////////////////
     /// Hook Functions
     ///////////////////////////////////////////////
+    useEffect(
+      () {
+        //TODO: Listen to the change of the fullname hook
+        fullNameTextCtl.addListener(() {
+          fullName.value = fullNameTextCtl.text;
+        });
+        //TODO: Listen to the change of the email hook
+        emailTextCtl.addListener(() {
+          email.value = emailTextCtl.text;
+        });
+        //TODO: Listen to the change of the whatsAppNumber hook
+        whatsAppNumberTextCtl.addListener(() {
+          whatsAppNumber.value = whatsAppNumberTextCtl.text;
+        });
+        //TODO: Listen to the change of the telegramNumber hook
+        telegramNumberTextCtl.addListener(() {
+          telegramNumber.value = telegramNumberTextCtl.text;
+        });
+        return null;
+      },
+      [
+        fullNameTextCtl,
+        emailTextCtl,
+        whatsAppNumberTextCtl,
+        telegramNumberTextCtl,
+      ],
+    );
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       extendBodyBehindAppBar: true,

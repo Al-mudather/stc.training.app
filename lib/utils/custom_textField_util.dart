@@ -15,7 +15,9 @@ class CustomTextFieldUtil extends StatelessWidget {
     this.hasLabel = true,
     this.enable = true,
     this.maxLines = 1,
-    this.icon,
+    this.prefixIcon,
+    this.suffixIcon,
+    this.iconPadding = 16,
   });
 
   final double radius;
@@ -28,7 +30,9 @@ class CustomTextFieldUtil extends StatelessWidget {
   final bool hasLabel;
   final bool enable;
   final int maxLines;
-  final Widget? icon;
+  final Widget? suffixIcon;
+  final Widget? prefixIcon;
+  final double iconPadding;
 
   @override
   Widget build(BuildContext context) {
@@ -54,12 +58,16 @@ class CustomTextFieldUtil extends StatelessWidget {
                   hasAnotherText: false,
                   fontWeight1: FontWeight.w700,
                 )
-              : Container(),
+              : Container(
+                  height: 0.1,
+                ),
           hasLabel
               ? const SizedBox(
                   height: 5,
                 )
-              : Container(),
+              : Container(
+                  height: 0.1,
+                ),
           TextFormField(
             controller: controller,
             // maxLines: null,
@@ -91,7 +99,18 @@ class CustomTextFieldUtil extends StatelessWidget {
               //   ),
               // ),
               enabled: enable,
-              suffixIcon: icon,
+              suffixIcon: suffixIcon != null
+                  ? Padding(
+                      padding: EdgeInsets.all(iconPadding),
+                      child: suffixIcon,
+                    )
+                  : suffixIcon,
+              prefixIcon: prefixIcon != null
+                  ? Padding(
+                      padding: EdgeInsets.all(iconPadding),
+                      child: prefixIcon,
+                    )
+                  : prefixIcon,
               filled: true,
               fillColor: Colors.white,
             ),

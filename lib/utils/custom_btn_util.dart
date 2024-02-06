@@ -232,6 +232,10 @@ class CustomBtnUtil extends StatelessWidget {
                 : Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      icon,
+                      const SizedBox(
+                        width: 5,
+                      ),
                       Text(
                         btnTitle,
                         style: TextStyle(
@@ -240,10 +244,6 @@ class CustomBtnUtil extends StatelessWidget {
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      icon
                     ],
                   ),
           ),

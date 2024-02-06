@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stc_training/features/account/profile_page.dart';
+import 'package:stc_training/features/authentication/login_auth_page.dart';
 import 'package:stc_training/helper/app_colors.dart';
 import 'package:stc_training/helper/dependencies.dart' as dep;
 
@@ -25,7 +26,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primary),
         useMaterial3: true,
       ),
-      home: const ProfilePage(),
+      // home: const ProfilePage(),
+      home: const LoginAuthPage(),
     );
   }
 }
