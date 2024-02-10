@@ -4,7 +4,7 @@ class AppConstants {
   // static const String fileUrl = "http://localhost:8000/media/";
 
   static const String BAS_URL = "https://stc.training/api/graphql/";
-  static const String fileUrl = "https://stc.training/media/";
+  static const String FileUrl = "https://stc.training/media/";
 
   static const String USER = "User";
   static const String TOKEN = "Token";
@@ -16,6 +16,7 @@ class AppConstants {
   ////////////////////////////////////////
   /// Dynamic space
   ////////////////////////////////////
+  static const double space_8 = 8;
   static const double space_16 = 16;
   static const double space_26 = 26;
   static const double space_32 = 32;

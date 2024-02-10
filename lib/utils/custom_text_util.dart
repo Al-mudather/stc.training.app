@@ -35,6 +35,7 @@ class CustomTextUtil extends StatelessWidget {
   Widget build(BuildContext context) {
     return RichText(
       textAlign: textAlign,
+      // overflow: TextOverflow.ellipsis,
       text: TextSpan(
         children: [
           TextSpan(

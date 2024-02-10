@@ -94,7 +94,7 @@ class _CustomImagePickerUtilState extends State<CustomImagePickerUtil> {
     } else {
       // return NetworkImage(widget?.networkImg);
       return Image.network(
-        '${AppConstants.fileUrl}${widget.networkImg}',
+        '${AppConstants.FileUrl}${widget.networkImg}',
         width: 150,
         height: 150,
       );

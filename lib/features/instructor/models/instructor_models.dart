@@ -4,7 +4,7 @@ class AllInstructorsModel {
   int? _totalCount;
   late List<InstructorModel> _instructors;
 
-  List<InstructorModel> get allInstructors => _instructors;
+  List<InstructorModel> get instructors => _instructors;
   int? get totalCount => _totalCount;
 
   AllInstructorsModel({required totalCount, required instructors}) {
@@ -18,7 +18,10 @@ class AllInstructorsModel {
     if (edges != null) {
       _instructors = <InstructorModel>[];
       edges.forEach((data) {
-        _instructors.add(InstructorModel.fromJson(data["node"]));
+        //TODO: Dont add the data that is empty
+        if ('${data["node"]["user"]["fullName"]}'.isNotEmpty) {
+          _instructors.add(InstructorModel.fromJson(data["node"]));
+        }
       });
     }
   }

@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:stc_training/features/instructor/models/instructor_models.dart';
 import 'package:stc_training/helper/app_colors.dart';
 import 'package:stc_training/utils/big_text_util.dart';
 
 class InstructorCardComponent extends StatelessWidget {
-  const InstructorCardComponent({super.key});
+  InstructorCardComponent({super.key, required this.instructor});
+
+  InstructorModel instructor;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: 177,
-      height: 240,
+      // height: 250,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
@@ -23,14 +26,26 @@ class InstructorCardComponent extends StatelessWidget {
         color: Colors.white,
       ),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           _cardImage(),
           const SizedBox(
             height: 5,
           ),
-          _cardTitle(),
+          SizedBox(
+            width: 150,
+            child: _cardTitle(instructor: instructor),
+          ),
+          Text(
+            "Instructor",
+            style: TextStyle(
+              color: AppColors.primary,
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
           const SizedBox(
             height: 5,
           ),
@@ -54,27 +69,22 @@ class InstructorCardComponent extends StatelessWidget {
     );
   }
 
-  RichText _cardTitle() {
+  // Widget _cardTitle({required InstructorModel instructor}) {
+  //   return CustomTextUtil(
+  //     text1: "${instructor.user!.fullName} \n",
+  //     textAlign: TextAlign.center,
+  //   );
+  // }
+  RichText _cardTitle({required InstructorModel instructor}) {
     return RichText(
       textAlign: TextAlign.center,
-      text: const TextSpan(
-        children: [
-          TextSpan(
-            text: "Dr.Sabri abo groon groon \n",
-            style: TextStyle(
-              color: Color(0xFF666666),
-              fontSize: 16,
-            ),
-          ),
-          TextSpan(
-            text: "Instructor",
-            style: TextStyle(
-              color: AppColors.primary,
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ],
+      overflow: TextOverflow.ellipsis,
+      text: TextSpan(
+        text: "${instructor.user!.fullName}",
+        style: TextStyle(
+          color: Color(0xFF666666),
+          fontSize: 16,
+        ),
       ),
     );
   }

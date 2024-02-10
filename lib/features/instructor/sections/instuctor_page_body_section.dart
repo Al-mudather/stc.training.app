@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:stc_training/features/instructor/components/qualifications_tab_bar_view.dart';
 import 'package:stc_training/helper/app_colors.dart';
-import 'package:stc_training/utils/bolit_item_util.dart';
-import 'package:stc_training/utils/custom_text_util.dart';
-import 'package:stc_training/utils/section_title_util.dart';
-import 'package:stc_training/utils/small_text_util.dart';
 
 class InstructorPageBodySection extends HookWidget {
   const InstructorPageBodySection({super.key});
