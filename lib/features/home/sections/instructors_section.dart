@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:stc_training/features/home/components/instructor_card_component.dart';
 
-import 'package:stc_training/features/home/hooks/get_all_instructors_hook.dart';
+import 'package:stc_training/features/instructor/hooks/get_all_instructors_hook.dart';
 import 'package:stc_training/features/instructor/components/instructor_loading_card_comp.dart';
 import 'package:stc_training/features/instructor/models/instructor_models.dart';
 import 'package:stc_training/utils/horizontal_loading_data_util.dart';
-import 'package:stc_training/utils/title_text_util.dart';
+import 'package:stc_training/utils/section_title_util.dart';
 
 class InstructorsSection extends HookWidget {
   const InstructorsSection({super.key});
@@ -30,8 +30,6 @@ class InstructorsSection extends HookWidget {
     ///////////////////////////////////////////////
     data = UseGet_all_instructors_query_hook(context: context);
 
-    // LOG_THE_DEBUG_DATA(messag: data);
-
     return data['loading']
         ? HorizontalLoadingDataUtil(
             child: InstructorLoadingCardComp(),
@@ -40,7 +38,13 @@ class InstructorsSection extends HookWidget {
             margin: const EdgeInsets.only(bottom: 20),
             child: Column(
               children: [
-                _sectionTitle(),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  child: SectionTitleUtil(
+                    firstText: "Best",
+                    secondText: "Instructors",
+                  ),
+                ),
                 const SizedBox(
                   height: 10,
                 ),
@@ -67,15 +71,5 @@ class InstructorsSection extends HookWidget {
               ],
             ),
           );
-  }
-
-  Padding _sectionTitle() {
-    return const Padding(
-      padding: EdgeInsets.symmetric(horizontal: 24),
-      child: TitleTextUtil(
-        firstText: "  Best",
-        secondText: "Instructors",
-      ),
-    );
   }
 }

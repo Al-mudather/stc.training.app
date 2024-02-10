@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stc_training/features/course_details/components/course_chapter_expandable_card.dart';
+import 'package:stc_training/features/course/components/course_chapter_expandable_card.dart';
 import 'package:stc_training/utils/section_title_util.dart';
 
 class CourseChaptersSection extends StatelessWidget {

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:stc_training/features/course_details/components/header_card_component.dart';
-import 'package:stc_training/features/course_details/components/share_and_instructor_name_component.dart';
-import 'package:stc_training/features/course_details/sections/about_the_course_section.dart';
-import 'package:stc_training/features/course_details/sections/course_chapters_section.dart';
-import 'package:stc_training/features/course_details/sections/course_instructors_section.dart';
-import 'package:stc_training/features/course_details/sections/what_you_will_learn_section.dart';
+import 'package:stc_training/features/course/components/header_card_component.dart';
+import 'package:stc_training/features/course/components/share_and_instructor_name_component.dart';
+import 'package:stc_training/features/course/sections/about_the_course_section.dart';
+import 'package:stc_training/features/course/sections/course_chapters_section.dart';
+import 'package:stc_training/features/course/sections/course_instructors_section.dart';
+import 'package:stc_training/features/course/sections/what_you_will_learn_section.dart';
 import 'package:stc_training/helper/app_colors.dart';
 import 'package:stc_training/utils/app_bar_util.dart';
 import 'package:stc_training/utils/custom_btn_util.dart';

@@ -1,17 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:stc_training/features/course/hooks/get_all_courses_hook.dart';
 import 'package:stc_training/features/home/components/course_card_component.dart';
-import 'package:stc_training/helper/app_colors.dart';
-import 'package:stc_training/utils/big_text_util.dart';
-import 'package:stc_training/utils/title_text_util.dart';
+import 'package:stc_training/utils/section_title_util.dart';
 
-class CoursesSection extends StatelessWidget {
+class CoursesSection extends HookWidget {
   const CoursesSection({super.key});
 
   @override
   Widget build(BuildContext context) {
+    ///////////////////////////////////////////////
+    /// Controllers
+    ///////////////////////////////////////////////
+
+    ///////////////////////////////////////////////
+    /// Parameters
+    ///////////////////////////////////////////////
+    Map<String, dynamic> data;
+    ////////////////////////////////////////////////
+    /// Functions
+    ///////////////////////////////////////////////
+
+    ////////////////////////////////////////////////
+    /// Hook Functions
+    ///////////////////////////////////////////////
+    data = UseGet_all_courses_query_hook(context: context);
     return Column(
       children: [
-        _sectionTitle(),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: SectionTitleUtil(
+            firstText: "Available",
+            secondText: "Courses",
+            hasLink: true,
+            linkTitle: "All Courses",
+          ),
+        ),
         const SizedBox(
           height: 10,
         ),
@@ -36,50 +60,6 @@ class CoursesSection extends StatelessWidget {
           ),
         )
       ],
-    );
-  }
-
-  Padding _sectionTitle() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          const TitleTextUtil(
-            firstText: "  Available",
-            secondText: "Courses",
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const BigTextUtil(
-                text: "All Courses",
-                fontSize: 16,
-                color: AppColors.brown,
-                fontWeight: FontWeight.bold,
-              ),
-              Transform.rotate(
-                angle: 110,
-                child: const Icon(
-                  Icons.arrow_back_ios,
-                  color: AppColors.secondary,
-                ),
-              ),
-              Transform.translate(
-                offset: const Offset(-20, 0),
-                child: Transform.rotate(
-                  angle: 110,
-                  child: const Icon(
-                    Icons.arrow_back_ios,
-                    color: AppColors.primary,
-                    size: 26,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
     );
   }
 }

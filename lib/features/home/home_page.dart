@@ -31,7 +31,7 @@ class HomePage extends StatelessWidget {
             SizedBox(
               height: AppConstants.height_20,
             ),
-            InstructorsSection(),
+            // InstructorsSection(),
             SizedBox(
               height: AppConstants.height_20,
             ),
