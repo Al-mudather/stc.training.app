@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 import 'package:stc_training/helper/app_colors.dart';
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
 
     return GraphQLProvider(
       client: client,
-      child: MaterialApp(
+      child: GetMaterialApp(
         title: 'Stc training app',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(

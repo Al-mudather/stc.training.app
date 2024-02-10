@@ -1,7 +1,8 @@
+import 'dart:convert';
+
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:stc_training/features/course/graphql/course_queries.dart';
 import 'package:stc_training/features/course/models/course_models.dart';
-import 'package:stc_training/helper/methods.dart';
 
 UseGet_all_courses_query_hook({
   required context,
@@ -12,7 +13,10 @@ UseGet_all_courses_query_hook({
       fetchPolicy: FetchPolicy.networkOnly,
       variables: {
         'orderBy': ["-pk"],
-        'first': 10
+        'first': 10,
+        'filters': jsonEncode(
+          {'course_fee_in_sdg__gt': 0},
+        ),
       },
       onError: (error) {
         // 1) Tell the user there somthing wrong.

@@ -17,9 +17,10 @@ class CoursesTabBarView extends StatelessWidget {
         alignment: WrapAlignment.center,
         children: List.generate(
           10,
-          (index) => CourseCardComponent(
-            width: 175,
-          ),
+          (index) => SizedBox(),
+          // (index) => CourseCardComponent(
+          //   width: 175,
+          // ),
         ),
       ),
     );
