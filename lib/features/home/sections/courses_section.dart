@@ -4,8 +4,6 @@ import 'package:stc_training/features/course/components/course_loading_card_comp
 import 'package:stc_training/features/course/hooks/get_all_courses_hook.dart';
 import 'package:stc_training/features/course/models/course_models.dart';
 import 'package:stc_training/features/home/components/course_card_component.dart';
-import 'package:stc_training/features/instructor/components/instructor_loading_card_comp.dart';
-import 'package:stc_training/helper/methods.dart';
 import 'package:stc_training/utils/horizontal_loading_data_util.dart';
 import 'package:stc_training/utils/section_title_util.dart';
 
@@ -21,7 +19,7 @@ class CoursesSection extends HookWidget {
     ///////////////////////////////////////////////
     /// Parameters
     ///////////////////////////////////////////////
-    Map<String, dynamic> data;
+    Map<String, dynamic> result;
     ////////////////////////////////////////////////
     /// Functions
     ///////////////////////////////////////////////
@@ -29,9 +27,9 @@ class CoursesSection extends HookWidget {
     ////////////////////////////////////////////////
     /// Hook Functions
     ///////////////////////////////////////////////
-    data = UseGet_all_courses_query_hook(context: context);
+    result = UseGet_all_courses_query_hook(context: context);
 
-    return data['loading']
+    return result['loading']
         ? HorizontalLoadingDataUtil(
             child: CourseLoadingCardComp(),
           )
@@ -57,9 +55,9 @@ class CoursesSection extends HookWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: List.generate(
-                        data['data'].courses.length,
+                        result['data'].courses.length,
                         (index) {
-                          CourseModel course = data['data'].courses![index];
+                          CourseModel course = result['data'].courses![index];
                           return Padding(
                             padding: EdgeInsets.all(8.0),
                             child: CourseCardComponent(

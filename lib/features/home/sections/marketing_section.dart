@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:stc_training/features/home/components/marketing_card_component.dart';
 import 'package:stc_training/features/home/components/slider_loading_card_comp.dart';
+import 'package:stc_training/features/home/hooks/get_all_home_sliders_hook.dart';
+import 'package:stc_training/features/home/models/home_slider_models.dart';
 import 'package:stc_training/helper/app_colors.dart';
 import 'package:stc_training/utils/horizontal_loading_data_util.dart';
 
@@ -20,6 +22,8 @@ class MarketingSection extends HookWidget {
     var _currentPageValue = useState(0.0);
     double _scaleFactor = 0.8;
     double sectionHeight = 180;
+    //? To get the data from the server
+    Map<String, dynamic> result;
     ////////////////////////////////////////////////
     /// Functions
     ///////////////////////////////////////////////
@@ -30,12 +34,17 @@ class MarketingSection extends HookWidget {
     ////////////////////////////////////////////////
     /// Hook Functions
     ///////////////////////////////////////////////
-    return _SLIDER_data(
-      sectionHeight,
-      pageController,
-      _currentPageValue,
-      _scaleFactor,
-    );
+    result = UseGet_all_home_sliders_query_hook(context: context);
+    AllHomeSlidersModel? homeSliders = result['data'];
+    return result['loading']
+        ? _LOADING_sliders()
+        : _SLIDER_data(
+            homeSliders,
+            sectionHeight,
+            pageController,
+            _currentPageValue,
+            _scaleFactor,
+          );
   }
 
   Widget _LOADING_sliders() {
@@ -49,6 +58,7 @@ class MarketingSection extends HookWidget {
   }
 
   Column _SLIDER_data(
+    AllHomeSlidersModel? homeSliders,
     double sectionHeight,
     PageController pageController,
     ValueNotifier<double> _currentPageValue,
@@ -60,9 +70,11 @@ class MarketingSection extends HookWidget {
           height: sectionHeight, // Controll the card height
           child: PageView.builder(
             controller: pageController,
-            itemCount: 3,
+            itemCount: homeSliders!.sliders.length,
             itemBuilder: (context, index) {
+              HomeSliderModel slider = homeSliders.sliders[index];
               return _buildPageItem(
+                slider: slider,
                 index: index,
                 sectionHeight: sectionHeight,
                 currentPageValue: _currentPageValue.value,
@@ -76,7 +88,7 @@ class MarketingSection extends HookWidget {
         ),
         Wrap(
           children: List.generate(
-            3,
+            homeSliders.sliders.length,
             (indexDots) => AnimatedContainer(
               duration: const Duration(milliseconds: 150),
               width: _currentPageValue.value.toInt() == indexDots ? 25 : 8,
@@ -96,6 +108,7 @@ class MarketingSection extends HookWidget {
   }
 
   Widget _buildPageItem({
+    required HomeSliderModel slider,
     required int index,
     required double sectionHeight,
     required double currentPageValue,
@@ -141,7 +154,9 @@ class MarketingSection extends HookWidget {
           top: 5,
           bottom: 2,
         ),
-        child: const MarketingCardComponent(),
+        child: MarketingCardComponent(
+          slider: slider,
+        ),
       ),
     );
   }

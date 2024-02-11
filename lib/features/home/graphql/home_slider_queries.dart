@@ -1,4 +1,4 @@
-class InstructorQueries {
+class HomeSliderQueries {
   //TODO: FIlter the instructors so only the ones those there fullName is
   // filled to be displied
   static const GETAllHomePageSlidersQuery = '''
