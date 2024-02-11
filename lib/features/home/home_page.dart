@@ -25,7 +25,7 @@ class HomePage extends StatelessWidget {
             SizedBox(
               height: AppConstants.height_20,
             ),
-            MarketingSection(),
+            // MarketingSection(),
             SizedBox(
               height: AppConstants.height_20,
             ),

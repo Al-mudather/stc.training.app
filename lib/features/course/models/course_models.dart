@@ -17,6 +17,11 @@ class AllCoursesModel {
     _courses = courses;
   }
 
+  AllCoursesModel.init() {
+    _totalCount = 0;
+    _courses = <CourseModel>[];
+  }
+
   AllCoursesModel.fromJson(Map<String, dynamic> json) {
     _totalCount = json['totalCount'];
     startCursor = json['pageInfo']['startCursor'];

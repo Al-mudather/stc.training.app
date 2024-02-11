@@ -2,8 +2,12 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:stc_training/features/course/models/course_models.dart';
+import 'package:stc_training/features/home/controller/make_search_request.dart';
 import 'package:stc_training/helper/app_colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:stc_training/helper/methods.dart';
 import 'package:stc_training/utils/big_text_util.dart';
 
 class SearchSection extends HookWidget {
@@ -14,63 +18,124 @@ class SearchSection extends HookWidget {
     ///////////////////////////////////////////////
     /// Controllers
     ///////////////////////////////////////////////
-    var searchController = TextEditingController();
+    TextEditingController searchCtl = useTextEditingController();
     ///////////////////////////////////////////////
     /// Parameters
     ///////////////////////////////////////////////
-
+    final search = useState("");
+    var isLoading = useState(false);
+    // var allCoursesData = useState(AllCoursesModel.init());
+    final GraphQLClient client = useGraphQLClient();
     ////////////////////////////////////////////////
     /// Functions
     ///////////////////////////////////////////////
 
+    // LOG_THE_DEBUG_DATA(messag: client);
+    Make_the_search() async {
+      if ("${search.value}".isNotEmpty) {
+        // ? Enable the loading
+        isLoading.value = true;
+
+        QueryResult result = await MAKE_search_resuest_with_client(
+          client: client,
+          filters: {'title__icontains': search.value},
+        );
+
+        var resData = result.data;
+        AllCoursesModel? allCourses;
+        // LOG_THE_DEBUG_DATA(messag: hookRes.result);
+        if (resData != null && resData.isNotEmpty) {
+          allCourses = AllCoursesModel.fromJson(resData["allCourses"]);
+          // LOG_THE_DEBUG_DATA(messag: resData["allCourses"]);
+          // return homeSliders;
+
+          _SHOW_result_in_bottomSheet(
+            context: context,
+            courses: allCourses.courses,
+          );
+
+          // ? Disable the loading
+          isLoading.value = false;
+        }
+
+        // ? Disable the loading
+        isLoading.value = result.isLoading;
+      }
+    }
+
+    // ;
+
     ////////////////////////////////////////////////
     /// Hook Functions
     ///////////////////////////////////////////////
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 24),
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        color: const Color(0xFFF5F5F5),
-        boxShadow: const [
-          BoxShadow(
-            color: Colors.grey,
-            // blurRadius: 0.1,
-            spreadRadius: 0.1,
-            offset: Offset(0, 0.1),
-          ),
-        ],
-      ),
-      child: TextField(
-        controller: searchController,
-        onTap: () {
-          //TODO: Make the search
-          //TODO: if there is a result show them
-          _SHOW_result_in_bottomSheet(context);
-        },
-        decoration: InputDecoration(
-          hintText: "What are you looking for ?",
-          hintStyle: const TextStyle(
-            color: Color(0xFF989898),
-          ),
-          suffixIcon: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(50),
-              color: Colors.white,
+
+    useEffect(() {
+      searchCtl.addListener(() {
+        search.value = searchCtl.text;
+      });
+
+      return null;
+    }, [
+      searchCtl,
+    ]);
+
+    // MAKE_search_request() {
+    //   context.graphQLClient.query
+    // }
+
+    return SingleChildScrollView(
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 24),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          color: const Color(0xFFF5F5F5),
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.grey,
+              // blurRadius: 0.1,
+              spreadRadius: 0.1,
+              offset: Offset(0, 0.1),
             ),
-            child: const Icon(
-              Icons.search,
-              size: 30,
-              color: AppColors.secondary,
+          ],
+        ),
+        child: TextField(
+          controller: searchCtl,
+          // onChanged: (value) {
+          //   Make_the_search();
+          // },
+          decoration: InputDecoration(
+            hintText: "What are you looking for ?",
+            hintStyle: const TextStyle(
+              color: Color(0xFF989898),
             ),
+            suffixIcon: InkWell(
+              onTap: () {
+                Make_the_search();
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(50),
+                  color: Colors.white,
+                ),
+                child: const Icon(
+                  Icons.search,
+                  size: 30,
+                  color: AppColors.secondary,
+                ),
+              ),
+            ),
+            border: InputBorder.none,
           ),
-          border: InputBorder.none,
         ),
       ),
     );
   }
 
-  dynamic _SHOW_result_in_bottomSheet(context) {
+  dynamic _SHOW_result_in_bottomSheet({
+    required BuildContext context,
+    required List<CourseModel> courses,
+  }) {
     showModalBottomSheet(
       // isScrollControlled: true,
       backgroundColor: Colors.transparent,
@@ -117,7 +182,16 @@ class SearchSection extends HookWidget {
                     // The data
                     // for (var i = 0; i < 20; i++) _searchCard(),
                     Wrap(
-                      children: List.generate(20, (index) => _searchCard()),
+                      children: List.generate(
+                        courses.length,
+                        (index) {
+                          CourseModel course = courses[index];
+
+                          return _searchCard(
+                            course: course,
+                          );
+                        },
+                      ),
                     ),
                     const SizedBox(
                       height: 10,
@@ -132,7 +206,9 @@ class SearchSection extends HookWidget {
     );
   }
 
-  Container _searchCard() {
+  Container _searchCard({
+    required CourseModel course,
+  }) {
     return Container(
       width: 345,
       margin: const EdgeInsets.only(top: 10),
@@ -151,9 +227,9 @@ class SearchSection extends HookWidget {
             const SizedBox(
               width: 10,
             ),
-            const Expanded(
+            Expanded(
               child: BigTextUtil(
-                text: "MRCOG part1 and local OBS and GYNE course",
+                text: "${course.title}",
                 color: Color(0xFF707070),
                 fontSize: 20,
                 maxLines: 2,
