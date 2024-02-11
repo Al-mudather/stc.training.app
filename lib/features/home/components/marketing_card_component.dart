@@ -28,27 +28,28 @@ class MarketingCardComponent extends StatelessWidget {
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const BigTextUtil(
                 text: "USMLE STEP 1 Course by Subjects Part 2",
                 fontWeight: FontWeight.bold,
                 fontSize: 20,
               ),
-              const SizedBox(height: 10),
-              SizedBox(
-                // width: 200,
-                child: Wrap(
-                  spacing: 10,
-                  runSpacing: 10,
-                  children: [
-                    _countCard(count: 12, title: 'Days'),
-                    _countCard(count: 12, title: 'Hours'),
-                    _countCard(count: 12, title: 'Minit'),
-                    // _countCard(count: 12, title: 'Seconds'),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 10),
+              // const SizedBox(height: 10),
+              // SizedBox(
+              //   // width: 200,
+              //   child: Wrap(
+              //     spacing: 10,
+              //     runSpacing: 10,
+              //     children: [
+              //       _countCard(count: 12, title: 'Days'),
+              //       _countCard(count: 12, title: 'Hours'),
+              //       _countCard(count: 12, title: 'Minit'),
+              //       // _countCard(count: 12, title: 'Seconds'),
+              //     ],
+              //   ),
+              // ),
+              // const SizedBox(height: 10),
               Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
@@ -61,7 +62,8 @@ class MarketingCardComponent extends StatelessWidget {
                   color: AppColors.secondary,
                   fontSize: 20,
                 ),
-              )
+              ),
+              const SizedBox(height: 10),
             ],
           ),
           Positioned(

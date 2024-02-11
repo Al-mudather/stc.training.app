@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:stc_training/features/home/components/marketing_card_component.dart';
+import 'package:stc_training/features/home/components/slider_loading_card_comp.dart';
 import 'package:stc_training/helper/app_colors.dart';
+import 'package:stc_training/utils/horizontal_loading_data_util.dart';
 
 class MarketingSection extends HookWidget {
   const MarketingSection({super.key});
@@ -11,7 +13,6 @@ class MarketingSection extends HookWidget {
     ///////////////////////////////////////////////
     /// Controllers
     ///////////////////////////////////////////////
-    // PageController pageController = PageController(viewportFraction: 0.9);
     PageController pageController = usePageController(viewportFraction: 0.9);
     ///////////////////////////////////////////////
     /// Parameters
@@ -29,6 +30,30 @@ class MarketingSection extends HookWidget {
     ////////////////////////////////////////////////
     /// Hook Functions
     ///////////////////////////////////////////////
+    return _SLIDER_data(
+      sectionHeight,
+      pageController,
+      _currentPageValue,
+      _scaleFactor,
+    );
+  }
+
+  Widget _LOADING_sliders() {
+    return HorizontalLoadingDataUtil(
+      child: SizedBox(
+        width: 340,
+        height: 180,
+        child: SliderLoadingCardComp(),
+      ),
+    );
+  }
+
+  Column _SLIDER_data(
+    double sectionHeight,
+    PageController pageController,
+    ValueNotifier<double> _currentPageValue,
+    double _scaleFactor,
+  ) {
     return Column(
       children: [
         SizedBox(
