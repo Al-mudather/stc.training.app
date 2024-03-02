@@ -6,6 +6,7 @@ import 'package:stc_training/helper/app_colors.dart';
 import 'package:stc_training/helper/app_constants.dart';
 import 'package:stc_training/helper/dependencies.dart' as dep;
 import 'package:stc_training/layout/drawer_layout_page.dart';
+import 'package:stc_training/routes/route_helper.dart';
 
 void main() async {
   // To ensure the dependenses are loaded
@@ -38,8 +39,9 @@ class MyApp extends StatelessWidget {
           ),
           useMaterial3: true,
         ),
-        home: const DrawerLayoutPage(),
-        // home: const MainLayoutPage(),
+        // home: const DrawerLayoutPage(),
+        initialRoute: Routehelper.GoToMainLayoutPage(),
+        getPages: Routehelper.routes,
       ),
     );
   }
@@ -49,15 +51,15 @@ class MyApp extends StatelessWidget {
       AppConstants.BAS_URL,
     );
 
-    final AuthLink authLink = AuthLink(
-      getToken: () async =>
-          'JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImFkbWluQHN0Yy5jb20iLCJleHAiOjE3MTAwNzc4ODgsIm9yaWdJYXQiOjE3MDc0ODU4ODh9.5r8hfmLdwhrFT3rSFYWU9FF3jVOhwvutd7w_6TQWB2M',
-      // OR
-      // getToken: () async => 'JWT ${innerAuthCtl.token}',
-    );
+    // final AuthLink authLink = AuthLink(
+    //   getToken: () async =>
+    //       'JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImFkbWluQHN0Yy5jb20iLCJleHAiOjE3MTAwNzc4ODgsIm9yaWdJYXQiOjE3MDc0ODU4ODh9.5r8hfmLdwhrFT3rSFYWU9FF3jVOhwvutd7w_6TQWB2M',
+    //   // OR
+    //   // getToken: () async => 'JWT ${innerAuthCtl.token}',
+    // );
 
-    final Link link = authLink.concat(httpLink);
-    // final Link link = httpLink;
+    // final Link link = authLink.concat(httpLink);
+    final Link link = httpLink;
 
     ValueNotifier<GraphQLClient> client = ValueNotifier(
       GraphQLClient(

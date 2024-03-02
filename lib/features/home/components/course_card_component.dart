@@ -5,6 +5,7 @@ import 'package:stc_training/features/course/models/course_models.dart';
 import 'package:stc_training/helper/app_colors.dart';
 import 'package:stc_training/helper/enumerations.dart';
 import 'package:stc_training/helper/methods.dart';
+import 'package:stc_training/routes/route_helper.dart';
 import 'package:stc_training/utils/big_text_util.dart';
 import 'package:stc_training/utils/custom_btn_util.dart';
 import 'package:stc_training/utils/title_text_util.dart';
@@ -44,9 +45,15 @@ class CourseCardComponent extends StatelessWidget {
               //   "The details page will come soon",
               //   icon: Icons.lock_clock,
               // );
-              SEND_a_message_to_the_user(
-                message: "The details page will come soon",
-                messageLable: "Wait",
+              // SEND_a_message_to_the_user(
+              //   message: "The details page will come soon",
+              //   messageLable: "Wait",
+              // );
+              //TODO: Go to course details page
+              Get.toNamed(
+                Routehelper.GoToCourseDetialsPage(
+                  coursePk: course.pk.toString(),
+                ),
               );
             },
             child: _cardImage(

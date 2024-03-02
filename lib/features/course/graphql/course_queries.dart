@@ -46,7 +46,6 @@ class CourseQueries {
                     id,
                     user {
                       id,
-                      username,
                       fullName,
                       firstName,
                       lastName
@@ -87,7 +86,6 @@ class CourseQueries {
                 image,
                 user {
                   id,
-                  username,
                   firstName,
                   lastName
                 }

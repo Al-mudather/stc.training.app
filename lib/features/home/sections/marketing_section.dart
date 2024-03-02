@@ -38,13 +38,15 @@ class MarketingSection extends HookWidget {
     AllHomeSlidersModel? homeSliders = result['data'];
     return result['loading']
         ? _LOADING_sliders()
-        : _SLIDER_data(
-            homeSliders,
-            sectionHeight,
-            pageController,
-            _currentPageValue,
-            _scaleFactor,
-          );
+        : (homeSliders != null
+            ? _SLIDER_data(
+                homeSliders,
+                sectionHeight,
+                pageController,
+                _currentPageValue,
+                _scaleFactor,
+              )
+            : Container());
   }
 
   Widget _LOADING_sliders() {

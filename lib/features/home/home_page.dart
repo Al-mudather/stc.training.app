@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:stc_training/features/home/components/instructor_card_component.dart';
-import 'package:stc_training/features/home/components/slider_loading_card_comp.dart';
 import 'package:stc_training/features/home/sections/courses_section.dart';
-import 'package:stc_training/features/home/sections/instructors_section.dart';
 import 'package:stc_training/features/home/sections/marketing_section.dart';
 import 'package:stc_training/features/home/sections/search_section.dart';
 import 'package:stc_training/helper/app_constants.dart';
-import 'package:stc_training/utils/horizontal_loading_data_util.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
+  //TODO: 1) When a user clicks on the course , navigate to the course details page.
+  //TODO: 2) Fill the course details with the data.
+  //TODO: 3) When the user clicks on the marketing details btn, navigate to the course details page that related to the marketing card.
+  //TODO:
+  //TODO:
+  //TODO:
 
   @override
   Widget build(BuildContext context) {
@@ -25,11 +27,11 @@ class HomePage extends StatelessWidget {
             SizedBox(
               height: AppConstants.height_20,
             ),
-            // MarketingSection(),
+            MarketingSection(),
             SizedBox(
               height: AppConstants.height_20,
             ),
-            // CoursesSection(),
+            CoursesSection(),
             SizedBox(
               height: AppConstants.height_20,
             ),

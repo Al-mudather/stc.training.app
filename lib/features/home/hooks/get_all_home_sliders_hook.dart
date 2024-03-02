@@ -1,6 +1,7 @@
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:stc_training/features/home/graphql/home_slider_queries.dart';
 import 'package:stc_training/features/home/models/home_slider_models.dart';
+import 'package:stc_training/helper/methods.dart';
 
 UseGet_all_home_sliders_query_hook({
   required context,

@@ -7,6 +7,7 @@ import 'package:stc_training/features/course/models/course_models.dart';
 import 'package:stc_training/features/home/controller/make_search_request.dart';
 import 'package:stc_training/helper/app_colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:stc_training/helper/dialog_helper.dart';
 import 'package:stc_training/helper/methods.dart';
 import 'package:stc_training/utils/big_text_util.dart';
 
@@ -35,6 +36,7 @@ class SearchSection extends HookWidget {
       if ("${search.value}".isNotEmpty) {
         // ? Enable the loading
         isLoading.value = true;
+        DialogHelper.SHOW_loading();
 
         QueryResult result = await MAKE_search_resuest_with_client(
           client: client,
@@ -43,23 +45,60 @@ class SearchSection extends HookWidget {
 
         var resData = result.data;
         AllCoursesModel? allCourses;
-        // LOG_THE_DEBUG_DATA(messag: hookRes.result);
+        //TODO: Listen for the errors
+        try {
+          // ? Disable the loading
+          isLoading.value = false;
+          DialogHelper.HIDE_loading();
+          // ? Empty the search
+          search.value = "";
+          List<GraphQLError> graphqlErrors = result.exception!.graphqlErrors;
+
+          if (graphqlErrors.length > 0) {
+            for (GraphQLError e in graphqlErrors) {
+              if (e.message.contains("AUTHENTICATION_ERROR")) {
+                //TODO: Tell the user that he is not authenticated and need to log in
+                SEND_a_message_to_the_user(
+                  message: "You need to log in",
+                  messageLable: "Authentication Error",
+                  backgroundColor: AppColors.errorLight,
+                  backgroundTextColor: Colors.white,
+                );
+              } else {
+                SEND_a_message_to_the_user(
+                  message: e.message,
+                  messageLable: "Error",
+                  backgroundColor: AppColors.errorLight,
+                  backgroundTextColor: Colors.white,
+                );
+              }
+            }
+          }
+        } catch (e) {}
+
+        //TODO: Show the data
         if (resData != null && resData.isNotEmpty) {
           allCourses = AllCoursesModel.fromJson(resData["allCourses"]);
           // LOG_THE_DEBUG_DATA(messag: resData["allCourses"]);
           // return homeSliders;
 
+          // ? Disable the loading
+          isLoading.value = false;
+          DialogHelper.HIDE_loading();
+
+          // ? Empty the search and close the keyboard
+          searchCtl.text = '';
+
+          // ? SHow the result
           _SHOW_result_in_bottomSheet(
             context: context,
             courses: allCourses.courses,
           );
-
-          // ? Disable the loading
-          isLoading.value = false;
         }
 
         // ? Disable the loading
         isLoading.value = result.isLoading;
+        DialogHelper.HIDE_loading();
       }
     }
 
@@ -102,6 +141,12 @@ class SearchSection extends HookWidget {
         child: TextField(
           controller: searchCtl,
           // onChanged: (value) {
+          //   Make_the_search();
+          // },
+          onEditingComplete: () {
+            Make_the_search();
+          },
+          // onSubmitted: (value) {
           //   Make_the_search();
           // },
           decoration: InputDecoration(

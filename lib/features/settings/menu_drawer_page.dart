@@ -29,17 +29,17 @@ class MenuDrawerPage extends StatelessWidget {
             ListView(
               // crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                CustomTextUtil(
-                  text1: "Dr.sabri sad altyb sad \n",
-                  fontSize1: 15,
-                  textColor: Colors.white,
-                  fontWeight1: FontWeight.w500,
-                  hasAnotherText: true,
-                  text2: "almudatheryhaya.one@gmail.com",
-                  textAlign: TextAlign.center,
-                  text2Color: AppColors.secondary,
-                  fontWeight2: FontWeight.w500,
-                ),
+                // CustomTextUtil(
+                //   text1: "Dr.sabri sad altyb sad \n",
+                //   fontSize1: 15,
+                //   textColor: Colors.white,
+                //   fontWeight1: FontWeight.w500,
+                //   hasAnotherText: true,
+                //   text2: "almudatheryhaya.one@gmail.com",
+                //   textAlign: TextAlign.center,
+                //   text2Color: AppColors.secondary,
+                //   fontWeight2: FontWeight.w500,
+                // ),
                 const SizedBox(
                   height: AppConstants.height_30,
                 ),

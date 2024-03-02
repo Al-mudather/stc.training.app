@@ -28,89 +28,53 @@ class CoursesSection extends HookWidget {
     /// Hook Functions
     ///////////////////////////////////////////////
     result = UseGet_all_courses_query_hook(context: context);
-
+    AllCoursesModel? allcourses = result['data'];
     return result['loading']
         ? HorizontalLoadingDataUtil(
             child: CourseLoadingCardComp(),
           )
-        : Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: SectionTitleUtil(
-                  firstText: "Available",
-                  secondText: "Courses",
-                  hasLink: true,
-                  linkTitle: "All Courses",
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              SizedBox(
-                height: 250,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: List.generate(
-                        result['data'].courses.length,
-                        (index) {
-                          CourseModel course = result['data'].courses![index];
-                          return Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: CourseCardComponent(
-                              course: course,
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-              )
-            ],
-          );
+        : (allcourses != null ? _COURSES_data(allcourses) : Container());
+  }
 
-    // return HorizontalLoadingDataUtil(
-    //   child: CourseLoadingCardComp(),
-    // );
-    // return Column(
-    //   children: [
-    //     Padding(
-    //       padding: const EdgeInsets.symmetric(horizontal: 24),
-    //       child: SectionTitleUtil(
-    //         firstText: "Available",
-    //         secondText: "Courses",
-    //         hasLink: true,
-    //         linkTitle: "All Courses",
-    //       ),
-    //     ),
-    //     const SizedBox(
-    //       height: 10,
-    //     ),
-    //     SizedBox(
-    //       height: 250,
-    //       child: ListView(
-    //         scrollDirection: Axis.horizontal,
-    //         children: [
-    //           Row(
-    //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //             children: List.generate(
-    //               3,
-    //               (index) {
-    //                 return const Padding(
-    //                   padding: EdgeInsets.all(8.0),
-    //                   child: CourseCardComponent(),
-    //                 );
-    //               },
-    //             ),
-    //           ),
-    //         ],
-    //       ),
-    //     )
-    //   ],
-    // );
+  Column _COURSES_data(AllCoursesModel? allcourses) {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: SectionTitleUtil(
+            firstText: "Available",
+            secondText: "Courses",
+            hasLink: true,
+            linkTitle: "All Courses",
+          ),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        SizedBox(
+          height: 250,
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: List.generate(
+                  allcourses!.courses.length,
+                  (index) {
+                    CourseModel course = allcourses.courses[index];
+                    return Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: CourseCardComponent(
+                        course: course,
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+        )
+      ],
+    );
   }
 }

@@ -21,20 +21,24 @@ Future<QueryResult> MAKE_search_resuest_with_client({
         'first': 10,
         'filters': queryFilters,
       },
-      onError: (error) {
-        // 1) Tell the user there somthing wrong.
-        var link = error!.linkException;
-        List graphqlErrors = error.graphqlErrors;
-        if (graphqlErrors != null) {
-          GraphQLError gr = graphqlErrors[0];
-          String message = gr.message;
-          // LOG_THE_DEBUG_DATA(messag: message, type: 'e');
-          if (message.contains("AUTHENTICATION_ERROR")) {
-            //GO to login page
-            // Get.toNamed(RouteHelper.accountLoginPage);
-          }
-        }
-      },
+      // onError: (error) {
+      //   // 1) Tell the user there somthing wrong.
+      //   // var link = error!.linkException;
+      //   // List<GraphQLError> graphqlErrors = error.graphqlErrors;
+      //   // if (graphqlErrors.isNotEmpty) {
+      //   //   for (GraphQLError e in graphqlErrors) {
+      //   //     String message = e.message;
+      //   //     if (message.contains("AUTHENTICATION_ERROR")) {
+      //   //       //TODO: Tell the user that he is not authenticated and need to log in
+      //   //       SEND_a_message_to_the_user(
+      //   //         message: "You need to log in",
+      //   //         messageLable: "Authentication Error",
+      //   //         backgroundColor: AppColors.errorDark,
+      //   //       );
+      //   //     }
+      //   //   }
+      //   // }
+      // },
     ),
   );
 

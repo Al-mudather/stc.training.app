@@ -66,15 +66,6 @@ class CourseLoadingCardComp extends StatelessWidget {
                   ),
                 ],
               ),
-              // const SizedBox(height: 10.0),
-              // Container(
-              //   width: 100,
-              //   height: 25.0,
-              //   decoration: BoxDecoration(
-              //     borderRadius: BorderRadius.circular(10),
-              //     color: Colors.white,
-              //   ),
-              // ),
             ],
           ),
         ),
