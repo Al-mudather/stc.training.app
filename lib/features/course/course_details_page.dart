@@ -4,8 +4,10 @@ import 'package:stc_training/features/course/components/course_loading_card_comp
 import 'package:stc_training/features/course/components/course_loading_page_comp.dart';
 import 'package:stc_training/features/course/components/header_card_component.dart';
 import 'package:stc_training/features/course/components/share_and_instructor_name_component.dart';
+import 'package:stc_training/features/course/hooks/get_all_units_data_by_course_pk_hook.dart';
 import 'package:stc_training/features/course/hooks/get_course_data_by_pk_hook.dart';
 import 'package:stc_training/features/course/models/course_models.dart';
+import 'package:stc_training/features/course/models/course_unit_model.dart';
 import 'package:stc_training/features/course/sections/about_the_course_section.dart';
 import 'package:stc_training/features/course/sections/course_chapters_section.dart';
 import 'package:stc_training/features/course/sections/course_instructors_section.dart';
@@ -19,9 +21,11 @@ class CourseDetailsPage extends HookWidget {
   const CourseDetailsPage({
     super.key,
     required this.coursePk,
+    required this.courseId,
   });
 
   final String coursePk;
+  final String courseId;
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +48,7 @@ class CourseDetailsPage extends HookWidget {
     /// Parameters
     ///////////////////////////////////////////////
     Map<String, dynamic> result;
+    Map<String, dynamic> unitsResult;
     // var queryResult = useState<Map<String, dynamic>>({
     //   'loading': true,
     //   'data': null,
@@ -55,8 +60,11 @@ class CourseDetailsPage extends HookWidget {
     ////////////////////////////////////////////////
     /// Hook Functions
     ///////////////////////////////////////////////
-    result =
-        UseGet_course_data_pk_query_hook(context: context, coursePk: coursePk);
+    result = UseGet_course_data_pk_query_hook(
+      context: context,
+      coursePk: coursePk,
+    );
+    //? Get the course data
     CourseModel? course = result['data'];
     // CourseModel? course = queryResult.value['data'];
     // LOG_THE_DEBUG_DATA(messag: course?.title);
@@ -74,6 +82,7 @@ class CourseDetailsPage extends HookWidget {
           ? CourseLoadingPageComp()
           : COURSE_data(
               course: course,
+              courseId: courseId,
             ),
       // body: CourseLoadingPageComp(),
       // body: COURSE_data(),
@@ -102,7 +111,10 @@ class CourseDetailsPage extends HookWidget {
     );
   }
 
-  Container COURSE_data({CourseModel? course}) {
+  Container COURSE_data({
+    CourseModel? course,
+    required String courseId,
+  }) {
     return Container(
       margin: EdgeInsets.all(16),
       padding: EdgeInsets.only(bottom: 70),
@@ -131,7 +143,9 @@ class CourseDetailsPage extends HookWidget {
             const SizedBox(
               height: 10,
             ),
-            CourseChaptersSection(),
+            CourseChaptersSection(
+              courseId: courseId,
+            ),
             const SizedBox(
               height: 20,
             ),

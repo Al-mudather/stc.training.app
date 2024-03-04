@@ -1,5 +1,6 @@
 import 'package:stc_training/features/course/models/course_models.dart';
 import 'package:stc_training/features/course/models/course_unit_content_model.dart';
+import 'package:stc_training/helper/methods.dart';
 
 class AllCourseUnitsModel {
   String? startCursor;
@@ -47,7 +48,7 @@ class CourseUnitModel {
   bool? isExternal;
   CourseModel? course;
 
-  AllCourseUnitContentsModel? courseUnitContentsModel;
+  AllCourseUnitContentsModel? courseUnitContents;
 
   CourseUnitModel({
     this.pk,
@@ -55,7 +56,7 @@ class CourseUnitModel {
     this.title,
     this.isExternal,
     this.course,
-    this.courseUnitContentsModel,
+    this.courseUnitContents,
   });
 
   CourseUnitModel.fromJson(Map<String, dynamic> json) {
@@ -67,12 +68,14 @@ class CourseUnitModel {
       course = CourseModel.fromJson(json['course']);
     }
 
-    if (isExternal == true) {
-      courseUnitContentsModel = AllCourseUnitContentsModel.fromJson(
+    if (json['external'] != null) {
+      courseUnitContents = AllCourseUnitContentsModel.fromJson(
           json['external']['courseunitcontentSet']);
     } else {
-      courseUnitContentsModel =
-          AllCourseUnitContentsModel.fromJson(json['courseunitcontentSet']);
+      if (json['courseunitcontentSet'] != null) {
+        courseUnitContents =
+            AllCourseUnitContentsModel.fromJson(json['courseunitcontentSet']);
+      }
     }
   }
 

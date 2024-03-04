@@ -37,6 +37,6 @@ UseGet_course_data_pk_query_hook({
 
   return {
     'loading': hookRes.result.isLoading,
-    'data': '',
+    'data': null,
   };
 }

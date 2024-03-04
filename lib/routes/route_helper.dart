@@ -12,8 +12,9 @@ class Routehelper {
   /// Course details page
   ///////////////////////////////////////////////
   static const String courseDetailsPage = '/course-details-page';
-  static String GoToCourseDetialsPage({required String coursePk}) =>
-      '$courseDetailsPage?coursePk=$coursePk';
+  static String GoToCourseDetialsPage(
+          {required String coursePk, required String courseId}) =>
+      '$courseDetailsPage?coursePk=$coursePk&&courseId=$courseId';
 
   ////////////////////////////////////////////
   // ? Route Lists
@@ -30,7 +31,11 @@ class Routehelper {
       name: courseDetailsPage,
       page: () {
         var coursePk = Get.parameters["coursePk"];
-        return CourseDetailsPage(coursePk: coursePk!);
+        var courseId = Get.parameters["courseId"];
+        return CourseDetailsPage(
+          coursePk: coursePk!,
+          courseId: courseId!,
+        );
       },
     )
   ];

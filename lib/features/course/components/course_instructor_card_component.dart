@@ -68,8 +68,6 @@ class CourseInstructorCardComponent extends StatelessWidget {
   }
 
   Container _INSTRUCTOR_image({CourseInstructorModel? courseInstructor}) {
-    LOG_THE_DEBUG_DATA(messag: courseInstructor?.instructor?.image);
-
     return Container(
       height: 60,
       width: 60,

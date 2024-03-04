@@ -1,4 +1,5 @@
 import 'package:stc_training/features/course/models/course_unit_model.dart';
+import 'package:stc_training/helper/methods.dart';
 
 class AllCourseUnitContentsModel {
   int? _totalCount;
@@ -18,7 +19,9 @@ class AllCourseUnitContentsModel {
   }
 
   AllCourseUnitContentsModel.fromJson(Map<String, dynamic> json) {
+    _totalCount = json['totalCount'];
     var edges = json['edges'];
+    LOG_THE_DEBUG_DATA(messag: edges);
     if (edges != null) {
       _courseUnitContents = <CourseUnitContentModel>[];
       edges.forEach((data) {

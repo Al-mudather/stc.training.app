@@ -1,6 +1,4 @@
-class CourseQueries {
-  //TODO: FIlter the instructors so only the ones those there fullName is
-  // filled to be displied
+class CourseUnitQueries {
   static const GetAllCourseUnitsByCourseQuery = '''
       query GetAllCourseUnitsByCourseID(\$cursor: String, \$limit: Int, \$courseID: ID) {
         allCourseUnits(course: \$courseID, after: \$cursor, first: \$limit) {

@@ -53,6 +53,7 @@ class CourseCardComponent extends StatelessWidget {
               Get.toNamed(
                 Routehelper.GoToCourseDetialsPage(
                   coursePk: course.pk.toString(),
+                  courseId: course.id.toString(),
                 ),
               );
             },

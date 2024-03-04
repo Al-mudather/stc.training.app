@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:stc_training/features/course/models/course_unit_model.dart';
 import 'package:stc_training/helper/app_colors.dart';
+import 'package:stc_training/helper/methods.dart';
 import 'package:stc_training/utils/custom_text_util.dart';
 
 class CourseChapterExpandableCard extends StatefulWidget {
@@ -8,8 +10,11 @@ class CourseChapterExpandableCard extends StatefulWidget {
     super.key,
     required this.cardTitle,
     required this.cardSubTitle,
+    required this.unit,
     this.allowActions = true,
   });
+
+  final CourseUnitModel? unit;
 
   final String cardTitle;
   final String cardSubTitle;
@@ -63,7 +68,7 @@ class _CourseChapterExpandableCardState
 
   Widget cardTitle() {
     return CustomTextUtil(
-      text1: widget.cardTitle,
+      text1: "${widget.unit?.title}",
       fontSize1: 14,
       fontWeight1: FontWeight.w800,
       hasAnotherText: false,
