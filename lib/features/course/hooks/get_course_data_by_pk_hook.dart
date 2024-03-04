@@ -1,7 +1,6 @@
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:stc_training/features/course/graphql/course_queries.dart';
 import 'package:stc_training/features/course/models/course_models.dart';
-import 'package:stc_training/helper/methods.dart';
 
 UseGet_course_data_pk_query_hook({
   required context,
@@ -23,14 +22,14 @@ UseGet_course_data_pk_query_hook({
 
   try {
     CourseModel? course;
-    // LOG_THE_DEBUG_DATA(messag: course);
+    // LOG_THE_DEBUG_DATA(messag: resData);
     if (resData != null && resData.isNotEmpty) {
-      course = CourseModel.fromJson(resData);
+      course = CourseModel.fromJson(resData['course']);
     }
 
     return {
       'loading': hookRes.result.isLoading,
-      'course': course,
+      'data': course,
     };
   } catch (e) {}
 
@@ -38,6 +37,6 @@ UseGet_course_data_pk_query_hook({
 
   return {
     'loading': hookRes.result.isLoading,
-    'course': '',
+    'data': '',
   };
 }

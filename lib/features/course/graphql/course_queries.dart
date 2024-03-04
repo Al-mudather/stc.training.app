@@ -41,6 +41,7 @@ class CourseQueries {
               edges{
                 node{
                   id,
+
                   isMainInstructor,
                   instructor{
                     id,
@@ -80,6 +81,7 @@ class CourseQueries {
             node {
               id,
               pk,
+              isMainInstructor,
               instructor {
                 id,
                 qualification,

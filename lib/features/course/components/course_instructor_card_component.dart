@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:stc_training/features/course/models/course_models.dart';
 import 'package:stc_training/helper/app_colors.dart';
 import 'package:stc_training/helper/enumerations.dart';
+import 'package:stc_training/helper/methods.dart';
 import 'package:stc_training/utils/custom_btn_util.dart';
 import 'package:stc_training/utils/custom_text_util.dart';
 
 class CourseInstructorCardComponent extends StatelessWidget {
-  const CourseInstructorCardComponent({super.key});
+  const CourseInstructorCardComponent(
+      {super.key, required this.courseInstructor});
+
+  final CourseInstructorModel? courseInstructor;
 
   @override
   Widget build(BuildContext context) {
@@ -23,12 +28,13 @@ class CourseInstructorCardComponent extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          _INSTRUCTOR_image(),
+          _INSTRUCTOR_image(courseInstructor: courseInstructor),
           const SizedBox(
             width: 10,
           ),
           CustomTextUtil(
-            text1: "Dr.sabri abo gron \n",
+            text1:
+                "Dr.${courseInstructor?.instructor?.user?.firstName} ${courseInstructor?.instructor?.user?.lastName} \n",
             fontSize1: 14,
             fontWeight1: FontWeight.w600,
             hasAnotherText: true,
@@ -42,7 +48,12 @@ class CourseInstructorCardComponent extends StatelessWidget {
             btnTitle: "more",
             btnType: BtnTypes.textWithIcon,
             btnColor: AppColors.primary,
-            onClicked: () => {},
+            onClicked: () => {
+              SEND_a_message_to_the_user(
+                message: "The details page will come soon",
+                messageLable: "Wait",
+              )
+            },
             icon: RotatedBox(
               quarterTurns: 2,
               child: SvgPicture.asset(
@@ -56,7 +67,9 @@ class CourseInstructorCardComponent extends StatelessWidget {
     );
   }
 
-  Container _INSTRUCTOR_image() {
+  Container _INSTRUCTOR_image({CourseInstructorModel? courseInstructor}) {
+    LOG_THE_DEBUG_DATA(messag: courseInstructor?.instructor?.image);
+
     return Container(
       height: 60,
       width: 60,
@@ -82,10 +95,15 @@ class CourseInstructorCardComponent extends StatelessWidget {
             left: 0,
             right: 0,
             bottom: 0,
-            child: Image.asset(
-              "assets/images/sabri.png",
-              fit: BoxFit.cover,
-            ),
+            child: (courseInstructor?.instructor?.image != null &&
+                    "${courseInstructor?.instructor?.image}".isNotEmpty)
+                ? RETURN_the_network_image_from_a_path(
+                    path: '${courseInstructor?.instructor?.image}')
+                : SvgPicture.asset(
+                    'assets/svgs/stc-logo.svg',
+                    color: AppColors.primary,
+                    fit: BoxFit.cover,
+                  ),
           ),
         ],
       ),

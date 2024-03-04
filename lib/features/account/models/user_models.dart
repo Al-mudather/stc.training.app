@@ -26,12 +26,16 @@ class UserModel {
   int? pk;
   String? id;
   String? fullName;
+  String? firstName;
+  String? lastName;
   String? email;
 
   UserModel({
     this.pk,
     this.id,
     this.fullName,
+    this.firstName,
+    this.lastName,
     this.email,
   });
 
@@ -39,6 +43,8 @@ class UserModel {
     pk = json['pk'];
     id = json['id'];
     fullName = json['fullName'];
+    firstName = json['firstName'];
+    lastName = json['lastName'];
     email = json['email'];
   }
 

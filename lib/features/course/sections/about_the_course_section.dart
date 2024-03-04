@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:stc_training/features/course/models/course_models.dart';
 import 'package:stc_training/utils/expandable_text_util.dart';
 import 'package:stc_training/utils/section_title_util.dart';
 
 class AboutTheCourseSection extends StatelessWidget {
-  const AboutTheCourseSection({super.key});
+  const AboutTheCourseSection({super.key, required this.course});
+
+  final CourseModel? course;
 
   @override
   Widget build(BuildContext context) {
@@ -14,8 +17,7 @@ class AboutTheCourseSection extends StatelessWidget {
           height: 5,
         ),
         ExpandableTextUtil(
-          text:
-              "مشكلة البيسك Basic sciences بتواجهنا من ايام الجامعة الاولى ولمن نصل الكلينك بنلقى روحنا ما قادرين نربط وكمان بعد نتخرج لمن نجي لامتحانات التخصص بنلقى , مشكلة البيسك Basic sciences بتواجهنا من ايام الجامعة الاولى ولمن نصل الكلينك بنلقى روحنا ما قادرين نربط وكمان بعد نتخرج لمن نجي لامتحانات التخصص بنلقى ,مشكلة البيسك Basic sciences بتواجهنا من ايام الجامعة الاولى ولمن نصل الكلينك بنلقى روحنا ما قادرين نربط وكمان بعد نتخرج لمن نجي لامتحانات التخصص بنلقى ",
+          text: "${course?.brief}",
         ),
       ],
     );

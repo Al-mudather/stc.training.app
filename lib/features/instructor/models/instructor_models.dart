@@ -32,6 +32,7 @@ class InstructorModel {
   String? id;
   String? image;
   String? qualification;
+  // bool? isMainInstructor;
 
   UserModel? user;
 
@@ -47,8 +48,11 @@ class InstructorModel {
     pk = json['pk'];
     id = json['id'];
     image = json['image'];
+    // isMainInstructor = json['isMainInstructor'];
     qualification = json['qualification'];
     user = UserModel.fromJson(json['user']);
+    // if (json['instructor'] != null) {
+    // }
   }
 
   @override

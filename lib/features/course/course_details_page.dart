@@ -27,7 +27,7 @@ class CourseDetailsPage extends HookWidget {
   Widget build(BuildContext context) {
     ////  1) convert the class to hook widget class. [ Done ]
     //// Get the course data by pk [ Done ]
-    //TODO: 3) Fill the course header card data
+    //// 3) Fill the course header card data [ Done ]
     //TODO: 4) Make the share course btn works
     //TODO: 5) Fill about the course section data
     //TODO: 6) Fill the course chapter section data
@@ -44,6 +44,10 @@ class CourseDetailsPage extends HookWidget {
     /// Parameters
     ///////////////////////////////////////////////
     Map<String, dynamic> result;
+    // var queryResult = useState<Map<String, dynamic>>({
+    //   'loading': true,
+    //   'data': null,
+    // });
     ////////////////////////////////////////////////
     /// Functions
     ///////////////////////////////////////////////
@@ -53,13 +57,25 @@ class CourseDetailsPage extends HookWidget {
     ///////////////////////////////////////////////
     result =
         UseGet_course_data_pk_query_hook(context: context, coursePk: coursePk);
-    // LOG_THE_DEBUG_DATA(messag: result);
+    CourseModel? course = result['data'];
+    // CourseModel? course = queryResult.value['data'];
+    // LOG_THE_DEBUG_DATA(messag: course?.title);
+
+    // useEffect(() {
+    //   queryResult.value = result;
+    //   return null;
+    // }, [result]);
 
     return Scaffold(
       appBar: AppBarUtil(
         barText: "Course Details",
       ),
-      body: CourseLoadingPageComp(),
+      body: result['loading']
+          ? CourseLoadingPageComp()
+          : COURSE_data(
+              course: course,
+            ),
+      // body: CourseLoadingPageComp(),
       // body: COURSE_data(),
       bottomSheet: Container(
         padding: const EdgeInsets.symmetric(
@@ -93,15 +109,21 @@ class CourseDetailsPage extends HookWidget {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            HeaderCardComponent(),
+            HeaderCardComponent(
+              course: course,
+            ),
             const SizedBox(
               height: 30,
             ),
-            ShareAndInstructorNameComponent(),
+            ShareAndInstructorNameComponent(
+              course: course,
+            ),
             const SizedBox(
               height: 30,
             ),
-            AboutTheCourseSection(),
+            AboutTheCourseSection(
+              course: course,
+            ),
             const SizedBox(
               height: 20,
             ),
@@ -113,7 +135,9 @@ class CourseDetailsPage extends HookWidget {
             const SizedBox(
               height: 20,
             ),
-            CourseInstructorsSection(),
+            CourseInstructorsSection(
+              course: course,
+            ),
           ],
         ),
       ),

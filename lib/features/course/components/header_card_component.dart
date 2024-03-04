@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:stc_training/features/course/models/course_models.dart';
 import 'package:stc_training/helper/app_colors.dart';
 import 'package:stc_training/utils/big_text_util.dart';
 import 'package:stc_training/utils/custom_text_util.dart';
 
 class HeaderCardComponent extends StatelessWidget {
-  const HeaderCardComponent({super.key});
+  const HeaderCardComponent({super.key, required this.course});
+
+  final CourseModel? course;
 
   @override
   Widget build(BuildContext context) {
@@ -35,21 +38,22 @@ class HeaderCardComponent extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          card_header(),
+          card_header(course: course),
           // NVDPROD25
-          card_statistics(),
-          card_fotter(),
+          card_statistics(course: course),
+          card_fotter(course: course),
         ],
       ),
     );
   }
 
-  Row card_fotter() {
+  Row card_fotter({CourseModel? course}) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         CustomTextUtil(
-          text1: "90K",
+          // text1: "90K",
+          text1: "${course?.courseFeeInSdg}".split('.').first,
           textColor: AppColors.secondary,
           fontSize1: 20,
           hasAnotherText: true,
@@ -64,32 +68,33 @@ class HeaderCardComponent extends StatelessWidget {
     );
   }
 
-  Row card_statistics() {
+  Row card_statistics({CourseModel? course}) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         course_setatistic_card(
           title: "Students",
-          total: "50",
-          identifier: "k",
+          total: "${course?.enrollmentCount}",
+          identifier: "",
         ),
         course_setatistic_card(
           title: "Hours",
-          total: "42",
+          total: "${course?.courseHours}",
           identifier: "H",
         ),
         course_setatistic_card(
           title: "Language",
-          total: "Arabic",
+          total: "${course?.courseLanguage?.name}",
           identifier: "",
         ),
       ],
     );
   }
 
-  Container card_header() {
+  Container card_header({CourseModel? course}) {
     return Container(
       padding: EdgeInsets.only(bottom: 10),
+      width: double.maxFinite,
       decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(
@@ -98,9 +103,10 @@ class HeaderCardComponent extends StatelessWidget {
         ),
       ),
       child: BigTextUtil(
-        text: "USMLE STEP 1 Course by Subjects Part 2",
+        text: '${course?.title}',
         fontSize: 16,
         fontWeight: FontWeight.bold,
+        textAlign: TextAlign.start,
       ),
     );
   }

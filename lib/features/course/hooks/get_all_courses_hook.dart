@@ -12,7 +12,7 @@ UseGet_all_courses_query_hook({
       document: gql(CourseQueries.GETAllCoursesQuery),
       fetchPolicy: FetchPolicy.networkOnly,
       variables: {
-        'orderBy': ["-pk"],
+        'orderBy': ["pk"],
         'first': 10,
         'filters': jsonEncode(
           {'course_fee_in_sdg__gt': 0},

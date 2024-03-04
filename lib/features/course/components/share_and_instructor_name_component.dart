@@ -1,33 +1,48 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get_navigation/src/snackbar/snackbar.dart';
+import 'package:stc_training/features/course/models/course_models.dart';
 import 'package:stc_training/helper/app_colors.dart';
+import 'package:stc_training/helper/methods.dart';
 import 'package:stc_training/utils/custom_text_util.dart';
+import 'package:share_plus/share_plus.dart';
 
 class ShareAndInstructorNameComponent extends StatelessWidget {
-  const ShareAndInstructorNameComponent({super.key});
+  const ShareAndInstructorNameComponent({
+    super.key,
+    required this.course,
+  });
+  final CourseModel? course;
 
   @override
   Widget build(BuildContext context) {
+    //TODO: Handle the error where there is no instructor assigned to the course
+    CourseInstructorModel? mainInstructor =
+        course?.instructors.firstWhere((element) {
+      return element.isMainInstructor == true;
+    });
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        _SHARE_button(),
         Row(
           children: [
-            CustomTextUtil(
-              text1: "د.صبري سعد الطيب سعد",
-            ),
+            _INSTRUCTOR_image(mainInstructor: mainInstructor),
             const SizedBox(
               width: 10,
             ),
-            _INSTRUCTOR_image(),
+            CustomTextUtil(
+              text1:
+                  "${mainInstructor?.instructor?.user?.firstName} ${mainInstructor?.instructor?.user?.lastName}",
+            ),
           ],
         ),
+        _SHARE_button(),
       ],
     );
   }
 
-  Container _INSTRUCTOR_image() {
+  Container _INSTRUCTOR_image({CourseInstructorModel? mainInstructor}) {
     return Container(
       height: 40,
       width: 40,
@@ -53,10 +68,15 @@ class ShareAndInstructorNameComponent extends StatelessWidget {
             left: 0,
             right: 0,
             bottom: 0,
-            child: Image.asset(
-              "assets/images/sabri.png",
-              fit: BoxFit.cover,
-            ),
+            child: (mainInstructor?.instructor?.image != null ??
+                    "${mainInstructor?.instructor?.image}".isNotEmpty)
+                ? RETURN_the_network_image_from_a_path(
+                    path: '${mainInstructor?.instructor?.image}')
+                : SvgPicture.asset(
+                    'assets/svgs/stc-logo.svg',
+                    color: AppColors.primary,
+                    fit: BoxFit.cover,
+                  ),
           ),
         ],
       ),
@@ -84,7 +104,14 @@ class ShareAndInstructorNameComponent extends StatelessWidget {
           height: 17,
           width: 17,
         ),
-        onPressed: () => {},
+        onPressed: () => {
+          SEND_a_message_to_the_user(
+            message: "Enabled soon",
+            messageLable: "Share",
+            snackbarPosition: SnackPosition.BOTTOM,
+          ),
+          // Share.share('${course?.title}'),
+        },
         alignment: Alignment.center,
       ),
     );

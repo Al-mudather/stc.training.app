@@ -1,4 +1,5 @@
 import 'package:stc_training/features/category/models/category_models.dart';
+import 'package:stc_training/features/instructor/models/instructor_models.dart';
 
 class AllCoursesModel {
   String? startCursor;
@@ -53,6 +54,8 @@ class CourseModel {
   String? cover;
   String? currency;
   String? brief;
+  int? enrollmentCount;
+  String? courseHours;
   bool? isPaid;
   bool? allowEnrollment;
   bool? isCompound;
@@ -60,6 +63,9 @@ class CourseModel {
   CategoryModel? category;
   CompoundCoursesModel? compoundCourses;
   CourseLanguageModel? courseLanguage;
+
+  late List<CourseInstructorModel> _allInstructors;
+  List<CourseInstructorModel> get instructors => _allInstructors;
 
   CourseModel({
     this.pk,
@@ -75,13 +81,18 @@ class CourseModel {
     this.cover,
     this.currency,
     this.brief,
+    this.enrollmentCount,
+    this.courseHours,
     this.category,
     this.compoundCourses,
     this.courseLanguage,
     this.isPaid,
     this.allowEnrollment,
     this.isCompound,
-  });
+    instructors,
+  }) {
+    _allInstructors = instructors;
+  }
 
   CourseModel.fromJson(Map<String, dynamic> json) {
     pk = json['pk'];
@@ -97,6 +108,8 @@ class CourseModel {
     cover = json['cover'];
     currency = json['currency'];
     brief = json['brief'];
+    enrollmentCount = json['enrollmentCount'];
+    courseHours = json['courseHours'];
     isPaid = json['isPaid'];
     allowEnrollment = json['allowEnrollment'];
     isCompound = json['isCompound'];
@@ -110,12 +123,52 @@ class CourseModel {
     if (json['courseLanguage'] != null) {
       courseLanguage = CourseLanguageModel.fromJson(json['courseLanguage']);
     }
+
+    if (json['courseinstructorSet'] != null) {
+      _allInstructors = <CourseInstructorModel>[];
+      var instructorsEdges = json['courseinstructorSet']['edges'];
+      if (instructorsEdges != null) {
+        instructorsEdges.forEach((data) {
+          _allInstructors.add(CourseInstructorModel.fromJson(data["node"]));
+        });
+      }
+    }
   }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CourseModel && other.pk == pk;
+  }
+
+  @override
+  int get hashCode => pk.hashCode;
+}
+
+class CourseInstructorModel {
+  int? pk;
+  String? id;
+  InstructorModel? instructor;
+  bool? isMainInstructor;
+
+  CourseInstructorModel({
+    this.pk,
+    this.id,
+    this.instructor,
+    this.isMainInstructor,
+  });
+
+  CourseInstructorModel.fromJson(Map<String, dynamic> json) {
+    pk = json["pk"];
+    id = json["id"];
+    isMainInstructor = json["isMainInstructor"];
+    instructor = InstructorModel.fromJson(json["instructor"]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is InstructorModel && other.pk == pk;
   }
 
   @override
@@ -166,4 +219,13 @@ class CourseLanguageModel {
     name = json["languageName"];
     code = json["languageCode"];
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is CourseLanguageModel && other.pk == pk;
+  }
+
+  @override
+  int get hashCode => pk.hashCode;
 }
