@@ -52,7 +52,6 @@ class CourseChaptersSection extends HookWidget {
                 children: List.generate(
                   courseUnits?.courseUnits.length ?? 0,
                   (index) => CourseChapterExpandableCard(
-                    cardTitle: "Chapter 1",
                     cardSubTitle: "This is a text",
                     unit: courseUnits?.courseUnits[index],
                   ),

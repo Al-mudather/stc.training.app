@@ -1,5 +1,6 @@
+import 'dart:convert';
+
 import 'package:stc_training/features/course/models/course_unit_model.dart';
-import 'package:stc_training/helper/methods.dart';
 
 class AllCourseUnitContentsModel {
   int? _totalCount;
@@ -21,7 +22,6 @@ class AllCourseUnitContentsModel {
   AllCourseUnitContentsModel.fromJson(Map<String, dynamic> json) {
     _totalCount = json['totalCount'];
     var edges = json['edges'];
-    LOG_THE_DEBUG_DATA(messag: edges);
     if (edges != null) {
       _courseUnitContents = <CourseUnitContentModel>[];
       edges.forEach((data) {
@@ -40,6 +40,16 @@ class CourseUnitContentModel {
   String? modelName;
   String? modelValue;
 
+  String? title;
+  String? video;
+  String? cipherIframe;
+  String? videoTime;
+  String? videoTimeSeconds;
+  String? video_metadata;
+  bool? isMeeting;
+  String? meetingType;
+  String? meetingData;
+
   CourseUnitModel? courseUnit;
 
   CourseUnitContentModel({
@@ -51,6 +61,14 @@ class CourseUnitContentModel {
     this.modelName,
     this.modelValue,
     this.courseUnit,
+    this.title,
+    this.video,
+    this.cipherIframe,
+    this.videoTime,
+    this.videoTimeSeconds,
+    this.isMeeting,
+    this.meetingType,
+    this.meetingData,
   });
 
   CourseUnitContentModel.fromJson(Map<String, dynamic> json) {
@@ -61,6 +79,19 @@ class CourseUnitContentModel {
     isFree = json['isFree'];
     modelName = json['modelName'];
     modelValue = json['modelValue'];
+
+    if (modelValue != null) {
+      var value = jsonDecode('$modelValue');
+      title = value['title'];
+      video = value['video'];
+      cipherIframe = value['cipher_iframe'];
+      videoTime = value['video_time'];
+      videoTimeSeconds = value['video_time_seconds'];
+      isMeeting = value['is_meeting'];
+      meetingType = value['meeting_type'];
+      meetingData = value['meeting_data'];
+    }
+
     if (json["courseUnit"] != null) {
       courseUnit = CourseUnitModel.fromJson(json["courseUnit"]);
     }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:stc_training/features/course/models/course_unit_content_model.dart';
 import 'package:stc_training/helper/app_colors.dart';
 import 'package:stc_training/helper/methods.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -36,6 +37,12 @@ class DialogHelper {
         ),
       ),
     );
+  }
+
+  static void SHOW_video_dialog({CourseUnitContentModel? content}) {
+    Get.dialog(SimpleDialog(
+      title: Text('Free: ${content?.title}'),
+    ));
   }
 
   //? Hide the dialog

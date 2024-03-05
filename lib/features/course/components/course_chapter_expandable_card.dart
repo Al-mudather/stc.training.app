@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:stc_training/features/course/models/course_unit_content_model.dart';
 import 'package:stc_training/features/course/models/course_unit_model.dart';
 import 'package:stc_training/helper/app_colors.dart';
+import 'package:stc_training/helper/dialog_helper.dart';
 import 'package:stc_training/helper/methods.dart';
 import 'package:stc_training/utils/custom_text_util.dart';
 
 class CourseChapterExpandableCard extends StatefulWidget {
   const CourseChapterExpandableCard({
     super.key,
-    required this.cardTitle,
     required this.cardSubTitle,
     required this.unit,
     this.allowActions = true,
@@ -16,7 +17,6 @@ class CourseChapterExpandableCard extends StatefulWidget {
 
   final CourseUnitModel? unit;
 
-  final String cardTitle;
   final String cardSubTitle;
   final bool allowActions;
 
@@ -31,18 +31,20 @@ class _CourseChapterExpandableCardState
 
   @override
   Widget build(BuildContext context) {
+    //? Some of the contents are empty holding ( NoneType as modelName)
+    //? filter them out to get the data only
+    var acceptedContents = widget.unit?.courseUnitContents?.courseUnitContents
+        .where(
+          (content) => content.modelName != 'NoneType',
+        )
+        .toList();
+
     return Container(
       width: double.maxFinite,
-      // height: ,
-      // margin: const EdgeInsets.only(
-      //   bottom: 10,
-      // ),
       child: Card(
-        // color: AppColors.verylightOrange,
         color: Colors.white,
         child: ExpansionTile(
           shape: const Border(),
-          // trailing: AnimatedIconBoxUtil(iconData: AnimatedIcons.list_view),
           trailing: SizedBox(), // Hide the arrow
           leading: isExpanded
               ? expansionIcon(
@@ -54,10 +56,10 @@ class _CourseChapterExpandableCardState
                   isExpanded: isExpanded,
                 ),
           title: cardTitle(),
-          children: [
-            _EXPANDED_body_item(),
-            _EXPANDED_body_item(),
-          ],
+          children: List.generate(
+            acceptedContents?.length ?? 0,
+            (index) => _EXPANDED_body_item(content: acceptedContents![index]),
+          ),
           onExpansionChanged: (bool expanded) {
             setState(() => isExpanded = expanded);
           },
@@ -87,37 +89,65 @@ class _CourseChapterExpandableCardState
     );
   }
 
-  Container _EXPANDED_body_item() {
-    return Container(
-      padding: const EdgeInsets.only(
-        left: 16,
-        right: 16,
-        top: 16,
-        bottom: 8,
-      ),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border(
-          top: BorderSide(color: AppColors.brown.withOpacity(0.5), width: 0.5),
-        ),
-      ),
+  Widget _EXPANDED_body_item({CourseUnitContentModel? content}) {
+    return GestureDetector(
+      onTap: content?.isFree == true
+          ? () {
+              // LOG_THE_DEBUG_DATA(messag: "Free");
+              //TODO: Open simple dialog to watch the free video
+              DialogHelper.SHOW_video_dialog(content: content);
+              //TODO: The dialog contains, a video player and a close btn
+              //TODO: If the user clicks on play the video will start
+              //TODO: If the user clicks on the close btn the dialog will be closed
+            }
+          : () => null,
       child: Container(
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SvgPicture.asset('assets/svgs/opened_lock.svg'),
-            SvgPicture.asset('assets/svgs/closed_lock.svg'),
-            const SizedBox(
-              width: 5,
-            ),
-            Expanded(
-              child: CustomTextUtil(
-                text1: "First video of the chapter one ",
-                fontSize1: 14,
-                fontWeight1: FontWeight.w500,
+        padding: const EdgeInsets.only(
+          left: 16,
+          right: 16,
+          top: 16,
+          bottom: 8,
+        ),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border(
+            top:
+                BorderSide(color: AppColors.brown.withOpacity(0.5), width: 0.5),
+          ),
+        ),
+        child: Container(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              content?.isFree == true
+                  ? SvgPicture.asset('assets/svgs/opened_lock.svg')
+                  : SvgPicture.asset('assets/svgs/closed_lock.svg'),
+              const SizedBox(
+                width: 5,
               ),
-            ),
-          ],
+              Expanded(
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                        color: content?.isFree == true
+                            ? AppColors.primary
+                            : Colors.transparent,
+                      ),
+                    ),
+                  ),
+                  child: CustomTextUtil(
+                    text1: "${content?.title}",
+                    fontSize1: 14,
+                    fontWeight1: FontWeight.w500,
+                    textColor: content?.isFree == true
+                        ? AppColors.primary
+                        : AppColors.blacklight2,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
