@@ -1,9 +1,13 @@
+import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:stc_training/features/course/controller/video_controller.dart';
 import 'package:stc_training/features/course/models/course_unit_content_model.dart';
-import 'package:stc_training/helper/app_colors.dart';
-import 'package:stc_training/helper/methods.dart';
+import 'package:stc_training/helper/enumerations.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:stc_training/utils/custom_btn_util.dart';
+import 'package:get/get.dart';
+import 'package:video_player/video_player.dart';
 
 class DialogHelper {
   //? Show Loading dialog
@@ -40,9 +44,50 @@ class DialogHelper {
   }
 
   static void SHOW_video_dialog({CourseUnitContentModel? content}) {
-    Get.dialog(SimpleDialog(
-      title: Text('Free: ${content?.title}'),
-    ));
+    Get.dialog(
+      Dialog(
+        child: Column(
+          children: [
+            Container(
+              width: double.maxFinite,
+              // transformAlignment: Alignment.centerRight,
+              child: CustomBtnUtil(
+                btnTitle: "",
+                btnType: BtnTypes.filledIcon,
+                radius: 50,
+                iconRadius: 50,
+                iconSize: 12,
+                fontSize: 12,
+                iconFilled: Colors.white,
+                onClicked: () => {},
+                icon: Icon(
+                  Icons.close,
+                  color: Colors.red,
+                ),
+              ),
+            ),
+            GetBuilder<VideoController>(
+              init: VideoController(
+                videoPath:
+                    "https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4",
+              ),
+              builder: (controller) {
+                // return Container(
+                //   child: controller.videoPlayerController.value.isInitialized
+                //       ? VideoPlayer(controller.videoPlayerController)
+                //       : CircularProgressIndicator(),
+                // );
+                return (controller.chewieController != null &&
+                        controller.chewieController!.videoPlayerController.value
+                            .isInitialized)
+                    ? Chewie(controller: controller.chewieController!)
+                    : Text("Error");
+              },
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   //? Hide the dialog

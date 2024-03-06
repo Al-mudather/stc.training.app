@@ -14,6 +14,12 @@ class CourseChaptersSection extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    """ 
+      TODO: 1) Create a new page for the free video player
+      TODO: 2) When the user clicks on view the free video
+        navigate to the page and play the intendet video
+    """;
+
     ///////////////////////////////////////////////
     /// Controllers
     ///////////////////////////////////////////////

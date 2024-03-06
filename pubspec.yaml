@@ -41,6 +41,9 @@ dependencies:
   http_parser: ^4.0.2
   flutter_hooks: ^0.20.3
   flutter_zoom_drawer: ^3.1.2
+  video_player: ^2.8.2
+  vdocipher_flutter: ^2.6.4
+  chewie: ^1.7.5
 
   # share_plus: ^7.2.1
   flutter_svg: ^2.0.4

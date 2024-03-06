@@ -1,5 +1,8 @@
+import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:stc_training/features/course/controller/video_controller.dart';
 import 'package:stc_training/features/course/models/course_unit_content_model.dart';
 import 'package:stc_training/features/course/models/course_unit_model.dart';
 import 'package:stc_training/helper/app_colors.dart';
@@ -56,10 +59,30 @@ class _CourseChapterExpandableCardState
                   isExpanded: isExpanded,
                 ),
           title: cardTitle(),
-          children: List.generate(
-            acceptedContents?.length ?? 0,
-            (index) => _EXPANDED_body_item(content: acceptedContents![index]),
-          ),
+          // children: List.generate(
+          //   acceptedContents?.length ?? 0,
+          //   (index) => _EXPANDED_body_item(content: acceptedContents![index]),
+          // ),
+          children: [
+            GetBuilder<VideoController>(
+              init: VideoController(
+                videoPath:
+                    "https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4",
+              ),
+              builder: (controller) {
+                // return Container(
+                //   child: controller.videoPlayerController.value.isInitialized
+                //       ? VideoPlayer(controller.videoPlayerController)
+                //       : CircularProgressIndicator(),
+                // );
+                return (controller.chewieController != null &&
+                        controller.chewieController!.videoPlayerController.value
+                            .isInitialized)
+                    ? Chewie(controller: controller.chewieController!)
+                    : Text("Error");
+              },
+            ),
+          ],
           onExpansionChanged: (bool expanded) {
             setState(() => isExpanded = expanded);
           },
