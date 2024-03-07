@@ -68,7 +68,7 @@ class ShareAndInstructorNameComponent extends StatelessWidget {
             left: 0,
             right: 0,
             bottom: 0,
-            child: (mainInstructor?.instructor?.image != null ??
+            child: (mainInstructor?.instructor?.image != null &&
                     "${mainInstructor?.instructor?.image}".isNotEmpty)
                 ? RETURN_the_network_image_from_a_path(
                     path: '${mainInstructor?.instructor?.image}')

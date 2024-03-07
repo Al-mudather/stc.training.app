@@ -1,7 +1,7 @@
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:stc_training/features/course/controller/video_controller.dart';
+import 'package:stc_training/features/video_player/controller/video_controller.dart';
 import 'package:stc_training/features/course/models/course_unit_content_model.dart';
 import 'package:stc_training/helper/enumerations.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';

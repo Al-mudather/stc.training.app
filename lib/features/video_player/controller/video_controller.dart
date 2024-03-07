@@ -56,8 +56,8 @@ class VideoController extends GetxController {
     //? Initialize the chewie controller
     chewieController = ChewieController(
       videoPlayerController: videoPlayerController,
-      autoPlay: true,
-      looping: true,
+      autoPlay: false,
+      looping: false,
       materialProgressColors: ChewieProgressColors(
         playedColor: AppColors.primary,
         handleColor: AppColors.secondary,

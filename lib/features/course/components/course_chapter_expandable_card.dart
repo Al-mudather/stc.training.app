@@ -1,13 +1,16 @@
+import 'dart:convert';
+
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:stc_training/features/course/controller/video_controller.dart';
+import 'package:stc_training/features/video_player/controller/video_controller.dart';
 import 'package:stc_training/features/course/models/course_unit_content_model.dart';
 import 'package:stc_training/features/course/models/course_unit_model.dart';
 import 'package:stc_training/helper/app_colors.dart';
 import 'package:stc_training/helper/dialog_helper.dart';
 import 'package:stc_training/helper/methods.dart';
+import 'package:stc_training/routes/route_helper.dart';
 import 'package:stc_training/utils/custom_text_util.dart';
 
 class CourseChapterExpandableCard extends StatefulWidget {
@@ -59,30 +62,10 @@ class _CourseChapterExpandableCardState
                   isExpanded: isExpanded,
                 ),
           title: cardTitle(),
-          // children: List.generate(
-          //   acceptedContents?.length ?? 0,
-          //   (index) => _EXPANDED_body_item(content: acceptedContents![index]),
-          // ),
-          children: [
-            GetBuilder<VideoController>(
-              init: VideoController(
-                videoPath:
-                    "https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4",
-              ),
-              builder: (controller) {
-                // return Container(
-                //   child: controller.videoPlayerController.value.isInitialized
-                //       ? VideoPlayer(controller.videoPlayerController)
-                //       : CircularProgressIndicator(),
-                // );
-                return (controller.chewieController != null &&
-                        controller.chewieController!.videoPlayerController.value
-                            .isInitialized)
-                    ? Chewie(controller: controller.chewieController!)
-                    : Text("Error");
-              },
-            ),
-          ],
+          children: List.generate(
+            acceptedContents?.length ?? 0,
+            (index) => _EXPANDED_body_item(content: acceptedContents![index]),
+          ),
           onExpansionChanged: (bool expanded) {
             setState(() => isExpanded = expanded);
           },
@@ -116,12 +99,27 @@ class _CourseChapterExpandableCardState
     return GestureDetector(
       onTap: content?.isFree == true
           ? () {
-              // LOG_THE_DEBUG_DATA(messag: "Free");
-              //TODO: Open simple dialog to watch the free video
-              DialogHelper.SHOW_video_dialog(content: content);
-              //TODO: The dialog contains, a video player and a close btn
-              //TODO: If the user clicks on play the video will start
-              //TODO: If the user clicks on the close btn the dialog will be closed
+              //TODO: Go to the video player page
+              Get.toNamed(Routehelper.GoToVideoPlayerPage(
+                videoPath:
+                    "https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4",
+                unitContent: jsonEncode({
+                  'id': content?.id,
+                  'pk': content?.pk,
+                  'isFree': content?.isFree,
+                  'title': content?.title,
+                  'video': content?.video,
+                  'cipherIframe': content?.cipherIframe,
+                  'modelValue': content?.modelValue,
+                }),
+              ));
+
+              // // LOG_THE_DEBUG_DATA(messag: "Free");
+              // //TODO: Open simple dialog to watch the free video
+              // DialogHelper.SHOW_video_dialog(content: content);
+              // //TODO: The dialog contains, a video player and a close btn
+              // //TODO: If the user clicks on play the video will start
+              // //TODO: If the user clicks on the close btn the dialog will be closed
             }
           : () => null,
       child: Container(

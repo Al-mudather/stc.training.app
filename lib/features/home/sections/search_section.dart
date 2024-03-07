@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:get/get.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:stc_training/features/course/models/course_models.dart';
 import 'package:stc_training/features/home/controller/make_search_request.dart';
@@ -9,6 +10,7 @@ import 'package:stc_training/helper/app_colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:stc_training/helper/dialog_helper.dart';
 import 'package:stc_training/helper/methods.dart';
+import 'package:stc_training/routes/route_helper.dart';
 import 'package:stc_training/utils/big_text_util.dart';
 
 class SearchSection extends HookWidget {
@@ -251,18 +253,26 @@ class SearchSection extends HookWidget {
     );
   }
 
-  Container _searchCard({
+  Widget _searchCard({
     required CourseModel course,
   }) {
-    return Container(
-      width: 345,
-      margin: const EdgeInsets.only(top: 10),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(22),
-        color: Colors.white,
-      ),
+    return GestureDetector(
+      onTap: () {
+        Get.toNamed(
+          Routehelper.GoToCourseDetialsPage(
+            coursePk: course.pk.toString(),
+            courseId: course.id.toString(),
+          ),
+        );
+      },
       child: Container(
+        width: 345,
+        margin: const EdgeInsets.only(top: 10),
         padding: const EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(22),
+          color: Colors.white,
+        ),
         child: Row(
           children: [
             CircleAvatar(

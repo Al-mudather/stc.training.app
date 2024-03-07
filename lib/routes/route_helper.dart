@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 import 'package:stc_training/features/course/course_details_page.dart';
+import 'package:stc_training/features/course/models/course_unit_content_model.dart';
+import 'package:stc_training/features/video_player/videoPlayerPage.dart';
 import 'package:stc_training/layout/main_layout_page.dart';
 
 class Routehelper {
@@ -16,6 +18,15 @@ class Routehelper {
           {required String coursePk, required String courseId}) =>
       '$courseDetailsPage?coursePk=$coursePk&&courseId=$courseId';
 
+  ///////////////////////////////////////////////
+  /// Video Player page
+  ///////////////////////////////////////////////
+  static const String videoPlayerPage = '/video-player-page';
+  static String GoToVideoPlayerPage({
+    required String videoPath,
+    required String unitContent,
+  }) =>
+      '$videoPlayerPage?unitContent=$unitContent&&videoPath=$videoPath';
   ////////////////////////////////////////////
   // ? Route Lists
   ////////////////////////////////////////////
@@ -37,6 +48,17 @@ class Routehelper {
           courseId: courseId!,
         );
       },
-    )
+    ),
+    // ? Video Player Page
+    GetPage(
+        name: videoPlayerPage,
+        page: () {
+          var videoPath = Get.parameters['videoPath'];
+          var unitContent = Get.parameters['unitContent'];
+          return VideoPlayerPage(
+            videoPath: videoPath!,
+            unitContent: unitContent!,
+          );
+        })
   ];
 }
