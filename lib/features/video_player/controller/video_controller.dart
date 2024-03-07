@@ -10,8 +10,7 @@ class VideoController extends GetxController {
 
   final String videoPath;
 
-  VideoController(
-      {this.videoPath = 'https://www.youtube.com/watch?v=j2ZKH72Xm04'});
+  VideoController({required this.videoPath});
 
   @override
   void onInit() {
