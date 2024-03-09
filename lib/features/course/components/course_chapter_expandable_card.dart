@@ -100,26 +100,33 @@ class _CourseChapterExpandableCardState
       onTap: content?.isFree == true
           ? () {
               //TODO: Go to the video player page
-              Get.toNamed(Routehelper.GoToVideoPlayerPage(
-                videoPath:
-                    "https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4",
-                unitContent: jsonEncode({
-                  'id': content?.id,
-                  'pk': content?.pk,
-                  'isFree': content?.isFree,
-                  'title': content?.title,
-                  'video': content?.video,
-                  'cipherIframe': content?.cipherIframe,
-                  'modelValue': content?.modelValue,
-                }),
-              ));
+              String? cipherIfram = content!.cipherIframe;
+              var cipherOtp, playbackInfo;
+              if (cipherIfram != null && cipherIfram.isNotEmpty) {
+                var otp = cipherIfram.split('otp=')[1].split('&');
+                cipherOtp = otp.first;
+                var info = cipherIfram.split('playbackInfo=')[1].split('"');
+                playbackInfo = info.first;
+              }
 
-              // // LOG_THE_DEBUG_DATA(messag: "Free");
-              // //TODO: Open simple dialog to watch the free video
-              // DialogHelper.SHOW_video_dialog(content: content);
-              // //TODO: The dialog contains, a video player and a close btn
-              // //TODO: If the user clicks on play the video will start
-              // //TODO: If the user clicks on the close btn the dialog will be closed
+              var contentData = jsonDecode('${content.modelValue}');
+              var video_type = contentData["video_type"];
+              var metaData = contentData['video_metadata'];
+              var videoUuid;
+              if (video_type == 'TYPE_HASIF') {
+                videoUuid = metaData['videoData']['videoUuid'];
+              }
+
+              Get.toNamed(
+                Routehelper.GoToVideoPlayerPage(
+                  unitContent: jsonEncode({
+                    'video_type': video_type,
+                    'cipherOtp': cipherOtp,
+                    'playbackInfo': playbackInfo,
+                    'videoUuid': videoUuid,
+                  }),
+                ),
+              );
             }
           : () => null,
       child: Container(

@@ -52,7 +52,7 @@ class AppBarUtil extends StatelessWidget implements PreferredSizeWidget {
           //   color: AppColors.blacklight4,
           // ),
           onClicked: () {
-            // Get.back();
+            Get.back();
           },
         ),
       ),

@@ -23,10 +23,9 @@ class Routehelper {
   ///////////////////////////////////////////////
   static const String videoPlayerPage = '/video-player-page';
   static String GoToVideoPlayerPage({
-    required String videoPath,
     required String unitContent,
   }) =>
-      '$videoPlayerPage?unitContent=$unitContent&&videoPath=$videoPath';
+      '$videoPlayerPage?unitContent=$unitContent';
   ////////////////////////////////////////////
   // ? Route Lists
   ////////////////////////////////////////////
@@ -53,10 +52,8 @@ class Routehelper {
     GetPage(
         name: videoPlayerPage,
         page: () {
-          var videoPath = Get.parameters['videoPath'];
           var unitContent = Get.parameters['unitContent'];
           return VideoPlayerPage(
-            videoPath: videoPath!,
             unitContent: unitContent!,
           );
         })

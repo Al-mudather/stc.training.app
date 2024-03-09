@@ -8,6 +8,8 @@ import 'package:stc_training/helper/dependencies.dart' as dep;
 import 'package:stc_training/layout/drawer_layout_page.dart';
 import 'package:stc_training/routes/route_helper.dart';
 
+import 'package:vdocipher_flutter/vdocipher_flutter.dart';
+
 void main() async {
   // To ensure the dependenses are loaded
   WidgetsFlutterBinding.ensureInitialized();
@@ -40,6 +42,9 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
         ),
         // home: const DrawerLayoutPage(),
+        navigatorObservers: [
+          VdoPlayerController.navigatorObserver('/player/(.*)')
+        ],
         initialRoute: Routehelper.GoToMainLayoutPage(),
         getPages: Routehelper.routes,
       ),
