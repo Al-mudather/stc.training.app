@@ -1,19 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:stc_training/features/course/components/course_loading_card_comp.dart';
 import 'package:stc_training/features/course/components/course_loading_page_comp.dart';
 import 'package:stc_training/features/course/components/header_card_component.dart';
 import 'package:stc_training/features/course/components/share_and_instructor_name_component.dart';
-import 'package:stc_training/features/course/hooks/get_all_units_data_by_course_pk_hook.dart';
 import 'package:stc_training/features/course/hooks/get_course_data_by_pk_hook.dart';
 import 'package:stc_training/features/course/models/course_models.dart';
-import 'package:stc_training/features/course/models/course_unit_model.dart';
 import 'package:stc_training/features/course/sections/about_the_course_section.dart';
 import 'package:stc_training/features/course/sections/course_chapters_section.dart';
 import 'package:stc_training/features/course/sections/course_instructors_section.dart';
 import 'package:stc_training/features/course/sections/what_you_will_learn_section.dart';
 import 'package:stc_training/helper/app_colors.dart';
-import 'package:stc_training/helper/methods.dart';
 import 'package:stc_training/utils/app_bar_util.dart';
 import 'package:stc_training/utils/custom_btn_util.dart';
 
@@ -48,11 +44,7 @@ class CourseDetailsPage extends HookWidget {
     /// Parameters
     ///////////////////////////////////////////////
     Map<String, dynamic> result;
-    Map<String, dynamic> unitsResult;
-    // var queryResult = useState<Map<String, dynamic>>({
-    //   'loading': true,
-    //   'data': null,
-    // });
+
     ////////////////////////////////////////////////
     /// Functions
     ///////////////////////////////////////////////
@@ -66,13 +58,6 @@ class CourseDetailsPage extends HookWidget {
     );
     //? Get the course data
     CourseModel? course = result['data'];
-    // CourseModel? course = queryResult.value['data'];
-    // LOG_THE_DEBUG_DATA(messag: course?.title);
-
-    // useEffect(() {
-    //   queryResult.value = result;
-    //   return null;
-    // }, [result]);
 
     return Scaffold(
       appBar: AppBarUtil(
@@ -84,8 +69,6 @@ class CourseDetailsPage extends HookWidget {
               course: course,
               courseId: courseId,
             ),
-      // body: CourseLoadingPageComp(),
-      // body: COURSE_data(),
       bottomSheet: Container(
         padding: const EdgeInsets.symmetric(
           vertical: 14,

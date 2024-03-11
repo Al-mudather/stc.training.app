@@ -2,21 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:stc_training/helper/app_colors.dart';
 
 class CustomTextUtil extends StatelessWidget {
-  const CustomTextUtil({
-    super.key,
-    required this.text1,
-    this.fontSize1 = 16,
-    this.fontSize2 = 14,
-    this.text2,
-    this.identifier = "",
-    this.hasAnotherText = false,
-    this.textColor = AppColors.blacklight2,
-    this.text2Color = AppColors.blacklight2,
-    this.fontWeight1 = FontWeight.w900,
-    this.fontWeight2 = FontWeight.w900,
-    this.textAlign = TextAlign.start,
-    this.lineHeight = 1.4,
-  });
+  const CustomTextUtil(
+      {super.key,
+      required this.text1,
+      this.fontSize1 = 16,
+      this.fontSize2 = 14,
+      this.text2,
+      this.identifier = "",
+      this.hasAnotherText = false,
+      this.textColor = AppColors.blacklight2,
+      this.text2Color = AppColors.blacklight2,
+      this.fontWeight1 = FontWeight.w900,
+      this.fontWeight2 = FontWeight.w900,
+      this.textAlign = TextAlign.start,
+      this.lineHeight = 1.4,
+      this.textOverflow = TextOverflow.visible});
 
   final String text1;
   final String? text2;
@@ -30,12 +30,13 @@ class CustomTextUtil extends StatelessWidget {
   final FontWeight fontWeight1;
   final FontWeight fontWeight2;
   final TextAlign textAlign;
+  final TextOverflow textOverflow;
 
   @override
   Widget build(BuildContext context) {
     return RichText(
       textAlign: textAlign,
-      // overflow: TextOverflow.ellipsis,
+      overflow: textOverflow,
       text: TextSpan(
         children: [
           TextSpan(

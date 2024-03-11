@@ -4,6 +4,8 @@ import 'package:stc_training/helper/app_colors.dart';
 import 'package:stc_training/helper/app_constants.dart';
 import 'package:stc_training/helper/methods.dart';
 import 'package:stc_training/utils/big_text_util.dart';
+import 'package:get/get.dart';
+import 'package:stc_training/routes/route_helper.dart';
 
 class MarketingCardComponent extends StatelessWidget {
   MarketingCardComponent({super.key, required this.slider});
@@ -14,9 +16,16 @@ class MarketingCardComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        SEND_a_message_to_the_user(
-          message: "The details page will come soon",
-          messageLable: "Wait",
+        // SEND_a_message_to_the_user(
+        //   message: "The details page will come soon",
+        //   messageLable: "Wait",
+        // );
+        //TODO: Go to course details page
+        Get.toNamed(
+          Routehelper.GoToCourseDetialsPage(
+            coursePk: slider.course!.pk.toString(),
+            courseId: slider.course!.id.toString(),
+          ),
         );
       },
       child: Container(

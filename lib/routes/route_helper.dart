@@ -3,13 +3,14 @@ import 'package:stc_training/features/course/course_details_page.dart';
 import 'package:stc_training/features/course/models/course_unit_content_model.dart';
 import 'package:stc_training/features/video_player/videoPlayerPage.dart';
 import 'package:stc_training/layout/main_layout_page.dart';
+import 'package:stc_training/layout/drawer_layout_page.dart';
 
 class Routehelper {
   ///////////////////////////////////////////////
   /// Main Layout page
   ///////////////////////////////////////////////
-  static const String mainLayoutPage = '/main-layout-page';
-  static String GoToMainLayoutPage() => mainLayoutPage;
+  static const String drawerLayoutPage = '/drawer-layout-page';
+  static String GoToDrawerLayoutPage() => drawerLayoutPage;
   ///////////////////////////////////////////////
   /// Course details page
   ///////////////////////////////////////////////
@@ -32,8 +33,9 @@ class Routehelper {
   static List<GetPage> routes = [
     // ? Main Layout Page
     GetPage(
-      name: mainLayoutPage,
-      page: () => MainLayoutPage(),
+      name: drawerLayoutPage,
+      page: () => DrawerLayoutPage(),
+      // page: () => MainLayoutPage(),
     ),
 
     // ? Course details page

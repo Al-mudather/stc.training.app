@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
         navigatorObservers: [
           VdoPlayerController.navigatorObserver('/player/(.*)')
         ],
-        initialRoute: Routehelper.GoToMainLayoutPage(),
+        initialRoute: Routehelper.GoToDrawerLayoutPage(),
         getPages: Routehelper.routes,
       ),
     );

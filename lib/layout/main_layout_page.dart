@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:stc_training/features/category/category_page.dart';
 import 'package:stc_training/features/home/home_page.dart';
 import 'package:stc_training/features/settings/controller/drawer_layout_controller.dart';
 import 'package:stc_training/helper/app_colors.dart';
@@ -46,7 +47,8 @@ class MainLayoutPage extends HookWidget {
           },
         ),
       ),
-      body: const HomePage(),
+      body: const CategoryPage(),
+      // body: const HomePage(),
       // body: const CourseDetailsPage(),
       bottomNavigationBar: Container(
         height: 75,
@@ -70,8 +72,9 @@ class MainLayoutPage extends HookWidget {
     );
   }
 
-  BottomNavigationBar _bottomNavigationBar(
-      {required ValueNotifier currentIndex}) {
+  BottomNavigationBar _bottomNavigationBar({
+    required ValueNotifier currentIndex,
+  }) {
     return BottomNavigationBar(
       onTap: (index) => {currentIndex.value = index},
       currentIndex: currentIndex.value,
