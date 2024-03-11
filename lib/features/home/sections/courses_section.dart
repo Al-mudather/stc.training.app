@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:get/get.dart';
 import 'package:stc_training/features/course/components/course_loading_card_comp.dart';
 import 'package:stc_training/features/course/hooks/get_all_courses_hook.dart';
 import 'package:stc_training/features/course/models/course_models.dart';
 import 'package:stc_training/features/home/components/course_card_component.dart';
+import 'package:stc_training/routes/route_helper.dart';
 import 'package:stc_training/utils/horizontal_loading_data_util.dart';
 import 'package:stc_training/utils/section_title_util.dart';
 
@@ -27,7 +29,7 @@ class CoursesSection extends HookWidget {
     ////////////////////////////////////////////////
     /// Hook Functions
     ///////////////////////////////////////////////
-    result = UseGet_all_courses_query_hook(context: context);
+    result = UseGet_all_courses_query_home_page_hook(context: context);
     AllCoursesModel? allcourses = result['data'];
     return result['loading']
         ? HorizontalLoadingDataUtil(
@@ -39,13 +41,20 @@ class CoursesSection extends HookWidget {
   Column _COURSES_data(AllCoursesModel? allcourses) {
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: SectionTitleUtil(
-            firstText: "Available",
-            secondText: "Courses",
-            hasLink: true,
-            linkTitle: "All Courses",
+        GestureDetector(
+          onTap: () => {
+            Get.toNamed(
+              Routehelper.GoToAllCoursesPage(),
+            )
+          },
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: SectionTitleUtil(
+              firstText: "Available",
+              secondText: "Courses",
+              hasLink: true,
+              linkTitle: "All Courses",
+            ),
           ),
         ),
         const SizedBox(

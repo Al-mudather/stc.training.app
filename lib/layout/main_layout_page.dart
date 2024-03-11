@@ -22,6 +22,10 @@ class MainLayoutPage extends HookWidget {
     /// Parameters
     ///////////////////////////////////////////////
     var _currentIndex = useState(0);
+    var tabsPage = [
+      const HomePage(),
+      const CategoryPage(),
+    ];
     ////////////////////////////////////////////////
     /// Functions
     ///////////////////////////////////////////////
@@ -47,8 +51,8 @@ class MainLayoutPage extends HookWidget {
           },
         ),
       ),
-      body: const CategoryPage(),
-      // body: const HomePage(),
+      // body: const CategoryPage(),
+      body: const HomePage(),
       // body: const CourseDetailsPage(),
       bottomNavigationBar: Container(
         height: 75,

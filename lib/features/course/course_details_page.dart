@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:stc_training/features/course/components/course_loading_page_comp.dart';
+import 'package:stc_training/features/course/components/course_details_loading_page_comp.dart';
 import 'package:stc_training/features/course/components/header_card_component.dart';
 import 'package:stc_training/features/course/components/share_and_instructor_name_component.dart';
 import 'package:stc_training/features/course/hooks/get_course_data_by_pk_hook.dart';
@@ -64,7 +64,7 @@ class CourseDetailsPage extends HookWidget {
         barText: "Course Details",
       ),
       body: result['loading']
-          ? CourseLoadingPageComp()
+          ? CourseDetailsLoadingPageComp()
           : COURSE_data(
               course: course,
               courseId: courseId,

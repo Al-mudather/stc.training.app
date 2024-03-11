@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-class CourseLoadingPageComp extends StatelessWidget {
-  const CourseLoadingPageComp({super.key});
+class CourseDetailsLoadingPageComp extends StatelessWidget {
+  const CourseDetailsLoadingPageComp({super.key});
 
   @override
   Widget build(BuildContext context) {

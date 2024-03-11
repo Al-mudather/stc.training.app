@@ -4,12 +4,14 @@ class CourseQueries {
   static const GETAllCoursesQuery = '''
         query GetAllCourses(
         \$first:Int,
+        \$cursor: String,
         \$orderBy:[String],
         \$execludeIds:[Int],
         \$filters: JSONString,
       ) {
       allCourses(
           first:\$first,
+          after: \$cursor,
           orderBy:\$orderBy,
           execludeIds:\$execludeIds,
           filters: \$filters

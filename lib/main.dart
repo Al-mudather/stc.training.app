@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:stc_training/features/course/all_courses_page.dart';
 
 import 'package:stc_training/helper/app_colors.dart';
 import 'package:stc_training/helper/app_constants.dart';
@@ -41,7 +42,7 @@ class MyApp extends StatelessWidget {
           ),
           useMaterial3: true,
         ),
-        // home: const DrawerLayoutPage(),
+        // home: const AllCoursesPage(),
         navigatorObservers: [
           VdoPlayerController.navigatorObserver('/player/(.*)')
         ],
