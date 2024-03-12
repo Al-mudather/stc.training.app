@@ -60,7 +60,14 @@ UseGet_all_courses_query_home_page_hook({
 
 UseGet_all_courses_query_hook({
   required context,
+  String search = '',
 }) {
+  Map filters = {
+    'course_fee_in_sdg__gt': 0,
+  };
+  if (search.isNotEmpty) {
+    filters['title__icontains'] = search;
+  }
   QueryHookResult<Object?> hookRes = useQuery(
     QueryOptions(
       document: gql(CourseQueries.GETAllCoursesQuery),
@@ -69,9 +76,7 @@ UseGet_all_courses_query_hook({
         'orderBy': ["pk"],
         'first': 10,
         'cursor': '',
-        'filters': jsonEncode(
-          {'course_fee_in_sdg__gt': 0},
-        ),
+        'filters': jsonEncode(filters),
       },
       onError: (error) {
         // 1) Tell the user there somthing wrong.

@@ -12,6 +12,7 @@ import 'package:stc_training/helper/dialog_helper.dart';
 import 'package:stc_training/helper/methods.dart';
 import 'package:stc_training/routes/route_helper.dart';
 import 'package:stc_training/utils/big_text_util.dart';
+import 'package:stc_training/utils/search_text_field_util.dart';
 
 class SearchSection extends HookWidget {
   const SearchSection({super.key});
@@ -127,53 +128,14 @@ class SearchSection extends HookWidget {
     return SingleChildScrollView(
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 24),
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          color: const Color(0xFFF5F5F5),
-          boxShadow: const [
-            BoxShadow(
-              color: Colors.grey,
-              // blurRadius: 0.1,
-              spreadRadius: 0.1,
-              offset: Offset(0, 0.1),
-            ),
-          ],
-        ),
-        child: TextField(
+        child: SearchTextFieldUtil(
           controller: searchCtl,
-          // onChanged: (value) {
-          //   Make_the_search();
-          // },
-          onEditingComplete: () {
+          onClicked: () {
+            // Stop the keyboard focus
+            FocusManager.instance.primaryFocus?.unfocus();
+            // Star searching
             Make_the_search();
           },
-          // onSubmitted: (value) {
-          //   Make_the_search();
-          // },
-          decoration: InputDecoration(
-            hintText: "What are you looking for ?",
-            hintStyle: const TextStyle(
-              color: Color(0xFF989898),
-            ),
-            suffixIcon: InkWell(
-              onTap: () {
-                Make_the_search();
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(50),
-                  color: Colors.white,
-                ),
-                child: const Icon(
-                  Icons.search,
-                  size: 30,
-                  color: AppColors.secondary,
-                ),
-              ),
-            ),
-            border: InputBorder.none,
-          ),
         ),
       ),
     );
