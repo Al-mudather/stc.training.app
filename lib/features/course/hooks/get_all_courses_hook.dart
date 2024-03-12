@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:stc_training/features/course/graphql/course_queries.dart';
 import 'package:stc_training/features/course/models/course_models.dart';
+import 'package:stc_training/helper/methods.dart';
 
 UseGet_all_courses_query_home_page_hook({
   required context,
@@ -61,6 +62,7 @@ UseGet_all_courses_query_home_page_hook({
 UseGet_all_courses_query_hook({
   required context,
   String search = '',
+  String? categoryPk,
 }) {
   Map filters = {
     'course_fee_in_sdg__gt': 0,
@@ -68,6 +70,11 @@ UseGet_all_courses_query_hook({
   if (search.isNotEmpty) {
     filters['title__icontains'] = search;
   }
+
+  if (categoryPk != null && categoryPk != 'null' && categoryPk.isNotEmpty) {
+    filters['course_speciality__pk'] = categoryPk;
+  }
+
   QueryHookResult<Object?> hookRes = useQuery(
     QueryOptions(
       document: gql(CourseQueries.GETAllCoursesQuery),

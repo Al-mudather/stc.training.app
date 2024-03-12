@@ -8,6 +8,7 @@ import 'package:stc_training/features/settings/controller/drawer_layout_controll
 import 'package:stc_training/helper/app_colors.dart';
 import 'package:stc_training/helper/enumerations.dart';
 import 'package:stc_training/utils/custom_btn_util.dart';
+import 'package:stc_training/utils/custom_text_util.dart';
 
 class MainLayoutPage extends HookWidget {
   const MainLayoutPage({super.key});
@@ -24,7 +25,9 @@ class MainLayoutPage extends HookWidget {
     var _currentIndex = useState(0);
     var tabsPage = [
       const HomePage(),
+      Center(child: CustomTextUtil(text1: 'Coming Soon')),
       const CategoryPage(),
+      Center(child: CustomTextUtil(text1: 'Coming Soon')),
     ];
     ////////////////////////////////////////////////
     /// Functions
@@ -51,9 +54,7 @@ class MainLayoutPage extends HookWidget {
           },
         ),
       ),
-      // body: const CategoryPage(),
-      body: const HomePage(),
-      // body: const CourseDetailsPage(),
+      body: tabsPage[_currentIndex.value],
       bottomNavigationBar: Container(
         height: 75,
         clipBehavior: Clip.hardEdge,

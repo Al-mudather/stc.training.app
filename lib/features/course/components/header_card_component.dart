@@ -72,16 +72,24 @@ class HeaderCardComponent extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        course_setatistic_card(
-          title: "Students",
-          total: "${course?.enrollmentCount}",
-          identifier: "",
-        ),
-        course_setatistic_card(
-          title: "Hours",
-          total: "${course?.courseHours}",
-          identifier: "H",
-        ),
+        (course?.enrollmentCount != null)
+            ? course_setatistic_card(
+                title: "Students",
+                total: "${course?.enrollmentCount}",
+                identifier: "",
+              )
+            : Container(
+                width: 0.1,
+              ),
+        course?.courseHours != null
+            ? course_setatistic_card(
+                title: "Hours",
+                total: "${course?.courseHours}",
+                identifier: "H",
+              )
+            : Container(
+                width: 0.1,
+              ),
         course_setatistic_card(
           title: "Language",
           total: "${course?.courseLanguage?.name}",

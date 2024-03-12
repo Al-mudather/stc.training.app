@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:stc_training/helper/app_colors.dart';
 import 'package:stc_training/helper/app_constants.dart';
+import 'package:stc_training/routes/route_helper.dart';
 import 'package:stc_training/utils/custom_text_util.dart';
 
 class MenuDrawerPage extends StatelessWidget {
@@ -47,6 +49,13 @@ class MenuDrawerPage extends StatelessWidget {
                   itemTitle: "Menu",
                   iconData: Icons.home,
                   onClicked: () {},
+                ),
+                menuItem(
+                  itemTitle: "All Courses",
+                  iconData: Icons.video_collection,
+                  onClicked: () {
+                    Get.toNamed(Routehelper.GoToAllCoursesPage());
+                  },
                 ),
                 menuItem(
                   itemTitle: "My Orders",

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:get/get.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:stc_training/features/course/components/all_courses_loading_page_comp.dart';
 import 'package:stc_training/features/course/hooks/get_all_courses_hook.dart';
@@ -11,11 +12,14 @@ import 'package:stc_training/helper/enumerations.dart';
 import 'package:stc_training/helper/methods.dart';
 import 'package:stc_training/utils/app_bar_util.dart';
 import 'package:stc_training/utils/custom_btn_util.dart';
+import 'package:stc_training/utils/custom_text_util.dart';
+import 'package:stc_training/utils/no_data_util.dart';
 import 'package:stc_training/utils/search_text_field_util.dart';
 
 class AllCoursesPage extends HookWidget {
-  const AllCoursesPage({super.key});
-
+  AllCoursesPage({super.key, this.categoryPk, this.categoryName});
+  String? categoryPk;
+  String? categoryName;
   @override
   Widget build(BuildContext context) {
     ///////////////////////////////////////////////
@@ -48,6 +52,7 @@ class AllCoursesPage extends HookWidget {
     result = UseGet_all_courses_query_hook(
       context: context,
       search: search.value,
+      categoryPk: categoryPk,
     );
     // LOG_THE_DEBUG_DATA(messag: searchCtl.text);
     AllCoursesModel? allcourses = result['data'];
@@ -55,7 +60,7 @@ class AllCoursesPage extends HookWidget {
 
     return Scaffold(
       appBar: AppBarUtil(
-        barText: "All Courses",
+        barText: (categoryName == 'null') ? "All Courses" : categoryName!,
       ),
       body: SingleChildScrollView(
         controller: scrollCtl,
@@ -105,11 +110,15 @@ class AllCoursesPage extends HookWidget {
                 ? AllCoursesLoadingPageComp()
                 : (allcourses == null
                     ? AllCoursesLoadingPageComp()
-                    : _COURSES_data(
-                        allcourses: allcourses,
-                        scrollCtl: scrollCtl,
-                        hookRes: hookRes,
-                      )),
+                    : allcourses!.courses.length > 0
+                        ? _COURSES_data(
+                            allcourses: allcourses,
+                            scrollCtl: scrollCtl,
+                            hookRes: hookRes,
+                          )
+                        : NoDataUtil(
+                            text: "No courses yet!",
+                          )),
           ],
         ),
       ),

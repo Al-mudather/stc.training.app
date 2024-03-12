@@ -18,7 +18,9 @@ class Routehelper {
   static String GoToCourseDetialsPage(
           {required String coursePk, required String courseId}) =>
       '$courseDetailsPage?coursePk=$coursePk&&courseId=$courseId';
-  static String GoToAllCoursesPage() => allCoursesPage;
+  static String GoToAllCoursesPage(
+          {String? categoryPk, String? categoryName}) =>
+      '$allCoursesPage?categoryPk=$categoryPk&&categoryName=$categoryName';
 
   ///////////////////////////////////////////////
   /// Video Player page
@@ -55,7 +57,14 @@ class Routehelper {
     // ? All Courses page
     GetPage(
       name: allCoursesPage,
-      page: () => AllCoursesPage(),
+      page: () {
+        var categoryPk = Get.parameters["categoryPk"];
+        var categoryName = Get.parameters["categoryName"];
+        return AllCoursesPage(
+          categoryPk: categoryPk,
+          categoryName: categoryName,
+        );
+      },
     ),
 
     // ? Video Player Page
