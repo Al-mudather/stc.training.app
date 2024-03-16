@@ -8,22 +8,18 @@ import 'package:stc_training/features/video_player/controller/video_controller.d
 import 'package:stc_training/features/course/models/course_unit_content_model.dart';
 import 'package:stc_training/features/course/models/course_unit_model.dart';
 import 'package:stc_training/helper/app_colors.dart';
-import 'package:stc_training/helper/dialog_helper.dart';
-import 'package:stc_training/helper/methods.dart';
 import 'package:stc_training/routes/route_helper.dart';
 import 'package:stc_training/utils/custom_text_util.dart';
 
 class CourseChapterExpandableCard extends StatefulWidget {
   const CourseChapterExpandableCard({
     super.key,
-    required this.cardSubTitle,
     required this.unit,
     this.allowActions = true,
   });
 
   final CourseUnitModel? unit;
 
-  final String cardSubTitle;
   final bool allowActions;
 
   @override

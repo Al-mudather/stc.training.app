@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:stc_training/features/course/components/course_chapter_expandable_card.dart';
 import 'package:stc_training/features/course/hooks/get_all_units_data_by_course_pk_hook.dart';
 import 'package:stc_training/features/course/models/course_unit_model.dart';
+import 'package:stc_training/helper/app_constants.dart';
 import 'package:stc_training/helper/methods.dart';
+import 'package:stc_training/utils/custom_btn_util.dart';
 import 'package:stc_training/utils/section_title_util.dart';
 import 'package:stc_training/utils/skeleton_loading_util.dart';
 
@@ -42,7 +45,7 @@ class CourseChaptersSection extends HookWidget {
     );
     //? Get the course units data
     AllCourseUnitsModel? courseUnits = unitsResult["data"];
-
+    QueryHookResult<Object?> hookRes = unitsResult['hookRes'];
     // LOG_THE_DEBUG_DATA(messag: courseUnits);
 
     return unitsResult['loading']
@@ -58,11 +61,48 @@ class CourseChaptersSection extends HookWidget {
                 children: List.generate(
                   courseUnits?.courseUnits.length ?? 0,
                   (index) => CourseChapterExpandableCard(
-                    cardSubTitle: "This is a text",
                     unit: courseUnits?.courseUnits[index],
                   ),
                 ),
               ),
+              const SizedBox(
+                height: AppConstants.height_20,
+              ),
+              courseUnits!.hasNextPage == true
+                  ? Container(
+                      width: double.maxFinite,
+                      child: CustomBtnUtil(
+                        btnTitle: "Load more",
+                        radius: 10,
+                        onClicked: () {
+                          FetchMoreOptions opts = FetchMoreOptions(
+                            variables: {'cursor': courseUnits!.endCursor},
+                            updateQuery:
+                                (previousResultData, fetchMoreResultData) {
+                              // this function will be called so as to combine both the original and fetchMore results
+                              final List<dynamic> repos = [
+                                ...previousResultData!['allCourseUnits']
+                                    ['edges'] as List<dynamic>,
+                                ...fetchMoreResultData!['allCourseUnits']
+                                    ['edges'] as List<dynamic>
+                              ];
+
+                              // to avoid a lot of work, lets just update the list of repos in returned
+                              // data with new data, this also ensures we have the endCursor already set
+                              // correctly
+                              fetchMoreResultData['allCourseUnits']['edges'] =
+                                  repos;
+
+                              return fetchMoreResultData;
+                            },
+                          );
+
+                          //TODO: Call the fetch more function
+                          hookRes.fetchMore(opts);
+                        },
+                      ),
+                    )
+                  : Container()
             ],
           );
   }

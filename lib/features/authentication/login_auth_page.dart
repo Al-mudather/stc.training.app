@@ -1,14 +1,29 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:stc_training/features/authentication/controller/auth_controller.dart';
+import 'package:stc_training/features/authentication/controller/authenticator.dart';
+import 'package:stc_training/features/authentication/graphql/auth_mutations.dart';
 import 'package:stc_training/helper/app_colors.dart';
 import 'package:stc_training/helper/app_constants.dart';
 import 'package:stc_training/helper/enumerations.dart';
+import 'package:stc_training/helper/methods.dart';
 import 'package:stc_training/utils/big_text_util.dart';
 import 'package:stc_training/utils/custom_btn_util.dart';
 import 'package:stc_training/utils/custom_textField_util.dart';
+import 'package:stc_training/utils/password_textField.dart';
 import 'package:stc_training/utils/small_text_util.dart';
 import 'package:stc_training/utils/title_with_background_util.dart';
+
+import 'dart:developer' as devtools show log;
+
+extension Log on Object {
+  void log() => devtools.log(toString());
+}
 
 class LoginAuthPage extends HookWidget {
   const LoginAuthPage({super.key});
@@ -86,15 +101,20 @@ class LoginAuthPage extends HookWidget {
                 btnType: BtnTypes.eleveatedWithIcon,
                 btnColor: AppColors.deepOrange.withOpacity(0.8),
                 icon: SvgPicture.asset("assets/svgs/google-icon.svg"),
-                onClicked: () {},
+                onClicked: () async {
+                  final result = await Authenticator().loginWithGoogle();
+                  print('888888888888888888888888');
+                  result.log();
+                  print('888888888888888888888888');
+                },
               ),
-              CustomBtnUtil(
-                btnTitle: "Login with Facebook",
-                btnType: BtnTypes.eleveatedWithIcon,
-                btnColor: AppColors.primary.withOpacity(0.8),
-                icon: SvgPicture.asset("assets/svgs/facebook-icon.svg"),
-                onClicked: () {},
-              ),
+              // CustomBtnUtil(
+              //   btnTitle: "Login with Facebook",
+              //   btnType: BtnTypes.eleveatedWithIcon,
+              //   btnColor: AppColors.primary.withOpacity(0.8),
+              //   icon: SvgPicture.asset("assets/svgs/facebook-icon.svg"),
+              //   onClicked: () {},
+              // ),
               const SizedBox(
                 height: AppConstants.space_26,
               ),
@@ -112,14 +132,15 @@ class LoginAuthPage extends HookWidget {
                 ),
                 radius: AppConstants.radius_24,
               ),
-              CustomTextFieldUtil(
+              PasswordTextField(
+                label: "Password",
+                hasLabel: false,
                 hintText: "Password",
                 controller: passwordCtl,
-                isPassword: true,
-                hasLabel: false,
                 prefixIcon: SvgPicture.asset(
                   "assets/svgs/password-key.svg",
                 ),
+                enable: true,
                 radius: AppConstants.radius_24,
               ),
               const SizedBox(
@@ -130,7 +151,10 @@ class LoginAuthPage extends HookWidget {
           ),
         ),
       ),
-      bottomSheet: _Login_action(),
+      bottomSheet: _Login_action(
+        email: email,
+        password: password,
+      ),
     );
   }
 
@@ -167,7 +191,10 @@ class LoginAuthPage extends HookWidget {
     );
   }
 
-  Container _Login_action() {
+  Container _Login_action({
+    required ValueNotifier email,
+    required ValueNotifier password,
+  }) {
     return Container(
       height: 90,
       padding: EdgeInsets.all(20),
@@ -186,20 +213,94 @@ class LoginAuthPage extends HookWidget {
           ),
         ],
       ),
-      child: SizedBox(
-        height: 40,
-        width: 200,
-        child: CustomBtnUtil(
-          btnTitle: "Login",
-          btnType: BtnTypes.eleveatedWithIcon,
-          // btnColor: Colors.white,
-          isLoading: false,
-          icon: Icon(
-            Icons.login,
-            color: Colors.white,
-          ),
-          onClicked: () => {},
-        ),
+      child: GetBuilder<AuthController>(
+        builder: (innerAuthCtl) {
+          return Mutation(
+            options: MutationOptions(
+              document: gql(AuthMutations.LoginMutation),
+              // you can update the cache based on results
+
+              // or do something with the result.data on completion
+              onCompleted: (dynamic resultData) {
+                LOG_THE_DEBUG_DATA(messag: resultData);
+                try {
+                  if (resultData['tokenAuth'] != null) {
+                    var success = resultData['tokenAuth']['success'];
+                    var errors = resultData['tokenAuth']['errors'];
+                    if ((success is bool && success == true)) {
+                      // Save the data to the shared refrences
+                      // LOG_THE_DEBUG_DATA(
+                      //     messag: "resultData => $resultData");
+
+                      innerAuthCtl.SET_CREDENTIALS(
+                        user: resultData['tokenAuth']['user'],
+                        token: resultData['tokenAuth']['token'],
+                        refreshToken: resultData['tokenAuth']['refreshToken'],
+                      );
+                    } else if (errors is Map) {
+                      LOG_THE_DEBUG_DATA(messag: errors, type: 'e');
+                      try {
+                        String code = errors["nonFieldErrors"][0]['code'];
+                        LOG_THE_DEBUG_DATA(messag: code, type: 'e');
+                        if (code.contains('invalid_credentials')) {
+                          // Tell the user to inter a valid credentilas
+                          SEND_a_message_to_the_user(
+                            message: "Enter Valid Credentials",
+                            messageLable: code,
+                            backgroundColor: AppColors.errorLight,
+                            backgroundTextColor: Colors.white,
+                          );
+                        }
+                      } catch (e) {
+                        Map message = jsonDecode(errors['message']);
+                        LOG_THE_DEBUG_DATA(messag: message);
+                        LOG_THE_DEBUG_DATA(messag: message.runtimeType);
+                        message.entries.map(
+                          (entery) {
+                            LOG_THE_DEBUG_DATA(messag: entery);
+                            return entery;
+                          },
+                        );
+                      }
+                    }
+                  }
+                } catch (e) {
+                  LOG_THE_DEBUG_DATA(messag: "e => $e", type: 'e');
+                }
+                // Close the loader
+                innerAuthCtl.setIsLoadingValue(false);
+              },
+            ),
+            builder: (
+              runMutation,
+              result,
+            ) {
+              return SizedBox(
+                height: 40,
+                width: 200,
+                child: CustomBtnUtil(
+                  btnTitle: "Login",
+                  btnType: BtnTypes.eleveatedWithIcon,
+                  // btnColor: Colors.white,
+                  isLoading: innerAuthCtl.isLoading,
+                  icon: Icon(
+                    Icons.login,
+                    color: Colors.white,
+                  ),
+                  onClicked: () {
+                    // Start the loader
+                    innerAuthCtl.setIsLoadingValue(true);
+                    // Run the mutation
+                    runMutation({
+                      'email': email.value,
+                      'password': password.value,
+                    });
+                  },
+                ),
+              );
+            },
+          );
+        },
       ),
     );
   }

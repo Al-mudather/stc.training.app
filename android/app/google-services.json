@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "935117514271",
+    "project_id": "stc-training-alhasif",
+    "storage_bucket": "stc-training-alhasif.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:935117514271:android:f0ec635925325c0b45d72a",
+        "android_client_info": {
+          "package_name": "com.training.stc.stc_training"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "935117514271-rq2uur7rav4l014mij8pi78lvg31n7nk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.training.stc.stc_training",
+            "certificate_hash": "ec46d9482b6355661e4d1f2b7baf6029c900d0b7"
+          }
+        },
+        {
+          "client_id": "935117514271-54t8tjcftkq92ijsf2udjdsg30l6r6tq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhBqqH_waM52FfP_X_94uKSGC4dI8Hz_c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "935117514271-54t8tjcftkq92ijsf2udjdsg30l6r6tq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "935117514271-8avuoa89raru9k0vl62q3dhqo3r369dl.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.training.stc.stcTraining"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

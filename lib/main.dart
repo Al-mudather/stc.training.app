@@ -1,19 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:stc_training/features/course/all_courses_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:stc_training/features/authentication/login_auth_page.dart';
 
 import 'package:stc_training/helper/app_colors.dart';
 import 'package:stc_training/helper/app_constants.dart';
 import 'package:stc_training/helper/dependencies.dart' as dep;
-import 'package:stc_training/layout/drawer_layout_page.dart';
 import 'package:stc_training/routes/route_helper.dart';
 
-import 'package:vdocipher_flutter/vdocipher_flutter.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+
+import 'dart:developer' as devtools show log;
+
+extension Log on Object {
+  void log() => devtools.log(toString());
+}
 
 void main() async {
   // To ensure the dependenses are loaded
   WidgetsFlutterBinding.ensureInitialized();
+  var appStorage = await SharedPreferences.getInstance();
+  var token = appStorage.get(AppConstants.TOKEN);
+  // initialize firebase
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   // so we need to initialize Hive.
   await initHiveForFlutter();
   // Load the dependences
@@ -43,11 +56,12 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
         ),
         // home: const AllCoursesPage(),
-        navigatorObservers: [
-          VdoPlayerController.navigatorObserver('/player/(.*)')
-        ],
-        initialRoute: Routehelper.GoToDrawerLayoutPage(),
-        getPages: Routehelper.routes,
+        // navigatorObservers: [
+        //   VdoPlayerController.navigatorObserver('/player/(.*)')
+        // ],
+        // initialRoute: Routehelper.GoToDrawerLayoutPage(),
+        // getPages: Routehelper.routes,
+        home: LoginAuthPage(),
       ),
     );
   }

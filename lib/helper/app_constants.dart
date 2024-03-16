@@ -1,4 +1,9 @@
+import 'package:flutter/foundation.dart' show immutable;
+
+@immutable
 class AppConstants {
+  const AppConstants._();
+
   // static const String BAS_URL = "http://127.0.0.1:8000/api/graphql/";
   // static const String BAS_URL = "http://localhost:8000/api/graphql/";
   // static const String fileUrl = "http://localhost:8000/media/";
@@ -9,6 +14,13 @@ class AppConstants {
   static const String USER = "User";
   static const String TOKEN = "Token";
   static const String REFRESHTOKEN = "Refresh-token";
+
+  static const accountExistsWithDifferentCredentail =
+      'account-exists-with-different-credentail';
+  static const googleCom = 'google.com';
+  static const emailScope = 'email';
+  static const clientId =
+      '935117514271-8avuoa89raru9k0vl62q3dhqo3r369dl.apps.googleusercontent.com';
 
   static const double verticalPadding = 16;
   static const double horizentalPadding = 24;

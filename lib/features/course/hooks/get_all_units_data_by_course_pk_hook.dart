@@ -13,6 +13,8 @@ UseGet_all_units_data_pk_course_query_hook({
       fetchPolicy: FetchPolicy.networkOnly,
       variables: {
         'courseID': courseId,
+        'limit': 5,
+        'cursor': '',
       },
     ),
   );
@@ -29,6 +31,7 @@ UseGet_all_units_data_pk_course_query_hook({
     return {
       'loading': hookRes.result.isLoading,
       'data': courseUnits,
+      'hookRes': hookRes
     };
   } catch (e) {
     LOG_THE_DEBUG_DATA(messag: e, type: 'e');
@@ -37,5 +40,6 @@ UseGet_all_units_data_pk_course_query_hook({
   return {
     'loading': hookRes.result.isLoading,
     'data': null,
+    'hookRes': hookRes
   };
 }

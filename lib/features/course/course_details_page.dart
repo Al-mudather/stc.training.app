@@ -122,7 +122,7 @@ class CourseDetailsPage extends HookWidget {
             const SizedBox(
               height: 20,
             ),
-            WhatYouWillLearnSection(),
+            // WhatYouWillLearnSection(),
             const SizedBox(
               height: 10,
             ),
