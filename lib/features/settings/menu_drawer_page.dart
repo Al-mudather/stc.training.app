@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:stc_training/features/authentication/controller/auth_controller.dart';
 import 'package:stc_training/helper/app_colors.dart';
 import 'package:stc_training/helper/app_constants.dart';
+import 'package:stc_training/helper/methods.dart';
 import 'package:stc_training/routes/route_helper.dart';
 import 'package:stc_training/utils/custom_text_util.dart';
 
@@ -28,68 +30,78 @@ class MenuDrawerPage extends StatelessWidget {
         ),
         child: Stack(
           children: [
-            ListView(
-              // crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                // CustomTextUtil(
-                //   text1: "Dr.sabri sad altyb sad \n",
-                //   fontSize1: 15,
-                //   textColor: Colors.white,
-                //   fontWeight1: FontWeight.w500,
-                //   hasAnotherText: true,
-                //   text2: "almudatheryhaya.one@gmail.com",
-                //   textAlign: TextAlign.center,
-                //   text2Color: AppColors.secondary,
-                //   fontWeight2: FontWeight.w500,
-                // ),
-                const SizedBox(
-                  height: AppConstants.height_30,
-                ),
-                menuItem(
-                  itemTitle: "Menu",
-                  iconData: Icons.home,
-                  onClicked: () {},
-                ),
-                menuItem(
-                  itemTitle: "All Courses",
-                  iconData: Icons.video_collection,
-                  onClicked: () {
-                    Get.toNamed(Routehelper.GoToAllCoursesPage());
-                  },
-                ),
-                menuItem(
-                  itemTitle: "My Orders",
-                  iconData: Icons.watch_later_outlined,
-                  onClicked: () {},
-                ),
-                menuItem(
-                  itemTitle: "My Courses",
-                  iconData: Icons.video_collection,
-                  onClicked: () {},
-                ),
-                menuItem(
-                  itemTitle: "My marketing Page",
-                  iconData: Icons.pages,
-                  onClicked: () {},
-                ),
-                menuItem(
-                  itemTitle: "Profile",
-                  iconData: Icons.person,
-                  onClicked: () {},
-                ),
-                menuItem(
-                  itemTitle: "Settings",
-                  iconData: Icons.settings,
-                  onClicked: () {},
-                ),
-                menuItem(
-                  itemTitle: "Log Out",
-                  iconData: Icons.logout,
-                  onClicked: () {},
-                ),
-                // Spacer(),
-              ],
-            ),
+            GetBuilder<AuthController>(builder: (innerAuthCtl) {
+              // LOG_THE_DEBUG_DATA(messag: innerAuthCtl.user, type: 'd');
+              return ListView(
+                // crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  // CustomTextUtil(
+                  //   text1: "Dr.sabri sad altyb sad \n",
+                  //   fontSize1: 15,
+                  //   textColor: Colors.white,
+                  //   fontWeight1: FontWeight.w500,
+                  //   hasAnotherText: true,
+                  //   text2: "almudatheryhaya.one@gmail.com",
+                  //   textAlign: TextAlign.center,
+                  //   text2Color: AppColors.secondary,
+                  //   fontWeight2: FontWeight.w500,
+                  // ),
+                  const SizedBox(
+                    height: AppConstants.height_30,
+                  ),
+                  menuItem(
+                    itemTitle: "Menu",
+                    iconData: Icons.home,
+                    onClicked: () {},
+                  ),
+                  menuItem(
+                    itemTitle: "All Courses",
+                    iconData: Icons.video_collection,
+                    onClicked: () {
+                      Get.toNamed(Routehelper.GoToAllCoursesPage());
+                    },
+                  ),
+                  menuItem(
+                    itemTitle: "My Orders",
+                    iconData: Icons.watch_later_outlined,
+                    onClicked: () {},
+                  ),
+                  menuItem(
+                    itemTitle: "My Courses",
+                    iconData: Icons.video_collection,
+                    onClicked: () =>
+                        Get.toNamed(Routehelper.GoToMyCoursesPage()),
+                  ),
+                  menuItem(
+                    itemTitle: "My marketing Page",
+                    iconData: Icons.pages,
+                    onClicked: () {},
+                  ),
+                  menuItem(
+                    itemTitle: "Profile",
+                    iconData: Icons.person,
+                    onClicked: () {},
+                  ),
+                  menuItem(
+                    itemTitle: "Settings",
+                    iconData: Icons.settings,
+                    onClicked: () {},
+                  ),
+                  innerAuthCtl.token.isNotEmpty
+                      ? menuItem(
+                          itemTitle: "Log Out",
+                          iconData: Icons.logout,
+                          onClicked: () {},
+                        )
+                      : menuItem(
+                          itemTitle: "Login",
+                          iconData: Icons.login,
+                          onClicked: () {},
+                        ),
+                  // Spacer(),
+                ],
+              );
+            }),
             Align(
               alignment: Alignment.bottomCenter,
               child: SvgPicture.asset(

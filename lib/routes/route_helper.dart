@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:stc_training/features/course/all_courses_page.dart';
 import 'package:stc_training/features/course/course_details_page.dart';
+import 'package:stc_training/features/course/my_courses_page.dart';
 import 'package:stc_training/features/video_player/videoPlayerPage.dart';
 import 'package:stc_training/layout/drawer_layout_page.dart';
 
@@ -15,12 +16,14 @@ class Routehelper {
   ///////////////////////////////////////////////
   static const String allCoursesPage = '/all-courses-page';
   static const String courseDetailsPage = '/course-details-page';
+  static const String myCoursesPage = '/my-courses-page';
   static String GoToCourseDetialsPage(
           {required String coursePk, required String courseId}) =>
       '$courseDetailsPage?coursePk=$coursePk&&courseId=$courseId';
   static String GoToAllCoursesPage(
           {String? categoryPk, String? categoryName}) =>
       '$allCoursesPage?categoryPk=$categoryPk&&categoryName=$categoryName';
+  static String GoToMyCoursesPage() => myCoursesPage;
 
   ///////////////////////////////////////////////
   /// Video Player page
@@ -65,6 +68,11 @@ class Routehelper {
           categoryName: categoryName,
         );
       },
+    ),
+    // ? My Courses page
+    GetPage(
+      name: myCoursesPage,
+      page: () => MyCoursesPage(),
     ),
 
     // ? Video Player Page

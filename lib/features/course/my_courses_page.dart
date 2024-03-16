@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:stc_training/features/course/components/all_courses_loading_page_comp.dart';
-import 'package:stc_training/features/course/hooks/get_all_courses_hook.dart';
-import 'package:stc_training/features/course/models/course_models.dart';
-import 'package:stc_training/features/home/components/course_card_component.dart';
+import 'package:stc_training/features/course/hooks/get_my_courses_hook.dart';
+import 'package:stc_training/features/course/models/enrollment_models.dart';
+import 'package:stc_training/features/home/components/my_course_card_component.dart';
 import 'package:stc_training/helper/app_colors.dart';
 import 'package:stc_training/helper/app_constants.dart';
 import 'package:stc_training/helper/enumerations.dart';
@@ -13,10 +13,10 @@ import 'package:stc_training/utils/custom_btn_util.dart';
 import 'package:stc_training/utils/no_data_util.dart';
 import 'package:stc_training/utils/search_text_field_util.dart';
 
-class AllCoursesPage extends HookWidget {
-  AllCoursesPage({super.key, this.categoryPk, this.categoryName});
-  final String? categoryPk;
-  final String? categoryName;
+class MyCoursesPage extends HookWidget {
+  MyCoursesPage({
+    super.key,
+  });
   @override
   Widget build(BuildContext context) {
     ///////////////////////////////////////////////
@@ -46,18 +46,17 @@ class AllCoursesPage extends HookWidget {
       searchCtl,
     ]);
 
-    result = UseGet_all_courses_query_hook(
+    result = UseGet_my_courses_query_home_page_hook(
       context: context,
       search: search.value,
-      categoryPk: categoryPk,
     );
     // LOG_THE_DEBUG_DATA(messag: searchCtl.text);
-    AllCoursesModel? allcourses = result['data'];
+    AllEnrollmentsModel? allenrollments = result['data'];
     QueryHookResult<Object?> hookRes = result['hookRes'];
 
     return Scaffold(
       appBar: AppBarUtil(
-        barText: (categoryName == 'null') ? "All Courses" : categoryName!,
+        barText: "My Courses",
       ),
       body: SingleChildScrollView(
         controller: scrollCtl,
@@ -105,11 +104,11 @@ class AllCoursesPage extends HookWidget {
             ),
             result['loading']
                 ? AllCoursesLoadingPageComp()
-                : (allcourses == null
+                : (allenrollments == null
                     ? AllCoursesLoadingPageComp()
-                    : allcourses!.courses.length > 0
+                    : allenrollments!.enrollments.length > 0
                         ? _COURSES_data(
-                            allcourses: allcourses,
+                            allenrollments: allenrollments,
                             scrollCtl: scrollCtl,
                             hookRes: hookRes,
                           )
@@ -141,11 +140,11 @@ class AllCoursesPage extends HookWidget {
   }
 
   Container _COURSES_data({
-    AllCoursesModel? allcourses,
+    AllEnrollmentsModel? allenrollments,
     required ScrollController scrollCtl,
     required QueryHookResult<Object?> hookRes,
   }) {
-    var courses = allcourses!.courses;
+    var enrollments = allenrollments!.enrollments;
     return Container(
       padding: EdgeInsets.symmetric(
         // horizontal: AppConstants.horizentalPadding,
@@ -158,14 +157,14 @@ class AllCoursesPage extends HookWidget {
             runSpacing: AppConstants.height_30 / 2,
             spacing: AppConstants.height_10,
             children: List.generate(
-              courses.length ?? 0,
-              (index) => CourseCardComponent(course: courses[index]),
+              enrollments.length ?? 0,
+              (index) => MyCourseCardComponent(enrollment: enrollments[index]),
             ),
           ),
           const SizedBox(
             height: AppConstants.height_20,
           ),
-          allcourses.hasNextPage == true
+          allenrollments.hasNextPage == true
               ? Container(
                   width: double.maxFinite,
                   child: CustomBtnUtil(
@@ -173,20 +172,23 @@ class AllCoursesPage extends HookWidget {
                     radius: 10,
                     onClicked: () {
                       FetchMoreOptions opts = FetchMoreOptions(
-                        variables: {'cursor': allcourses.endCursor},
+                        variables: {'cursor': allenrollments.endCursor},
                         updateQuery: (previousResultData, fetchMoreResultData) {
                           // this function will be called so as to combine both the original and fetchMore results
                           final List<dynamic> repos = [
-                            ...previousResultData!['allCourses']['edges']
+                            ...previousResultData![
+                                    'allEnrollmentsForCurrentUserV2']['edges']
                                 as List<dynamic>,
-                            ...fetchMoreResultData!['allCourses']['edges']
+                            ...fetchMoreResultData![
+                                    'allEnrollmentsForCurrentUserV2']['edges']
                                 as List<dynamic>
                           ];
 
                           // to avoid a lot of work, lets just update the list of repos in returned
                           // data with new data, this also ensures we have the endCursor already set
                           // correctly
-                          fetchMoreResultData['allCourses']['edges'] = repos;
+                          fetchMoreResultData['allEnrollmentsForCurrentUserV2']
+                              ['edges'] = repos;
 
                           return fetchMoreResultData;
                         },

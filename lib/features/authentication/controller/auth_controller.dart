@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stc_training/helper/app_constants.dart';
+import 'package:stc_training/routes/route_helper.dart';
 
 class AuthController extends GetxController {
   final SharedPreferences appStorage;
@@ -74,6 +75,6 @@ class AuthController extends GetxController {
     Get.forceAppUpdate();
 
     // Go to the inital page
-    // Get.toNamed(RouteHelper.initialPage);
+    Get.toNamed(Routehelper.GoToDrawerLayoutPage());
   }
 }

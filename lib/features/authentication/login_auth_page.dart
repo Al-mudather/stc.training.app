@@ -222,15 +222,13 @@ class LoginAuthPage extends HookWidget {
 
               // or do something with the result.data on completion
               onCompleted: (dynamic resultData) {
-                LOG_THE_DEBUG_DATA(messag: resultData);
+                // LOG_THE_DEBUG_DATA(messag: resultData);
                 try {
                   if (resultData['tokenAuth'] != null) {
                     var success = resultData['tokenAuth']['success'];
                     var errors = resultData['tokenAuth']['errors'];
                     if ((success is bool && success == true)) {
                       // Save the data to the shared refrences
-                      // LOG_THE_DEBUG_DATA(
-                      //     messag: "resultData => $resultData");
 
                       innerAuthCtl.SET_CREDENTIALS(
                         user: resultData['tokenAuth']['user'],
@@ -238,26 +236,29 @@ class LoginAuthPage extends HookWidget {
                         refreshToken: resultData['tokenAuth']['refreshToken'],
                       );
                     } else if (errors is Map) {
-                      LOG_THE_DEBUG_DATA(messag: errors, type: 'e');
                       try {
-                        String code = errors["nonFieldErrors"][0]['code'];
-                        LOG_THE_DEBUG_DATA(messag: code, type: 'e');
-                        if (code.contains('invalid_credentials')) {
-                          // Tell the user to inter a valid credentilas
-                          SEND_a_message_to_the_user(
-                            message: "Enter Valid Credentials",
-                            messageLable: code,
-                            backgroundColor: AppColors.errorLight,
-                            backgroundTextColor: Colors.white,
-                          );
+                        //Todo: Loop throw all the errors
+                        for (var e_key in errors.keys) {
+                          if (errors[e_key] is List) {
+                            for (var error in errors[e_key]) {
+                              String code = error['code'];
+                              String message = error['message'];
+                              SEND_a_message_to_the_user(
+                                message: message,
+                                messageLable: code,
+                                backgroundColor: AppColors.errorLight,
+                                backgroundTextColor: Colors.white,
+                              );
+                            }
+                          }
                         }
                       } catch (e) {
                         Map message = jsonDecode(errors['message']);
-                        LOG_THE_DEBUG_DATA(messag: message);
-                        LOG_THE_DEBUG_DATA(messag: message.runtimeType);
+                        // LOG_THE_DEBUG_DATA(messag: message);
+                        // LOG_THE_DEBUG_DATA(messag: message.runtimeType);
                         message.entries.map(
                           (entery) {
-                            LOG_THE_DEBUG_DATA(messag: entery);
+                            // LOG_THE_DEBUG_DATA(messag: entery);
                             return entery;
                           },
                         );
