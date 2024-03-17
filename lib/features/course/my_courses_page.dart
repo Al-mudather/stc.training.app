@@ -16,7 +16,11 @@ import 'package:stc_training/utils/search_text_field_util.dart';
 class MyCoursesPage extends HookWidget {
   MyCoursesPage({
     super.key,
+    this.isPage = true,
   });
+
+  final bool isPage;
+
   @override
   Widget build(BuildContext context) {
     ///////////////////////////////////////////////
@@ -55,13 +59,18 @@ class MyCoursesPage extends HookWidget {
     QueryHookResult<Object?> hookRes = result['hookRes'];
 
     return Scaffold(
-      appBar: AppBarUtil(
-        barText: "My Courses",
-      ),
+      appBar: isPage
+          ? AppBarUtil(
+              barText: "My Courses",
+            )
+          : null,
       body: SingleChildScrollView(
         controller: scrollCtl,
         child: Column(
           children: [
+            const SizedBox(
+              height: AppConstants.height_10,
+            ),
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 24),
               child: Row(

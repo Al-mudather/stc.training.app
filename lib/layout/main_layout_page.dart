@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:stc_training/features/category/category_page.dart';
+import 'package:stc_training/features/course/my_courses_page.dart';
 import 'package:stc_training/features/home/home_page.dart';
 import 'package:stc_training/features/settings/controller/drawer_layout_controller.dart';
 import 'package:stc_training/helper/app_colors.dart';
@@ -25,10 +26,12 @@ class MainLayoutPage extends HookWidget {
     var _currentIndex = useState(0);
     var tabsPage = [
       const HomePage(),
-      Center(child: CustomTextUtil(text1: 'Coming Soon')),
+      MyCoursesPage(
+        isPage: false,
+      ),
       const CategoryPage(),
-      Center(child: CustomTextUtil(text1: 'Coming Soon')),
     ];
+    // Center(child: CustomTextUtil(text1: 'Coming Soon')),
     ////////////////////////////////////////////////
     /// Functions
     ///////////////////////////////////////////////
@@ -99,20 +102,6 @@ class MainLayoutPage extends HookWidget {
         ),
         BottomNavigationBarItem(
           icon: SvgPicture.asset(
-            "assets/svgs/shopping-cart.svg",
-            color: currentIndex.value == 1
-                ? AppColors.secondary
-                : const Color(0xFF7B7E81),
-            height: 24,
-          ),
-          label: "Cart",
-        ),
-        const BottomNavigationBarItem(
-          icon: Icon(Icons.category),
-          label: "Categories",
-        ),
-        BottomNavigationBarItem(
-          icon: SvgPicture.asset(
             "assets/svgs/my-courses-icon.svg",
             color: currentIndex.value == 3
                 ? AppColors.secondary
@@ -120,6 +109,20 @@ class MainLayoutPage extends HookWidget {
             height: 24,
           ),
           label: "My Courses",
+        ),
+        // BottomNavigationBarItem(
+        //   icon: SvgPicture.asset(
+        //     "assets/svgs/shopping-cart.svg",
+        //     color: currentIndex.value == 1
+        //         ? AppColors.secondary
+        //         : const Color(0xFF7B7E81),
+        //     height: 24,
+        //   ),
+        //   label: "Cart",
+        // ),
+        const BottomNavigationBarItem(
+          icon: Icon(Icons.category),
+          label: "Categories",
         ),
       ],
     );

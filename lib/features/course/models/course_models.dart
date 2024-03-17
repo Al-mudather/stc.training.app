@@ -44,7 +44,7 @@ class CourseModel {
   int? pk;
   String? id;
   int? period;
-  int? totalHours;
+  String? totalHours;
   String? title;
   String? telegramLink;
   String? examLink;
@@ -97,7 +97,7 @@ class CourseModel {
   CourseModel.fromJson(Map<String, dynamic> json) {
     pk = json['pk'];
     period = json['period'];
-    totalHours = json['totalHours'];
+    totalHours = json['courseHours'];
     id = json['id'];
     title = json['title'];
     telegramLink = json['telegramLink'];

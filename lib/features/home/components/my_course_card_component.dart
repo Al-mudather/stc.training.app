@@ -26,54 +26,45 @@ class MyCourseCardComponent extends StatelessWidget {
     // LOG_THE_DEBUG_DATA(messag: enrollment);
 
     CourseModel? course = enrollment.course;
-    return Container(
-      width: width,
-      // height: 220,
-      padding: const EdgeInsets.all(4),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: const [
-          BoxShadow(
-            color: Colors.grey,
-            blurRadius: 1,
-            offset: Offset(0, 1),
+    return GestureDetector(
+      onTap: () {
+        Get.toNamed(
+          Routehelper.GoToClassRoomPage(
+            coursePk: course!.pk.toString(),
+            courseId: course!.id.toString(),
           ),
-        ],
-        color: Colors.white,
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          InkWell(
-            onTap: () {
-              // SHOW_snackbar(
-              //   "The details page will come soon",
-              //   icon: Icons.lock_clock,
-              // );
-              // SEND_a_message_to_the_user(
-              //   message: "The details page will come soon",
-              //   messageLable: "Wait",
-              // );
-              //TODO: Go to Class page
-              // Get.toNamed(
-              //   Routehelper.GoToCourseDetialsPage(
-              //     coursePk: course!.pk.toString(),
-              //     courseId: course.id.toString(),
-              //   ),
-              // );
-            },
-            child: _cardImage(
+        );
+      },
+      child: Container(
+        width: width,
+        // height: 220,
+        padding: const EdgeInsets.all(4),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.grey,
+              blurRadius: 1,
+              offset: Offset(0, 1),
+            ),
+          ],
+          color: Colors.white,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            _cardImage(
               imgPath: course!.cover!,
               // imgPath: "",
             ),
-          ),
-          const SizedBox(
-            height: AppConstants.height_10,
-          ),
-          _cardTitle(
-            title: course!.title!,
-          ),
-        ],
+            const SizedBox(
+              height: AppConstants.height_10,
+            ),
+            _cardTitle(
+              title: course!.title!,
+            ),
+          ],
+        ),
       ),
     );
   }

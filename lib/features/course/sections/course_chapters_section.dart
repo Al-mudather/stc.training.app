@@ -5,7 +5,6 @@ import 'package:stc_training/features/course/components/course_chapter_expandabl
 import 'package:stc_training/features/course/hooks/get_all_units_data_by_course_pk_hook.dart';
 import 'package:stc_training/features/course/models/course_unit_model.dart';
 import 'package:stc_training/helper/app_constants.dart';
-import 'package:stc_training/helper/methods.dart';
 import 'package:stc_training/utils/custom_btn_util.dart';
 import 'package:stc_training/utils/section_title_util.dart';
 import 'package:stc_training/utils/skeleton_loading_util.dart';

@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:stc_training/features/class_room/controller/class_room_controller.dart';
 import 'package:stc_training/features/class_room/sections/class_chapters_custom_tab_bar_view.dart';
 import 'package:stc_training/features/class_room/sections/class_info_tab_bar_view.dart';
+import 'package:stc_training/features/course/components/course_class_loading_page_comp.dart';
+import 'package:stc_training/features/course/hooks/get_course_data_by_pk_hook.dart';
+import 'package:stc_training/features/course/models/course_models.dart';
 import 'package:stc_training/helper/app_colors.dart';
 import 'package:stc_training/helper/enumerations.dart';
 import 'package:stc_training/utils/app_bar_util.dart';
@@ -11,14 +16,27 @@ import 'package:stc_training/utils/custom_text_util.dart';
 import 'package:stc_training/utils/small_text_util.dart';
 
 class ClassRoomPage extends HookWidget {
-  const ClassRoomPage({super.key});
+  const ClassRoomPage({
+    super.key,
+    required this.coursePk,
+    required this.courseId,
+  });
+
+  final String coursePk;
+  final String courseId;
 
   @override
   Widget build(BuildContext context) {
+    //TODO: Get the course by pk
+    //TODO: Get the enrollment by the course pk
+    //TODO: Fill the course data
+    //TODO: Get the course video based on the content
+
     ///////////////////////////////////////////////
     /// Parameters
     ///////////////////////////////////////////////
     List<String> tabList = ["Information", "Courses"];
+    Map<String, dynamic> result;
     ///////////////////////////////////////////////
     /// Controllers
     ///////////////////////////////////////////////
@@ -33,70 +51,100 @@ class ClassRoomPage extends HookWidget {
     ////////////////////////////////////////////////
     /// Hook Functions
     ///////////////////////////////////////////////
+    result = UseGet_course_data_pk_query_hook(
+      context: context,
+      coursePk: coursePk,
+    );
+    //? Get the course data
+    CourseModel? course = result['data'];
     return Scaffold(
-      appBar: AppBarUtil(barText: ""),
+      appBar: AppBarUtil(barText: ''),
       backgroundColor: AppColors.backgroundColor,
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              height: 300,
-              width: double.maxFinite,
-              color: Colors.amber,
+      body: result['loading']
+          ? CourseClassLoadingPageComp()
+          : _CLASS_data(
+              course: course,
+              tabs: tabs,
+              current_index: current_index,
+              pageController: pageController,
             ),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                children: [
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  CustomTextUtil(
-                    text1: "ECG Interpretaion",
-                    textAlign: TextAlign.center,
-                    fontSize1: 20,
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  CLASS_statistics(),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  _CLASS_tabs_container(tabs, current_index, pageController),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    height: 250,
-                    padding: EdgeInsets.only(bottom: 5),
-                    child: PageView(
-                      controller: pageController,
-                      physics: NeverScrollableScrollPhysics(),
-                      children: [
-                        ClassChapterCustomTabBarView(),
-                        ClassInfoTabBarView(),
-                      ],
+    );
+  }
+
+  SingleChildScrollView _CLASS_data({
+    CourseModel? course,
+    required List<dynamic> tabs,
+    required ValueNotifier<int> current_index,
+    required PageController pageController,
+  }) {
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Container(
+            height: 300,
+            width: double.maxFinite,
+            color: Colors.amber,
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 10),
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 20,
+                ),
+                GetBuilder<ClassRoomController>(builder: (ctl) {
+                  return Container(
+                    child: CustomTextUtil(
+                      text1: '${ctl.videoName}',
+                      textAlign: TextAlign.center,
+                      fontSize1: 20,
                     ),
+                  );
+                }),
+                const SizedBox(
+                  height: 20,
+                ),
+                CLASS_statistics(
+                  totalHours: '${course!.totalHours}',
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                _CLASS_tabs_container(tabs, current_index, pageController),
+                const SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  height: 250,
+                  padding: EdgeInsets.only(bottom: 5),
+                  child: PageView(
+                    controller: pageController,
+                    physics: NeverScrollableScrollPhysics(),
+                    children: [
+                      ClassChapterCustomTabBarView(
+                        courseId: courseId,
+                      ),
+                      ClassInfoTabBarView(),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-            const SizedBox(
-              height: 20,
-            ),
-          ],
-        ),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+        ],
       ),
     );
   }
 
-  Row CLASS_statistics() {
+  Row CLASS_statistics({String? totalHours}) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        _STATISTIC_item(name: "12 Lessons"),
-        _STATISTIC_item(name: "30 Hours"),
+        // _STATISTIC_item(name: "12 Lessons"),
+        _STATISTIC_item(name: "${totalHours} Hours"),
         _STATISTIC_item(name: "Certificate"),
       ],
     );

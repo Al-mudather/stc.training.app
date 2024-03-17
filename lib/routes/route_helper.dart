@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:stc_training/features/class_room/class_room_page.dart';
 import 'package:stc_training/features/course/all_courses_page.dart';
 import 'package:stc_training/features/course/course_details_page.dart';
 import 'package:stc_training/features/course/my_courses_page.dart';
@@ -24,6 +25,16 @@ class Routehelper {
           {String? categoryPk, String? categoryName}) =>
       '$allCoursesPage?categoryPk=$categoryPk&&categoryName=$categoryName';
   static String GoToMyCoursesPage() => myCoursesPage;
+
+  ///////////////////////////////////////////////
+  /// Course class page
+  ///////////////////////////////////////////////
+  static const String classRoomPage = '/class-room-page';
+  static String GoToClassRoomPage({
+    required String coursePk,
+    required String courseId,
+  }) =>
+      '$classRoomPage?coursePk=$coursePk&&courseId=$courseId';
 
   ///////////////////////////////////////////////
   /// Video Player page
@@ -73,6 +84,16 @@ class Routehelper {
     GetPage(
       name: myCoursesPage,
       page: () => MyCoursesPage(),
+    ),
+
+    // ? Course details page
+    GetPage(
+      name: classRoomPage,
+      page: () {
+        var coursePk = Get.parameters['coursePk'];
+        var courseId = Get.parameters['courseId'];
+        return ClassRoomPage(coursePk: coursePk!, courseId: courseId!);
+      },
     ),
 
     // ? Video Player Page
