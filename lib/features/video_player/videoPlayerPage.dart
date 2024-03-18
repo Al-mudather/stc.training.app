@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:stc_training/features/video_player/components/alhasif_video_player_comp.dart';
 import 'package:stc_training/features/video_player/components/vdo_cipher_video_player_comp.dart';
-import 'package:stc_training/helper/methods.dart';
 import 'package:stc_training/utils/app_bar_util.dart';
 
 class VideoPlayerPage extends StatelessWidget {

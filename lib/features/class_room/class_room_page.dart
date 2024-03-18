@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:stc_training/features/class_room/controller/class_room_controller.dart';
 import 'package:stc_training/features/class_room/sections/class_chapters_custom_tab_bar_view.dart';
 import 'package:stc_training/features/class_room/sections/class_info_tab_bar_view.dart';
+import 'package:stc_training/features/class_room/sections/videoPlayerClassSection.dart';
 import 'package:stc_training/features/course/components/course_class_loading_page_comp.dart';
 import 'package:stc_training/features/course/hooks/get_course_data_by_pk_hook.dart';
 import 'package:stc_training/features/course/models/course_models.dart';
@@ -80,10 +81,16 @@ class ClassRoomPage extends HookWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          Container(
+          //Todo: video player
+          // Container(
+          //   height: 300,
+          //   width: double.maxFinite,
+          //   color: Colors.amber,
+          // ),
+          SizedBox(
             height: 300,
             width: double.maxFinite,
-            color: Colors.amber,
+            child: VideoPlayerClassSection(),
           ),
           Container(
             margin: EdgeInsets.symmetric(horizontal: 10),
@@ -95,9 +102,9 @@ class ClassRoomPage extends HookWidget {
                 GetBuilder<ClassRoomController>(builder: (ctl) {
                   return Container(
                     child: CustomTextUtil(
-                      text1: '${ctl.videoName}',
+                      text1: '${ctl.videoName ?? ''}',
                       textAlign: TextAlign.center,
-                      fontSize1: 20,
+                      fontSize1: 18,
                     ),
                   );
                 }),

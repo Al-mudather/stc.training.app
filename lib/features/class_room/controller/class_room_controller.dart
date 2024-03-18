@@ -1,20 +1,28 @@
 import 'package:get/get.dart';
 
 class ClassRoomController extends GetxController {
-  String _video_type = '';
-  String _cipher_otp = '';
-  String _cipher_play_back_info = '';
-  String _alhasif_video_uuid = '';
-  String _video_name = '';
+  var _video_type;
+  var _cipher_otp;
+  var _cipher_play_back_info;
+  var _alhasif_video_uuid;
+  var _video_name;
+  bool isLoading = true;
 
-  String get videoType => _video_type;
-  String get cipherOtp => _cipher_otp;
-  String get cipherPlayBackInfo => _cipher_play_back_info;
-  String get alhasifVideoUuid => _alhasif_video_uuid;
-  String get videoName => _video_name;
+  get videoType => _video_type;
+  get cipherOtp => _cipher_otp;
+  get cipherPlayBackInfo => _cipher_play_back_info;
+  get alhasifVideoUuid => _alhasif_video_uuid;
+  get videoName => _video_name;
+
+  void SET_is_loading({required bool val}) {
+    isLoading = val;
+
+    update();
+  }
 
   void SET_video_palyer_info_data({
     required videoName,
+    required bool loading,
     required videoType,
     required cipherOtp,
     required cipherPlayBackInfo,
@@ -23,8 +31,9 @@ class ClassRoomController extends GetxController {
     _video_name = videoName;
     _video_type = videoType;
     _cipher_otp = cipherOtp;
-    _cipher_play_back_info = _cipher_play_back_info;
+    _cipher_play_back_info = cipherPlayBackInfo;
     _alhasif_video_uuid = _alhasif_video_uuid;
+    isLoading = loading;
 
     update();
   }

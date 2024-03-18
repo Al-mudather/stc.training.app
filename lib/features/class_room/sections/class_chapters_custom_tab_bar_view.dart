@@ -104,32 +104,34 @@ class ClassChapterCustomTabBarView extends HookWidget {
     );
   }
 
-  Column Course_chapters_loading() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          width: 100,
-          height: 10.0,
-          color: Colors.white,
-        ),
-        const SizedBox(height: 15.0),
-        Wrap(
-          spacing: 10,
-          runSpacing: 10,
-          children: List.generate(
-            5,
-            (index) => Container(
-              width: double.infinity,
-              height: 30.0,
-              decoration: BoxDecoration(
-                color: Colors.white,
+  SingleChildScrollView Course_chapters_loading() {
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: 100,
+            height: 10.0,
+            color: Colors.white,
+          ),
+          const SizedBox(height: 15.0),
+          Wrap(
+            spacing: 10,
+            runSpacing: 10,
+            children: List.generate(
+              5,
+              (index) => Container(
+                width: double.infinity,
+                height: 30.0,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                ),
               ),
             ),
           ),
-        ),
-        const SizedBox(height: 10.0),
-      ],
+          const SizedBox(height: 10.0),
+        ],
+      ),
     );
   }
 }

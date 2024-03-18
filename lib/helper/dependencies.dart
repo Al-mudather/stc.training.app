@@ -11,8 +11,8 @@ Future<void> init() async {
   // - load the shared preferences storage using getx
   Get.lazyPut(() => sharedPreferences, fenix: true);
   // Load the Auth Controller
-  Get.lazyPut(() => AuthController(appStorage: Get.find()));
-  Get.lazyPut(() => ClassRoomController());
+  Get.lazyPut(() => AuthController(appStorage: Get.find()), fenix: true);
+  Get.lazyPut(() => ClassRoomController(), fenix: true);
   Get.lazyPut(
     () => DrawerLayoutController(),
   );

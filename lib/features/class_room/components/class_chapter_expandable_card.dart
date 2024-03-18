@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -145,6 +144,8 @@ class _ClassChapterExpandableCardState
   void Extract_the_video_data({CourseUnitContentModel? content}) {
     //TODO: Go to the video player page
     try {
+      //Todo: Start the loading
+      classRoomCtl.SET_is_loading(val: true);
       String? cipherIfram = content!.cipherIframe;
       var cipherOtp, playbackInfo;
       if (cipherIfram != null && cipherIfram.isNotEmpty) {
@@ -155,14 +156,17 @@ class _ClassChapterExpandableCardState
       }
 
       var contentData = jsonDecode('${content.modelValue}');
+      // LOG_THE_DEBUG_DATA(messag: contentData);
       var video_type = contentData["video_type"];
       var metaData = contentData['video_metadata'];
+
       var videoUuid;
       if (video_type == 'TYPE_HASIF') {
         videoUuid = metaData['videoData']['videoUuid'];
       }
 
       classRoomCtl.SET_video_palyer_info_data(
+        loading: false,
         videoName: '${content!.title}',
         videoType: video_type,
         cipherOtp: cipherOtp,
@@ -170,7 +174,9 @@ class _ClassChapterExpandableCardState
         alhasifVideoUuid: videoUuid,
       );
     } catch (e) {
-      LOG_THE_DEBUG_DATA(messag: e);
+      LOG_THE_DEBUG_DATA(messag: e, type: 'e');
+      //Todo: Start the loading when there is an error
+      classRoomCtl.SET_is_loading(val: true);
     }
   }
 
