@@ -15,7 +15,7 @@ class VideoPlayerClassSection extends StatelessWidget {
     return GetBuilder<ClassRoomController>(
       builder: (innerClassRoomCtl) {
         LOG_THE_DEBUG_DATA(
-            messag: 'is loading => ${innerClassRoomCtl.isLoading}');
+            messag: 'is loading => ${innerClassRoomCtl.isLoading}', type: 'd');
         return innerClassRoomCtl.isLoading
             ? Center(
                 child: Text('Video is loading...'),

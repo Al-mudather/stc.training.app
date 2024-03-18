@@ -14,9 +14,6 @@ class VdoCihperVideoPlayerComp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    LOG_THE_DEBUG_DATA(messag: 'OTP: => $otp');
-    LOG_THE_DEBUG_DATA(messag: 'playbackInfo: => $playbackInfo');
-
     EmbedInfo embedInfo = EmbedInfo.streaming(
       otp: otp,
       playbackInfo: playbackInfo,
@@ -33,10 +30,24 @@ class VdoCihperVideoPlayerComp extends StatelessWidget {
     return VdoPlayer(
       embedInfo: embedInfo,
       onError: _onVdoError,
-      onPlayerCreated: (controller) {},
+      onPlayerCreated: (controller) {
+        // _onEventChange(controller);
+      },
       controls: true,
     );
   }
+
+  // _onEventChange(VdoPlayerController? controller) {
+  //   controller!.addListener(() {
+  //     VdoPlayerValue value = controller.value;
+
+  //     print("VdoControllerListner"
+  //         "\nloading: ${value.isLoading} "
+  //         "\nplaying: ${value.isPlaying} "
+  //         "\nbuffering: ${value.isBuffering} "
+  //         "\nended: ${value.isEnded}");
+  //   });
+  // }
 
   _onVdoError(VdoError vdoError) {
     print("Oops, the system encountered a problem: ${vdoError.message}");

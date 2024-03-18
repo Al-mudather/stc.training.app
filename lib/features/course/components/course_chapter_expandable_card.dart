@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:stc_training/features/course/models/course_unit_content_model.dart';
 import 'package:stc_training/features/course/models/course_unit_model.dart';
 import 'package:stc_training/helper/app_colors.dart';
+import 'package:stc_training/helper/methods.dart';
 import 'package:stc_training/routes/route_helper.dart';
 import 'package:stc_training/utils/custom_text_util.dart';
 
@@ -106,21 +107,31 @@ class _CourseChapterExpandableCardState
               var contentData = jsonDecode('${content.modelValue}');
               var video_type = contentData["video_type"];
               var metaData = contentData['video_metadata'];
+              var video = contentData['video'];
               var videoUuid;
               if (video_type == 'TYPE_HASIF') {
                 videoUuid = metaData['videoData']['videoUuid'];
               }
 
-              Get.toNamed(
-                Routehelper.GoToVideoPlayerPage(
-                  unitContent: jsonEncode({
-                    'video_type': video_type,
-                    'cipherOtp': cipherOtp,
-                    'playbackInfo': playbackInfo,
-                    'videoUuid': videoUuid,
-                  }),
-                ),
-              );
+              if (video != null && video.toString().isNotEmpty) {
+                SEND_a_message_to_the_user(
+                  message:
+                      "Video is not supported on the phone, please watch it on the web version.",
+                  messageLable: "Error",
+                  backgroundColor: AppColors.errorLight,
+                );
+              } else {
+                Get.toNamed(
+                  Routehelper.GoToVideoPlayerPage(
+                    unitContent: jsonEncode({
+                      'video_type': video_type,
+                      'cipherOtp': cipherOtp,
+                      'playbackInfo': playbackInfo,
+                      'videoUuid': videoUuid,
+                    }),
+                  ),
+                );
+              }
             }
           : () => null,
       child: Container(

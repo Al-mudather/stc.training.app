@@ -3,6 +3,7 @@ import 'package:stc_training/features/class_room/class_room_page.dart';
 import 'package:stc_training/features/course/all_courses_page.dart';
 import 'package:stc_training/features/course/course_details_page.dart';
 import 'package:stc_training/features/course/my_courses_page.dart';
+import 'package:stc_training/features/video_player/classRoomVideoPlayerPage.dart';
 import 'package:stc_training/features/video_player/videoPlayerPage.dart';
 import 'package:stc_training/layout/drawer_layout_page.dart';
 
@@ -40,10 +41,17 @@ class Routehelper {
   /// Video Player page
   ///////////////////////////////////////////////
   static const String videoPlayerPage = '/video-player-page';
+  static const String classRoomVideoPlayerPage =
+      '/class-room-video-player-page';
   static String GoToVideoPlayerPage({
     required String unitContent,
   }) =>
       '$videoPlayerPage?unitContent=$unitContent';
+  static String GoToClassRoomVideoPlayerPage({
+    required String unitContent,
+    required String videoTitle,
+  }) =>
+      '$classRoomVideoPlayerPage?unitContent=$unitContent&&videoTitle=$videoTitle';
   ////////////////////////////////////////////
   // ? Route Lists
   ////////////////////////////////////////////
@@ -102,6 +110,17 @@ class Routehelper {
         page: () {
           var unitContent = Get.parameters['unitContent'];
           return VideoPlayerPage(
+            unitContent: unitContent!,
+          );
+        }),
+    // ? Class Room Video Player Page
+    GetPage(
+        name: classRoomVideoPlayerPage,
+        page: () {
+          var unitContent = Get.parameters['unitContent'];
+          var videoTitle = Get.parameters['videoTitle'];
+          return ClassRoomVideoPlayerPage(
+            videoTitle: videoTitle!,
             unitContent: unitContent!,
           );
         })

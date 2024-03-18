@@ -8,19 +8,16 @@ import 'package:stc_training/features/course/models/course_unit_content_model.da
 import 'package:stc_training/features/course/models/course_unit_model.dart';
 import 'package:stc_training/helper/app_colors.dart';
 import 'package:stc_training/helper/methods.dart';
+import 'package:stc_training/routes/route_helper.dart';
 import 'package:stc_training/utils/custom_text_util.dart';
 
 class ClassChapterExpandableCard extends StatefulWidget {
   const ClassChapterExpandableCard({
     super.key,
-    required this.cardTitle,
-    required this.cardSubTitle,
     this.allowActions = true,
     required this.unit,
   });
 
-  final String cardTitle;
-  final String cardSubTitle;
   final bool allowActions;
 
   final CourseUnitModel? unit;
@@ -143,9 +140,8 @@ class _ClassChapterExpandableCardState
 
   void Extract_the_video_data({CourseUnitContentModel? content}) {
     //TODO: Go to the video player page
+    //Todo: Start the loading
     try {
-      //Todo: Start the loading
-      classRoomCtl.SET_is_loading(val: true);
       String? cipherIfram = content!.cipherIframe;
       var cipherOtp, playbackInfo;
       if (cipherIfram != null && cipherIfram.isNotEmpty) {
@@ -156,27 +152,46 @@ class _ClassChapterExpandableCardState
       }
 
       var contentData = jsonDecode('${content.modelValue}');
-      // LOG_THE_DEBUG_DATA(messag: contentData);
       var video_type = contentData["video_type"];
       var metaData = contentData['video_metadata'];
+      var video = contentData['video'];
 
       var videoUuid;
       if (video_type == 'TYPE_HASIF') {
         videoUuid = metaData['videoData']['videoUuid'];
       }
 
-      classRoomCtl.SET_video_palyer_info_data(
-        loading: false,
-        videoName: '${content!.title}',
-        videoType: video_type,
-        cipherOtp: cipherOtp,
-        cipherPlayBackInfo: playbackInfo,
-        alhasifVideoUuid: videoUuid,
-      );
+      // classRoomCtl.SET_video_palyer_info_data(
+      //   loading: false,
+      //   videoName: '${content!.title}',
+      //   videoType: video_type,
+      //   cipherOtp: cipherOtp,
+      //   cipherPlayBackInfo: playbackInfo,
+      //   alhasifVideoUuid: videoUuid,
+      // );
+
+      if (video != null && video.toString().isNotEmpty) {
+        SEND_a_message_to_the_user(
+          message:
+              "Video is not supported on the phone, please watch it on the web version.",
+          messageLable: "Error",
+          backgroundColor: AppColors.errorLight,
+        );
+      } else {
+        Get.toNamed(
+          Routehelper.GoToClassRoomVideoPlayerPage(
+            videoTitle: '${content.title}',
+            unitContent: jsonEncode({
+              'video_type': video_type,
+              'cipherOtp': cipherOtp,
+              'playbackInfo': playbackInfo,
+              'videoUuid': videoUuid,
+            }),
+          ),
+        );
+      }
     } catch (e) {
       LOG_THE_DEBUG_DATA(messag: e, type: 'e');
-      //Todo: Start the loading when there is an error
-      classRoomCtl.SET_is_loading(val: true);
     }
   }
 

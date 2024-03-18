@@ -66,7 +66,7 @@ void SEND_a_message_to_the_user({
   Get.snackbar(
     messageLable,
     message,
-    duration: const Duration(seconds: 2),
+    duration: const Duration(seconds: 5),
     snackPosition: snackbarPosition,
     titleText: CustomTextUtil(
       text1: messageLable,

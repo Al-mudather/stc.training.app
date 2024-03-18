@@ -56,8 +56,6 @@ class ClassChapterCustomTabBarView extends HookWidget {
             children: List.generate(
               courseUnits?.courseUnits.length ?? 0,
               (index) => ClassChapterExpandableCard(
-                cardTitle: "Chapter $index",
-                cardSubTitle: "This is a text",
                 unit: courseUnits?.courseUnits[index],
               ),
             ),
@@ -109,17 +107,11 @@ class ClassChapterCustomTabBarView extends HookWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: 100,
-            height: 10.0,
-            color: Colors.white,
-          ),
-          const SizedBox(height: 15.0),
           Wrap(
             spacing: 10,
             runSpacing: 10,
             children: List.generate(
-              5,
+              15,
               (index) => Container(
                 width: double.infinity,
                 height: 30.0,

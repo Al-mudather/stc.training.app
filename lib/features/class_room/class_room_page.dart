@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -11,6 +13,7 @@ import 'package:stc_training/features/course/hooks/get_course_data_by_pk_hook.da
 import 'package:stc_training/features/course/models/course_models.dart';
 import 'package:stc_training/helper/app_colors.dart';
 import 'package:stc_training/helper/enumerations.dart';
+import 'package:stc_training/helper/methods.dart';
 import 'package:stc_training/utils/app_bar_util.dart';
 import 'package:stc_training/utils/custom_btn_util.dart';
 import 'package:stc_training/utils/custom_text_util.dart';
@@ -52,6 +55,13 @@ class ClassRoomPage extends HookWidget {
     ////////////////////////////////////////////////
     /// Hook Functions
     ///////////////////////////////////////////////
+    useEffect(() {
+      pageController.addListener(() {
+        LOG_THE_DEBUG_DATA(
+            messag: int.parse(pageController.page.toString()), type: 'e');
+      });
+    }, [pageController]);
+
     result = UseGet_course_data_pk_query_hook(
       context: context,
       coursePk: coursePk,
@@ -59,7 +69,7 @@ class ClassRoomPage extends HookWidget {
     //? Get the course data
     CourseModel? course = result['data'];
     return Scaffold(
-      appBar: AppBarUtil(barText: ''),
+      appBar: AppBarUtil(barText: 'Class Room Page'),
       backgroundColor: AppColors.backgroundColor,
       body: result['loading']
           ? CourseClassLoadingPageComp()
@@ -82,16 +92,23 @@ class ClassRoomPage extends HookWidget {
       child: Column(
         children: [
           //Todo: video player
-          // Container(
-          //   height: 300,
-          //   width: double.maxFinite,
-          //   color: Colors.amber,
+
+          // GetBuilder<ClassRoomController>(
+          //   builder: (controller) {
+          //     return controller.isLoading
+          //         ? Container(
+          //             height: 300,
+          //             width: double.maxFinite,
+          //             color: Colors.amber,
+          //           )
+          //         : SizedBox(
+          //             height: 300,
+          //             width: double.maxFinite,
+          //             child: VideoPlayerClassSection(),
+          //           );
+          //   },
           // ),
-          SizedBox(
-            height: 300,
-            width: double.maxFinite,
-            child: VideoPlayerClassSection(),
-          ),
+
           Container(
             margin: EdgeInsets.symmetric(horizontal: 10),
             child: Column(
@@ -99,15 +116,15 @@ class ClassRoomPage extends HookWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                GetBuilder<ClassRoomController>(builder: (ctl) {
-                  return Container(
-                    child: CustomTextUtil(
-                      text1: '${ctl.videoName ?? ''}',
-                      textAlign: TextAlign.center,
-                      fontSize1: 18,
-                    ),
-                  );
-                }),
+                // GetBuilder<ClassRoomController>(builder: (ctl) {
+                //   return Container(
+                //     child: CustomTextUtil(
+                //       text1: '${ctl.videoName ?? ''}',
+                //       textAlign: TextAlign.center,
+                //       fontSize1: 18,
+                //     ),
+                //   );
+                // }),
                 const SizedBox(
                   height: 20,
                 ),
@@ -122,7 +139,7 @@ class ClassRoomPage extends HookWidget {
                   height: 10,
                 ),
                 Container(
-                  height: 250,
+                  height: 550,
                   padding: EdgeInsets.only(bottom: 5),
                   child: PageView(
                     controller: pageController,

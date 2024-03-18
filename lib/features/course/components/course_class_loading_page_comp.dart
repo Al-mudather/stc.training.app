@@ -30,7 +30,7 @@ class CourseClassLoadingPageComp extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Course_header_card(),
+                // Course_header_card(),
                 const SizedBox(height: 20.0),
                 Taps_label(),
                 const SizedBox(height: 20.0),
@@ -52,7 +52,7 @@ class CourseClassLoadingPageComp extends StatelessWidget {
           spacing: 10,
           runSpacing: 10,
           children: List.generate(
-            10,
+            20,
             (index) => Container(
               width: double.infinity,
               height: 30.0,
