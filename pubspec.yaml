@@ -45,6 +45,10 @@ dependencies:
   vdocipher_flutter: ^2.6.4
   chewie: ^1.7.5
   lecle_yoyo_player: ^0.0.8
+  flutter_pdfview: ^1.2.7
+  flutter_file_downloader: ^1.2.1
+  dio: ^5.4.1
+  open_file: ^3.3.2
 
   # share_plus: ^7.2.1
   flutter_svg: ^2.0.4

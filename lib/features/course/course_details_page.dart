@@ -8,7 +8,6 @@ import 'package:stc_training/features/course/models/course_models.dart';
 import 'package:stc_training/features/course/sections/about_the_course_section.dart';
 import 'package:stc_training/features/course/sections/course_chapters_section.dart';
 import 'package:stc_training/features/course/sections/course_instructors_section.dart';
-import 'package:stc_training/features/course/sections/what_you_will_learn_section.dart';
 import 'package:stc_training/helper/app_colors.dart';
 import 'package:stc_training/utils/app_bar_util.dart';
 import 'package:stc_training/utils/custom_btn_util.dart';

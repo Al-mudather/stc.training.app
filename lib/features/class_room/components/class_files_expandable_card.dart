@@ -1,18 +1,27 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:stc_training/features/class_room/components/class_file_item_content_comp.dart';
 import 'package:stc_training/features/class_room/controller/class_room_controller.dart';
 import 'package:stc_training/features/course/models/course_unit_content_model.dart';
 import 'package:stc_training/features/course/models/course_unit_model.dart';
 import 'package:stc_training/helper/app_colors.dart';
+import 'package:stc_training/helper/app_constants.dart';
+import 'package:stc_training/helper/enumerations.dart';
 import 'package:stc_training/helper/methods.dart';
 import 'package:stc_training/routes/route_helper.dart';
+import 'package:stc_training/utils/custom_btn_util.dart';
 import 'package:stc_training/utils/custom_text_util.dart';
 
-class ClassChapterExpandableCard extends StatefulWidget {
-  const ClassChapterExpandableCard({
+import 'package:path_provider/path_provider.dart';
+import 'package:http/http.dart' as http;
+
+import 'package:flutter_file_downloader/flutter_file_downloader.dart';
+
+class ClassFilesExpandableCard extends StatefulWidget {
+  const ClassFilesExpandableCard({
     super.key,
     this.allowActions = true,
     required this.unit,
@@ -23,13 +32,13 @@ class ClassChapterExpandableCard extends StatefulWidget {
   final CourseUnitModel? unit;
 
   @override
-  State<ClassChapterExpandableCard> createState() =>
-      _ClassChapterExpandableCardState();
+  State<ClassFilesExpandableCard> createState() =>
+      _ClassFilesExpandableCardState();
 }
 
-class _ClassChapterExpandableCardState
-    extends State<ClassChapterExpandableCard> {
+class _ClassFilesExpandableCardState extends State<ClassFilesExpandableCard> {
   var isExpanded = false;
+  var isLoading = false;
 
   ClassRoomController classRoomCtl = Get.find<ClassRoomController>();
 
@@ -37,7 +46,7 @@ class _ClassChapterExpandableCardState
   Widget build(BuildContext context) {
     var acceptedContents = widget.unit?.courseUnitContents?.courseUnitContents
         .where(
-          (content) => content.modelName == 'ContentVideo',
+          (content) => content.modelName == 'ContentFile',
         )
         .toList();
     return Container(
@@ -65,7 +74,9 @@ class _ClassChapterExpandableCardState
           title: cardTitle(),
           children: List.generate(
             acceptedContents?.length ?? 0,
-            (index) => _EXPANDED_body_item(content: acceptedContents![index]),
+            // (index) => _EXPANDED_body_item(content: acceptedContents![index]),
+            (index) =>
+                ClassFileItemContentComp(content: acceptedContents![index]),
           ),
           onExpansionChanged: (bool expanded) {
             setState(() => isExpanded = expanded);
@@ -93,48 +104,6 @@ class _ClassChapterExpandableCardState
         color: AppColors.primaryLight2,
       ),
       child: Icon(icon, color: Colors.white),
-    );
-  }
-
-  GestureDetector _EXPANDED_body_item({CourseUnitContentModel? content}) {
-    return GestureDetector(
-      onTap: () {
-        //Extract the video data and send it to the video player
-        Extract_the_video_data(content: content);
-      },
-      child: Container(
-        padding: const EdgeInsets.only(
-          left: 16,
-          right: 16,
-          top: 16,
-          bottom: 8,
-        ),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border(
-            top:
-                BorderSide(color: AppColors.brown.withOpacity(0.5), width: 0.5),
-          ),
-        ),
-        child: Container(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SvgPicture.asset('assets/svgs/opened_lock.svg'),
-              const SizedBox(
-                width: 5,
-              ),
-              Expanded(
-                child: CustomTextUtil(
-                  text1: "${content?.title}",
-                  fontSize1: 14,
-                  fontWeight1: FontWeight.w500,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
     );
   }
 

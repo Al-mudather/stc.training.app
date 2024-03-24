@@ -3,6 +3,7 @@ import 'package:stc_training/features/class_room/class_room_page.dart';
 import 'package:stc_training/features/course/all_courses_page.dart';
 import 'package:stc_training/features/course/course_details_page.dart';
 import 'package:stc_training/features/course/my_courses_page.dart';
+import 'package:stc_training/features/pdf/pdf_screen.dart';
 import 'package:stc_training/features/video_player/classRoomVideoPlayerPage.dart';
 import 'package:stc_training/features/video_player/videoPlayerPage.dart';
 import 'package:stc_training/layout/drawer_layout_page.dart';
@@ -36,6 +37,13 @@ class Routehelper {
     required String courseId,
   }) =>
       '$classRoomPage?coursePk=$coursePk&&courseId=$courseId';
+
+  ///////////////////////////////////////////////
+  /// The Pdf Screen page
+  ///////////////////////////////////////////////
+  static const String pdfScreenPage = '/pdfScreen';
+  static String goToPdfScreenPage({required path}) =>
+      '$pdfScreenPage?path=$path';
 
   ///////////////////////////////////////////////
   /// Video Player page
@@ -92,6 +100,15 @@ class Routehelper {
     GetPage(
       name: myCoursesPage,
       page: () => MyCoursesPage(),
+    ),
+
+    // ? 2 - The Pdf Screen page
+    GetPage(
+      name: pdfScreenPage,
+      page: () {
+        var path = Get.parameters["path"];
+        return PDFScreen(path: path!);
+      },
     ),
 
     // ? Course details page

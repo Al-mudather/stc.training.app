@@ -10,7 +10,10 @@ import 'package:stc_training/utils/section_title_util.dart';
 import 'package:stc_training/utils/skeleton_loading_util.dart';
 
 class CourseChaptersSection extends HookWidget {
-  CourseChaptersSection({super.key, required this.courseId});
+  CourseChaptersSection({
+    super.key,
+    required this.courseId,
+  });
 
   final String courseId;
 

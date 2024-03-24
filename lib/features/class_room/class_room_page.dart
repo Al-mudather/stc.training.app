@@ -1,22 +1,16 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
-import 'package:stc_training/features/class_room/controller/class_room_controller.dart';
 import 'package:stc_training/features/class_room/sections/class_chapters_custom_tab_bar_view.dart';
+import 'package:stc_training/features/class_room/sections/class_files_custom_tab_bar_view.dart';
 import 'package:stc_training/features/class_room/sections/class_info_tab_bar_view.dart';
-import 'package:stc_training/features/class_room/sections/videoPlayerClassSection.dart';
 import 'package:stc_training/features/course/components/course_class_loading_page_comp.dart';
 import 'package:stc_training/features/course/hooks/get_course_data_by_pk_hook.dart';
 import 'package:stc_training/features/course/models/course_models.dart';
 import 'package:stc_training/helper/app_colors.dart';
 import 'package:stc_training/helper/enumerations.dart';
-import 'package:stc_training/helper/methods.dart';
 import 'package:stc_training/utils/app_bar_util.dart';
 import 'package:stc_training/utils/custom_btn_util.dart';
-import 'package:stc_training/utils/custom_text_util.dart';
 import 'package:stc_training/utils/small_text_util.dart';
 
 class ClassRoomPage extends HookWidget {
@@ -47,7 +41,7 @@ class ClassRoomPage extends HookWidget {
     PageController pageController = usePageController(initialPage: 0);
     var current_index = useState(0);
 
-    List tabs = ["Lessons", "Info"];
+    List tabs = ["Lessons", "Files", "Info"];
     ////////////////////////////////////////////////
     /// Functions
     ///////////////////////////////////////////////
@@ -55,12 +49,12 @@ class ClassRoomPage extends HookWidget {
     ////////////////////////////////////////////////
     /// Hook Functions
     ///////////////////////////////////////////////
-    useEffect(() {
-      pageController.addListener(() {
-        LOG_THE_DEBUG_DATA(
-            messag: int.parse(pageController.page.toString()), type: 'e');
-      });
-    }, [pageController]);
+    // useEffect(() {
+    //   pageController.addListener(() {
+    //     LOG_THE_DEBUG_DATA(
+    //         messag: int.parse(pageController.page.toString()), type: 'e');
+    //   });
+    // }, [pageController]);
 
     result = UseGet_course_data_pk_query_hook(
       context: context,
@@ -68,6 +62,8 @@ class ClassRoomPage extends HookWidget {
     );
     //? Get the course data
     CourseModel? course = result['data'];
+
+    //Todo: Get all the chapters and there contents
     return Scaffold(
       appBar: AppBarUtil(barText: 'Class Room Page'),
       backgroundColor: AppColors.backgroundColor,
@@ -147,7 +143,10 @@ class ClassRoomPage extends HookWidget {
                     children: [
                       ClassChapterCustomTabBarView(
                         courseId: courseId,
+                        coursePk: coursePk,
                       ),
+                      ClassFilesCustomTabBarView(
+                          courseId: courseId, coursePk: coursePk),
                       ClassInfoTabBarView(),
                     ],
                   ),

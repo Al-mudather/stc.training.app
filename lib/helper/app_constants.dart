@@ -10,6 +10,7 @@ class AppConstants {
 
   static const String BAS_URL = "https://stc.training/api/graphql/";
   static const String FileUrl = "https://stc.training/media/";
+  static const String DownloadUrl = "https://stc.training";
 
   static const String USER = "User";
   static const String TOKEN = "Token";
