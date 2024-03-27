@@ -91,7 +91,7 @@ class RewardsCardComponent extends HookWidget {
                 btnTitle: "Collect",
                 btnType: BtnTypes.textWithIcon,
                 btnColor: AppColors.blacklight2,
-                isLoading: maketingInnerCtl.isWithdrawLoading,
+                isLoading: maketingInnerCtl.isBalanceLoading,
                 icon: Container(
                   padding: EdgeInsets.symmetric(
                     vertical: 5,
@@ -107,7 +107,7 @@ class RewardsCardComponent extends HookWidget {
                   ),
                 ),
                 onClicked: () {
-                  maketingInnerCtl.setIsWithdrawLoadingValue(true);
+                  maketingInnerCtl.setIsBalanceLoadingValue(true);
                   var payload = {'input': {}};
                   collectMutationHook.runMutation(payload);
                 },

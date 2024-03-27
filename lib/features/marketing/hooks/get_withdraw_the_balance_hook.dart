@@ -11,25 +11,27 @@ import 'package:stc_training/helper/methods.dart';
 
 MarketingController marketingCtl = Get.find<MarketingController>();
 
-useCollectTheRewoardsMutationHook({required context}) {
-  var action = useMutation(MutationOptions(
-    document: gql(MarketingMutations.CollectTheRewardsMutation),
+useWithdrawTheBalanceHook({required context}) {
+  MutationHookResult action = useMutation(MutationOptions(
+    document: gql(MarketingMutations.WithDrawPyramidBalanceMutation),
     fetchPolicy: FetchPolicy.networkOnly,
     onCompleted: (dynamic resultData) {
       if (resultData != null) {
         // LOG_THE_DEBUG_DATA(messag: resultData, type: 'i');
-        var success = resultData!['claimPyramidLedgerBalance']!['success'];
-        var errors = resultData!['claimPyramidLedgerBalance']!['errors'];
+        var success = resultData!['makePyramidWithdraw']!['success'];
+        var errors = resultData!['makePyramidWithdraw']!['errors'];
         if (success == true) {
           // Stop the button loader.
-          marketingCtl.setIsBalanceLoadingValue(false);
+          marketingCtl.setIsWithdrawLoadingValue(false);
           SEND_a_message_to_the_user(
-            message: "The rewards collected succefuly",
+            message: "The withdrawal process is succefule",
             messageLable: "Success",
           );
+          //Todo: Close the dialog
+          Navigator.of(Get.overlayContext!).pop();
         } else if (errors != null) {
           // Stop the button loader.
-          marketingCtl.setIsBalanceLoadingValue(false);
+          marketingCtl.setIsWithdrawLoadingValue(false);
           Map messages = jsonDecode(errors["message"]);
 
           messages.entries.forEach((message) {
@@ -45,14 +47,6 @@ useCollectTheRewoardsMutationHook({required context}) {
                     backgroundTextColor: Colors.white,
                   );
                   LOG_THE_DEBUG_DATA(messag: value);
-                  if ('${value!['code']}'.contains("password_mismatch")) {
-                    SEND_a_message_to_the_user(
-                      message: "${value!['message']}",
-                      messageLable: "Error",
-                      backgroundColor: AppColors.errorDark,
-                      backgroundTextColor: Colors.white,
-                    );
-                  }
                   return value;
                 },
               );
@@ -66,7 +60,7 @@ useCollectTheRewoardsMutationHook({required context}) {
       LOG_THE_DEBUG_DATA(messag: 'Error ==> $error', type: 'e');
       var link = error!.linkException;
       // 2) Stop the button loader.
-      marketingCtl.setIsBalanceLoadingValue(false);
+      marketingCtl.setIsWithdrawLoadingValue(false);
     },
   ));
   return action;

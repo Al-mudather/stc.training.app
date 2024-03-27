@@ -1,117 +1,97 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:stc_training/features/marketing/components/certificate_filter_dialog.dart';
-import 'package:stc_training/features/marketing/hooks/get_my_balance_hook.dart';
+import 'package:get/get.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:stc_training/features/marketing/controller/marketing_controller.dart';
+import 'package:stc_training/features/marketing/hooks/get_withdraw_the_balance_hook.dart';
 import 'package:stc_training/helper/app_colors.dart';
-import 'package:stc_training/helper/enumerations.dart';
 import 'package:stc_training/utils/custom_btn_util.dart';
-import 'package:stc_training/utils/custom_text_util.dart';
+import 'package:stc_training/utils/custom_textField_util.dart';
 
-class BalanceCardComponent extends HookWidget {
-  const BalanceCardComponent({
-    super.key,
-  });
+class WithdrawAmountDialog extends HookWidget {
+  const WithdrawAmountDialog({super.key});
 
   @override
   Widget build(BuildContext context) {
     ///////////////////////////////////////////////
     /// Controllers
     ///////////////////////////////////////////////
+    final TextEditingController amountCtl = useTextEditingController();
     ///////////////////////////////////////////////
     /// Parameters
     ///////////////////////////////////////////////
-    Map<String, dynamic> balanceResult;
-    ////////////////////////////////////////////////
-    /// Functions
-    ///////////////////////////////////////////////
-
-    ////////////////////////////////////////////////
-    /// Hook Functions
-    ///////////////////////////////////////////////
-    balanceResult = UseGet_my_balance_query_hook(
-      context: context,
-    );
-    var myBalance = balanceResult['data'];
-
-    return Container(
-      padding: EdgeInsets.only(
-        left: 12,
-        right: 12,
-        top: 12,
-      ),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15),
-        color: AppColors.whiteLight,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.2),
-            blurRadius: 1,
-          ),
-        ],
-      ),
-      child: Column(
-        children: [
-          Container(
-            padding: EdgeInsets.all(11),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-              color: Colors.white,
-              border: Border.all(color: AppColors.grey),
-            ),
-            child: SvgPicture.asset("assets/svgs/money.svg"),
-          ),
-          const SizedBox(
-            height: 5,
-          ),
-          CustomTextUtil(text1: 'Balance'),
-          const SizedBox(
-            height: 5,
-          ),
-          CustomTextUtil(
-            text1: "$myBalance ",
-            hasAnotherText: true,
-            text2: "SDG",
-            fontSize2: 12,
-            fontWeight2: FontWeight.w400,
-          ),
-          const SizedBox(
-            height: 5,
-          ),
-          SizedBox(
-            width: 145,
-            child: CustomBtnUtil(
-              btnTitle: "Withdrawal",
-              btnType: BtnTypes.textWithIcon,
-              btnColor: AppColors.blacklight2,
-              icon: Container(
-                padding: EdgeInsets.symmetric(
-                  vertical: 5,
-                  horizontal: 7,
-                ),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: AppColors.primary,
-                ),
-                child: RotatedBox(
-                  quarterTurns: 2,
-                  child: SvgPicture.asset("assets/svgs/arrow_white.svg"),
-                ),
-              ),
-              onClicked: () => OpenTheWithdrawAmountDialog(context: context),
-            ),
-          )
-        ],
-      ),
-    );
-  }
-
-  OpenTheWithdrawAmountDialog({required BuildContext context}) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return const WithdrawAmountDialog();
+    final amount = useState("");
+    useEffect(
+      () {
+        //TODO: Listen to the change of the fullname hook
+        amountCtl.addListener(() {
+          amount.value = amountCtl.text;
+        });
+        return null;
       },
+      [amountCtl],
+    );
+
+    MutationHookResult withdrawBalanceHook =
+        useWithdrawTheBalanceHook(context: context);
+
+    return Dialog(
+      clipBehavior: Clip.hardEdge,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(24),
+      ),
+      insetPadding: const EdgeInsets.all(10),
+      child: Container(
+        width: double.maxFinite,
+        height: 200,
+        padding: EdgeInsets.all(10),
+        // color: Colors.white,
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.deepBlack,
+              offset: Offset(0, 1),
+              blurRadius: 10,
+            )
+          ],
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            CustomTextFieldUtil(
+              hintText: "Amount",
+              hasLabel: false,
+              controller: amountCtl,
+              keyboardType: TextInputType.number,
+            ),
+            GetBuilder<MarketingController>(
+              builder: (marketingInnerCtl) {
+                return SizedBox(
+                  width: double.maxFinite,
+                  child: CustomBtnUtil(
+                    btnTitle: "now",
+                    isLoading: marketingInnerCtl.isWithdrawLoading,
+                    onClicked: amount.value.isNotEmpty
+                        ? () async {
+                            marketingInnerCtl.setIsWithdrawLoadingValue(true);
+                            var payload = {
+                              'amount': amount.value,
+                              'input': {},
+                            };
+                            await withdrawBalanceHook.runMutation(payload);
+                            marketingInnerCtl.setIsWithdrawLoadingValue(false);
+                            //Todo: Empty the data
+                            amountCtl.text = '';
+                          }
+                        : null,
+                  ),
+                );
+              },
+            )
+          ],
+        ),
+      ),
     );
   }
 }
