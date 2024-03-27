@@ -1,6 +1,5 @@
 import 'package:stc_training/features/course/models/course_models.dart';
 import 'package:stc_training/features/course/models/course_unit_content_model.dart';
-import 'package:stc_training/helper/methods.dart';
 
 class AllCourseUnitsModel {
   String? startCursor;

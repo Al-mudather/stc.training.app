@@ -24,17 +24,6 @@ class CourseDetailsPage extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    ////  1) convert the class to hook widget class. [ Done ]
-    //// Get the course data by pk [ Done ]
-    //// 3) Fill the course header card data [ Done ]
-    //TODO: 4) Make the share course btn works
-    //// 5) Fill about the course section data
-    //TODO: 6) Fill the course chapter section data
-    //// 7) Fill the course instructors section data [ Done ]
-    //TODO: 8) Get the what you will learn section data and fill it
-    //TODO: 9) Add the course to the shopping card list
-    //TODO:
-
     ///////////////////////////////////////////////
     /// Controllers
     ///////////////////////////////////////////////

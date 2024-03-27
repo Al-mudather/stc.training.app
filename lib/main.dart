@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+// import 'package:hive/hive.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stc_training/features/authentication/controller/auth_controller.dart';
-import 'package:stc_training/features/authentication/login_auth_page.dart';
+
+// import 'package:@apollo/client/core.dart';
 
 import 'package:stc_training/helper/app_colors.dart';
 import 'package:stc_training/helper/app_constants.dart';
@@ -15,6 +17,11 @@ import 'package:vdocipher_flutter/vdocipher_flutter.dart';
 import 'firebase_options.dart';
 
 import 'dart:developer' as devtools show log;
+
+//tODO: 1) fix the graphql offline mode
+//tODO: 2) add the alhasif offline videos for the class room
+
+const String graphQLCacheBox = 'graphQLCache';
 
 extension Log on Object {
   void log() => devtools.log(toString());
@@ -31,6 +38,8 @@ void main() async {
   );
   // so we need to initialize Hive.
   await initHiveForFlutter();
+
+  // await Hive.openBox<QueryResult>(graphQLCacheBox);
   // Load the dependences
   await dep.init();
   runApp(MyApp(
@@ -88,6 +97,11 @@ class MyApp extends StatelessWidget {
       getToken: () async => 'JWT ${innerAuthCtl.token}',
     );
 
+    // final PersistedQueriesLink _apqLink = PersistedQueriesLink(
+    //   // To enable GET queries for the first load to allow for CDN caching
+    //   useGETForHashedQueries: true,
+    // );
+
     final Link link = authLink.concat(httpLink);
     // final Link link = httpLink;
 
@@ -95,16 +109,19 @@ class MyApp extends StatelessWidget {
       GraphQLClient(
         link: link,
         // The default store is the InMemoryStore, which does NOT persist to disk
-        cache: GraphQLCache(store: HiveStore()),
+        // cache: GraphQLCache(store: HiveStore()),
+        cache: GraphQLCache(),
         // defaultPolicies: DefaultPolicies(
-        //   query: Policies(
-        //     fetch: FetchPolicy.networkOnly,
-        //     // fetch: FetchPolicy.cacheAndNetwork,
-        //   ),
-        //   watchQuery: Policies(
-        //     fetch: FetchPolicy.networkOnly,
-        //   ),
-        // ),
+        //     // query: Policies(
+        //     //   // fetch: FetchPolicy.networkOnly,
+        //     //   fetch: FetchPolicy.cacheAndNetwork,
+        //     // ),
+        //     // watchQuery: Policies(
+        //     //   // fetch: FetchPolicy.networkOnly,
+        //     //   fetch: FetchPolicy.cacheAndNetwork,
+        //     // ),
+
+        //     ),
       ),
     );
 

@@ -39,6 +39,35 @@ void LOG_THE_DEBUG_DATA(
   }
 }
 
+// FORMAT_COUSRE_PRICE(num, digits) {
+//       try {
+//         const lookup = [
+//           { "value": 1, "symbol": "" },
+//           { "value": 1e3, "symbol": "k" },
+//           { "value": 1e6, "symbol": "M" },
+//           { "value": 1e9, "symbol": "G" },
+//           { "value": 1e12, "symbol": "T" },
+//           { "value": 1e15, "symbol": "P" },
+//           { "value": 1e18, "symbol": "E" }
+//         ];
+
+//         if ( (num.toString().split('.')[0] == 0) || num == 0 ) {
+//           return num;
+//         }
+//         const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
+//         var item = lookup.map((item) {
+//           return num >= item['value'];
+//         });
+//         // var item = lookup.slice().reverse().find(function(item) {
+//         //   return num >= item.value;
+//         // });
+
+//         return item !=null ? (num / item).toFixed(digits).replace(rx, "\$1") + item['symbol'] : "0";
+//       } catch (error) {
+//         return num;
+//       }
+//     },
+
 String GET_full_network_path({required String path}) {
   return '${AppConstants.FileUrl}${path}';
 }

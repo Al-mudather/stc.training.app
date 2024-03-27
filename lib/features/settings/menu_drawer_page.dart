@@ -75,7 +75,9 @@ class MenuDrawerPage extends StatelessWidget {
                   menuItem(
                     itemTitle: "My marketing Page",
                     iconData: Icons.pages,
-                    onClicked: () {},
+                    onClicked: () => Get.toNamed(
+                      Routehelper.GoToMyMarketingPage(),
+                    ),
                   ),
                   menuItem(
                     itemTitle: "Profile",
@@ -91,12 +93,19 @@ class MenuDrawerPage extends StatelessWidget {
                       ? menuItem(
                           itemTitle: "Log Out",
                           iconData: Icons.logout,
-                          onClicked: () {},
+                          onClicked: () {
+                            //TODO: Implement the log out functinality
+                            // Get.toNamed(
+                            //   Routehelper.GoToAuthLoginPage(),
+                            // );
+                          },
                         )
                       : menuItem(
                           itemTitle: "Login",
                           iconData: Icons.login,
-                          onClicked: () {},
+                          onClicked: () => Get.toNamed(
+                            Routehelper.GoToAuthLoginPage(),
+                          ),
                         ),
                   // Spacer(),
                 ],

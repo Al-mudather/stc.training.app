@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:stc_training/features/marketing/components/my_marketing_page_card_component.dart';
 import 'package:stc_training/features/marketing/sections/joined_throw_me_section.dart';
 import 'package:stc_training/features/marketing/sections/profits_section.dart';
 import 'package:stc_training/features/marketing/sections/withdraw_orders_section.dart';

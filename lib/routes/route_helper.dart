@@ -1,14 +1,21 @@
 import 'package:get/get.dart';
+import 'package:stc_training/features/authentication/login_auth_page.dart';
 import 'package:stc_training/features/class_room/class_room_page.dart';
 import 'package:stc_training/features/course/all_courses_page.dart';
 import 'package:stc_training/features/course/course_details_page.dart';
 import 'package:stc_training/features/course/my_courses_page.dart';
+import 'package:stc_training/features/marketing/my_marketing_page.dart';
 import 'package:stc_training/features/pdf/pdf_screen.dart';
 import 'package:stc_training/features/video_player/classRoomVideoPlayerPage.dart';
 import 'package:stc_training/features/video_player/videoPlayerPage.dart';
 import 'package:stc_training/layout/drawer_layout_page.dart';
 
 class Routehelper {
+  ///////////////////////////////////////////////
+  /// Authentication pages
+  ///////////////////////////////////////////////
+  static const String authLoginPage = '/auth_login-page';
+  static String GoToAuthLoginPage() => authLoginPage;
   ///////////////////////////////////////////////
   /// Main Layout page
   ///////////////////////////////////////////////
@@ -46,6 +53,12 @@ class Routehelper {
       '$pdfScreenPage?path=$path';
 
   ///////////////////////////////////////////////
+  /// My Marketing page
+  ///////////////////////////////////////////////
+  static const String myMarketingPage = '/my-marketing-page';
+  static String GoToMyMarketingPage() => '$myMarketingPage';
+
+  ///////////////////////////////////////////////
   /// Video Player page
   ///////////////////////////////////////////////
   static const String videoPlayerPage = '/video-player-page';
@@ -64,6 +77,13 @@ class Routehelper {
   // ? Route Lists
   ////////////////////////////////////////////
   static List<GetPage> routes = [
+    // ? Authentication Page
+    GetPage(
+      name: authLoginPage,
+      page: () => LoginAuthPage(),
+      // page: () => MainLayoutPage(),
+    ),
+
     // ? Main Layout Page
     GetPage(
       name: drawerLayoutPage,
@@ -132,14 +152,21 @@ class Routehelper {
         }),
     // ? Class Room Video Player Page
     GetPage(
-        name: classRoomVideoPlayerPage,
-        page: () {
-          var unitContent = Get.parameters['unitContent'];
-          var videoTitle = Get.parameters['videoTitle'];
-          return ClassRoomVideoPlayerPage(
-            videoTitle: videoTitle!,
-            unitContent: unitContent!,
-          );
-        })
+      name: classRoomVideoPlayerPage,
+      page: () {
+        var unitContent = Get.parameters['unitContent'];
+        var videoTitle = Get.parameters['videoTitle'];
+        return ClassRoomVideoPlayerPage(
+          videoTitle: videoTitle!,
+          unitContent: unitContent!,
+        );
+      },
+    ),
+
+    // ? Class Room Video Player Page
+    GetPage(
+      name: myMarketingPage,
+      page: () => MyMarketingPage(),
+    ),
   ];
 }

@@ -58,7 +58,7 @@ class MyMarketingPageCardComponent extends StatelessWidget {
           CustomTextUtil(
             text1: "$amount ",
             hasAnotherText: true,
-            text2: "USD",
+            text2: "SDG",
             fontSize2: 12,
             fontWeight2: FontWeight.w400,
           ),
