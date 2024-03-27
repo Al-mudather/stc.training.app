@@ -44,7 +44,7 @@ class WithdrawOrdersSection extends HookWidget {
         const SizedBox(
           height: 20,
         ),
-        result['loading'] ? The_loading() : The_data(withdraws: withdraws)
+        result['loading'] ? The_loading() : The_data(allwithdraws: withdraws)
       ],
     );
   }
@@ -64,8 +64,8 @@ class WithdrawOrdersSection extends HookWidget {
     );
   }
 
-  Container The_data({AllWithdrawsModel? withdraws}) {
-    LOG_THE_DEBUG_DATA(messag: withdraws);
+  Container The_data({AllWithdrawsModel? allwithdraws}) {
+    // LOG_THE_DEBUG_DATA(messag: allwithdraws);
     return Container(
       padding: EdgeInsets.all(11),
       decoration: BoxDecoration(
@@ -80,24 +80,26 @@ class WithdrawOrdersSection extends HookWidget {
       ),
       child: Wrap(
         runSpacing: 10,
-        children: [
-          WithDrawCardComponent(
-            cardLabel: "Paied",
-            withdrawDate: "2021-08-07",
-            imgPath: "assets/svgs/done_status.svg",
-            amount: "1,588",
-          ),
-          WithDrawCardComponent(
-            cardLabel: "Waiting",
-            withdrawDate: "2021-08-01",
-            imgPath: "assets/svgs/waiting_status.svg",
-            amount: "588",
-          ),
-        ],
-        // children: List.generate(
-        //   withdraws['edges'].length,
-        //   (index) => WithDrawCardComponent(),
-        // ),
+        children: List.generate(
+          allwithdraws?.wihthdraws.length ?? 0,
+          (index) {
+            WithdrawModel? withdraw = allwithdraws?.wihthdraws[index];
+
+            if (withdraw != null) {
+              return WithDrawCardComponent(
+                cardLabel: withdraw.isDone == true ? "Paied" : "Waiting",
+                withdrawDate:
+                    "${FORMAT_THE_DATE(stringDate: withdraw.created)}",
+                imgPath: withdraw.isDone == true
+                    ? "assets/svgs/done_status.svg"
+                    : "assets/svgs/waiting_status.svg",
+                amount: "${withdraw.amount}",
+              );
+            }
+
+            return Container();
+          },
+        ),
       ),
     );
   }

@@ -9,7 +9,7 @@ UseGet_all_home_sliders_query_hook({
   QueryHookResult<Object?> hookRes = useQuery(
     QueryOptions(
       document: gql(HomeSliderQueries.GETAllHomePageSlidersQuery),
-      fetchPolicy: FetchPolicy.networkOnly,
+      // fetchPolicy: FetchPolicy.networkOnly,
       variables: {
         'orderBy': ["-pk"],
       },

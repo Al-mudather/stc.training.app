@@ -10,7 +10,7 @@ UseGet_all_courses_query_home_page_hook({
   QueryHookResult<Object?> hookRes = useQuery(
     QueryOptions(
       document: gql(CourseQueries.GETAllCoursesQuery),
-      fetchPolicy: FetchPolicy.networkOnly,
+      // fetchPolicy: FetchPolicy.networkOnly,
       variables: {
         'orderBy': ["pk"],
         'first': 10,
@@ -77,7 +77,7 @@ UseGet_all_courses_query_hook({
   QueryHookResult<Object?> hookRes = useQuery(
     QueryOptions(
       document: gql(CourseQueries.GETAllCoursesQuery),
-      fetchPolicy: FetchPolicy.networkOnly,
+      // fetchPolicy: FetchPolicy.networkOnly,
       variables: {
         'orderBy': ["pk"],
         'first': 10,

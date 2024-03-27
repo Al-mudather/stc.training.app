@@ -9,7 +9,7 @@ UseGet_course_data_pk_query_hook({
   QueryHookResult<Object?> hookRes = useQuery(
     QueryOptions(
       document: gql(CourseQueries.GetSingleCourseByPkQuery),
-      fetchPolicy: FetchPolicy.networkOnly,
+      // fetchPolicy: FetchPolicy.networkOnly,
       variables: {
         'coursePk': coursePk,
       },

@@ -1,9 +1,7 @@
 class EnrollmentQueries {
-  //TODO: FIlter the instructors so only the ones those there fullName is
-  // filled to be displied
   static const GETAllEnrollmentsForCurrentUserQuery = '''
-        query AllEnrollmentsForCurrentUser(\$cursor: String, \$limit: Int, \$filters: JSONString,){
-  allEnrollmentsForCurrentUserV2(after: \$cursor, first: \$limit,filters: \$filters){
+        query AllEnrollmentsForCurrentUser(\$cursor: String, \$limit: Int, \$orderBy: [String] , \$filters: JSONString,){
+  allEnrollmentsForCurrentUserV2(after: \$cursor, first: \$limit, orderBy: \$orderBy ,filters: \$filters){
     pageInfo {
       startCursor,
       endCursor,

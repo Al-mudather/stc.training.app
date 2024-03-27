@@ -9,6 +9,9 @@ UseGet_my_withdraws_query_hook({
   QueryHookResult<Object?> hookRes = useQuery(
     QueryOptions(
       document: gql(MyMarketingQueries.MyPyramidWithdrawsQuery),
+      variables: {
+        'orderBy': ['-id']
+      },
       // fetchPolicy: FetchPolicy.networkOnly,
     ),
   );
@@ -17,7 +20,7 @@ UseGet_my_withdraws_query_hook({
 
   try {
     AllWithdrawsModel? withdraws;
-    LOG_THE_DEBUG_DATA(messag: resData);
+    // LOG_THE_DEBUG_DATA(messag: resData);
     if (resData != null && resData.isNotEmpty) {
       withdraws = AllWithdrawsModel.fromJson(resData['myPyramidWithdraws']);
     }

@@ -12,6 +12,8 @@ import 'package:stc_training/routes/route_helper.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
 
+import 'package:intl/intl.dart';
+
 void LOG_THE_DEBUG_DATA(
     {required messag, type = 'i', error = 'Some thing wrong'}) {
   var logger = Logger();
@@ -174,4 +176,13 @@ void _open_the_network_file({required String netWorkFilePath}) async {
       ),
     );
   }
+}
+
+FORMAT_THE_DATE({stringDate, format = "yyyy-MM-dd"}) {
+  DateTime dateTime = DateTime.parse(stringDate);
+
+  DateFormat formatter = DateFormat(format);
+  String formattedDate = formatter.format(dateTime);
+
+  return formattedDate;
 }

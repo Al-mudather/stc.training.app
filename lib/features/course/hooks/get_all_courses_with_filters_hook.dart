@@ -17,7 +17,7 @@ UseGet_all_courses_with_filters_query_hook({
   QueryHookResult<Object?> hookRes = useQuery(
     QueryOptions(
       document: gql(CourseQueries.GETAllCoursesQuery),
-      fetchPolicy: FetchPolicy.networkOnly,
+      // fetchPolicy: FetchPolicy.networkOnly,
       variables: {
         'orderBy': ["-pk"],
         'first': 10,

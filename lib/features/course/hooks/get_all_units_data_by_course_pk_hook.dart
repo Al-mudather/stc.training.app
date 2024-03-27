@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:stc_training/features/course/graphql/course_unit_queries.dart';
 import 'package:stc_training/features/course/models/course_unit_model.dart';
@@ -12,7 +10,7 @@ UseGet_all_units_data_pk_course_query_hook({
   QueryHookResult<Object?> hookRes = useQuery(
     QueryOptions(
       document: gql(CourseUnitQueries.GetAllCourseUnitsByCourseQuery),
-      fetchPolicy: FetchPolicy.networkOnly,
+      // fetchPolicy: FetchPolicy.networkOnly,
       variables: {
         'courseID': courseId,
         'limit': 5,

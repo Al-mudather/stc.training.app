@@ -9,7 +9,7 @@ UseGet_all_categories_query_hook({
   QueryHookResult<Object?> hookRes = useQuery(
     QueryOptions(
       document: gql(CategoryQueries.GETAllCourseSpecialitiesQuery),
-      fetchPolicy: FetchPolicy.networkOnly,
+      // fetchPolicy: FetchPolicy.networkOnly,
       // variables: {
       //   'orderBy': ["pk"],
       //   'first': 10,

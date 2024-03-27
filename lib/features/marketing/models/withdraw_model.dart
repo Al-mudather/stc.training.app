@@ -24,27 +24,27 @@ class AllWithdrawsModel {
   }
 
   AllWithdrawsModel.fromJson(Map<String, dynamic> json) {
-    LOG_THE_DEBUG_DATA(messag: json);
-    // _totalCount = json['totalCount'];
-    // startCursor = json['pageInfo']['startCursor'];
-    // endCursor = json['pageInfo']['endCursor'];
-    // hasNextPage = json['pageInfo']['hasNextPage'];
-    // hasPreviousPage = json['pageInfo']['hasPreviousPage'];
+    // LOG_THE_DEBUG_DATA(messag: json);
+    _totalCount = json['totalCount'];
+    startCursor = json['pageInfo']['startCursor'];
+    endCursor = json['pageInfo']['endCursor'];
+    hasNextPage = json['pageInfo']['hasNextPage'];
+    hasPreviousPage = json['pageInfo']['hasPreviousPage'];
 
-    // var edges = json['edges'];
-    // if (edges != null) {
-    //   _withdraws = <WithdrawModel>[];
-    //   edges.forEach((data) {
-    //     _withdraws.add(WithdrawModel.fromJson(data["node"]));
-    //   });
-    // }
+    var edges = json['edges'];
+    if (edges != null) {
+      _withdraws = <WithdrawModel>[];
+      edges.forEach((data) {
+        _withdraws.add(WithdrawModel.fromJson(data["node"]));
+      });
+    }
   }
 }
 
 class WithdrawModel {
   int? pk;
   String? id;
-  String? amount;
+  double? amount;
   bool? isDone;
   String? created;
 

@@ -24,8 +24,8 @@ class MyMarketingQueries {
   ''';
 
   static const MyPyramidWithdrawsQuery = '''
-    query MyPyramidWithdraws {
-      myPyramidWithdraws {
+    query MyPyramidWithdraws(\$filters: JSONString, \$orderBy: [String]) {
+      myPyramidWithdraws(filters: \$filters, orderBy: \$orderBy,) {
           totalCount,
           edgeCount,
           pageInfo {

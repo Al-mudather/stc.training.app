@@ -15,7 +15,7 @@ UseGet_my_courses_query_home_page_hook({
   }
 
   var variables = {
-    'orderBy': ["pk"],
+    'orderBy': ["-id"],
     'limit': 10,
     'cursor': '',
   };
@@ -27,7 +27,7 @@ UseGet_my_courses_query_home_page_hook({
   QueryHookResult<Object?> hookRes = useQuery(
     QueryOptions(
       document: gql(EnrollmentQueries.GETAllEnrollmentsForCurrentUserQuery),
-      fetchPolicy: FetchPolicy.networkOnly,
+      // fetchPolicy: FetchPolicy.networkOnly,
       variables: variables,
       onError: (error) {
         // 1) Tell the user there somthing wrong.
