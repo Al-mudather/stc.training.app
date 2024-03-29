@@ -50,8 +50,6 @@ UseGet_my_courses_query_home_page_hook({
     ),
   );
 
-  hookRes.result.isLoading;
-
   var resData = hookRes.result.data;
   AllEnrollmentsModel? allEnrollments;
   // LOG_THE_DEBUG_DATA(messag: hookRes.result);
