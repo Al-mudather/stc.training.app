@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:stc_training/features/account/hooks/get_my_profile_account_hook.dart';
+import 'package:stc_training/features/account/hooks/get_update_user_account_hook.dart';
 import 'package:stc_training/features/account/models/user_models.dart';
 import 'package:stc_training/helper/app_colors.dart';
 import 'package:stc_training/helper/enumerations.dart';
-import 'package:stc_training/helper/methods.dart';
 import 'package:stc_training/utils/app_bar_util.dart';
 import 'package:stc_training/utils/custom_btn_util.dart';
 import 'package:stc_training/utils/custom_textField_util.dart';
 import 'package:stc_training/utils/custom_text_util.dart';
 
 enum Gender {
-  NOTHING,
+  NOT_SET,
   MALE,
   FEMALE,
 }
@@ -34,7 +34,7 @@ class ProfilePage extends HookWidget {
     ///////////////////////////////////////////////
     /// Parameters
     ///////////////////////////////////////////////
-    var genderTypes = useState<Gender>(Gender.NOTHING);
+    var genderTypes = useState<Gender>(Gender.NOT_SET);
     final fullName = useState("");
     final email = useState("");
     final myAccount = useState<UserModel?>(UserModel.init());
@@ -61,6 +61,11 @@ class ProfilePage extends HookWidget {
     //? Get the course units data
     myAccount.value = unitsResult["data"];
     QueryHookResult<Object?> hookRes = unitsResult['hookRes'];
+
+    // Get the create new certifcate mutation hook
+    MutationHookResult updateUserAccountHook = useUpdateUserAccountMutationHook(
+      context: context,
+    );
 
     //Todo: Whatch the change of the input fields
     useEffect(
@@ -93,7 +98,7 @@ class ProfilePage extends HookWidget {
           } else if (gender == 'FEMALE') {
             genderTypes.value = Gender.FEMALE;
           } else {
-            genderTypes.value = Gender.NOTHING;
+            genderTypes.value = Gender.NOT_SET;
           }
         }
 
@@ -349,11 +354,23 @@ class ProfilePage extends HookWidget {
           ),
         ),
       ),
-      bottomSheet: _SAVE_the_profile_data_action(),
+      bottomSheet: _SAVE_the_profile_data_action(
+        updateUserAccountHook: updateUserAccountHook,
+        genderTypes: genderTypes.value,
+        fullName: fullName,
+        whatsAppNumber: whatsAppNumber,
+        telegramNumber: telegramNumber,
+      ),
     );
   }
 
-  Container _SAVE_the_profile_data_action() {
+  Container _SAVE_the_profile_data_action({
+    required MutationHookResult updateUserAccountHook,
+    required Gender genderTypes,
+    required ValueNotifier fullName,
+    required ValueNotifier whatsAppNumber,
+    required ValueNotifier telegramNumber,
+  }) {
     return Container(
       height: 90,
       padding: EdgeInsets.all(20),
@@ -384,7 +401,21 @@ class ProfilePage extends HookWidget {
             Icons.save,
             color: Colors.white,
           ),
-          onClicked: () => {},
+          onClicked: () {
+            //TODO: Prepare the payload data
+            var payload = {
+              'input': {
+                'fullName': fullName.value,
+                'phoneNumber2': whatsAppNumber.value,
+                'phoneNumber3': telegramNumber.value,
+                'gender': genderTypes == Gender.FEMALE
+                    ? 'female'
+                    : (genderTypes == Gender.MALE ? 'male' : 'not set'),
+              }
+            };
+
+            updateUserAccountHook.runMutation(payload);
+          },
         ),
       ),
     );
