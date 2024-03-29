@@ -82,7 +82,7 @@ class MenuDrawerPage extends StatelessWidget {
                   menuItem(
                     itemTitle: "Profile",
                     iconData: Icons.person,
-                    onClicked: () {},
+                    onClicked: () => Get.toNamed(Routehelper.GoToProfilePage()),
                   ),
                   menuItem(
                     itemTitle: "Settings",

@@ -28,7 +28,15 @@ class UserModel {
   String? fullName;
   String? firstName;
   String? lastName;
+  String? certificateName;
+  String? certificateNameConfirm;
   String? email;
+  String? phoneNumber;
+  String? phoneNumber2;
+  String? phoneNumber3;
+  String? gender;
+  bool? isPyramidAdmin;
+  bool? isPyramidMarketer;
 
   UserModel({
     this.pk,
@@ -36,8 +44,18 @@ class UserModel {
     this.fullName,
     this.firstName,
     this.lastName,
+    this.certificateName,
+    this.certificateNameConfirm,
     this.email,
+    this.phoneNumber,
+    this.phoneNumber2,
+    this.phoneNumber3,
+    this.gender,
+    this.isPyramidAdmin,
+    this.isPyramidMarketer,
   });
+
+  UserModel.init() {}
 
   UserModel.fromJson(Map<String, dynamic> json) {
     pk = json['pk'];
@@ -45,7 +63,16 @@ class UserModel {
     fullName = json['fullName'];
     firstName = json['firstName'];
     lastName = json['lastName'];
+    certificateName = json['certificateName'];
+    certificateNameConfirm = json['certificateNameConfirm'];
     email = json['email'];
+
+    phoneNumber = json['phoneNumber'];
+    phoneNumber2 = json['phoneNumber2'];
+    phoneNumber3 = json['phoneNumber3'];
+    gender = json['gender'];
+    isPyramidAdmin = json['isPyramidAdmin'];
+    isPyramidMarketer = json['isPyramidMarketer'];
   }
 
   @override

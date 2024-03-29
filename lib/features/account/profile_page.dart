@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:stc_training/features/account/hooks/get_my_profile_account_hook.dart';
+import 'package:stc_training/features/account/models/user_models.dart';
 import 'package:stc_training/helper/app_colors.dart';
 import 'package:stc_training/helper/enumerations.dart';
 import 'package:stc_training/helper/methods.dart';
@@ -36,6 +37,7 @@ class ProfilePage extends HookWidget {
     var genderTypes = useState<Gender>(Gender.NOTHING);
     final fullName = useState("");
     final email = useState("");
+    final myAccount = useState<UserModel?>(UserModel.init());
     final whatsAppNumber = useState("");
     final telegramNumber = useState("");
 
@@ -52,16 +54,25 @@ class ProfilePage extends HookWidget {
     ////////////////////////////////////////////////
     /// Hook Functions
     ///////////////////////////////////////////////
+    //Todo: Get my profile account data
+    var unitsResult = UseGet_my_profile_account_query_hook(
+      context: context,
+    );
+    //? Get the course units data
+    myAccount.value = unitsResult["data"];
+    QueryHookResult<Object?> hookRes = unitsResult['hookRes'];
+
+    //Todo: Whatch the change of the input fields
     useEffect(
       () {
         //TODO: Listen to the change of the fullname hook
         fullNameTextCtl.addListener(() {
           fullName.value = fullNameTextCtl.text;
         });
-        //TODO: Listen to the change of the email hook
-        emailTextCtl.addListener(() {
-          email.value = emailTextCtl.text;
-        });
+        // //TODO: Listen to the change of the email hook
+        // emailTextCtl.addListener(() {
+        //   email.value = emailTextCtl.text;
+        // });
         //TODO: Listen to the change of the whatsAppNumber hook
         whatsAppNumberTextCtl.addListener(() {
           whatsAppNumber.value = whatsAppNumberTextCtl.text;
@@ -70,6 +81,22 @@ class ProfilePage extends HookWidget {
         telegramNumberTextCtl.addListener(() {
           telegramNumber.value = telegramNumberTextCtl.text;
         });
+
+        if (myAccount.value != null) {
+          emailTextCtl.text = myAccount.value?.email ?? '';
+          fullNameTextCtl.text = myAccount.value?.fullName ?? '';
+          telegramNumberTextCtl.text = myAccount.value?.phoneNumber3 ?? '';
+          telegramNumberTextCtl.text = myAccount.value?.phoneNumber3 ?? '';
+          var gender = myAccount.value?.gender;
+          if (gender == 'MALE') {
+            genderTypes.value = Gender.MALE;
+          } else if (gender == 'FEMALE') {
+            genderTypes.value = Gender.FEMALE;
+          } else {
+            genderTypes.value = Gender.NOTHING;
+          }
+        }
+
         return null;
       },
       [
@@ -77,8 +104,10 @@ class ProfilePage extends HookWidget {
         emailTextCtl,
         whatsAppNumberTextCtl,
         telegramNumberTextCtl,
+        myAccount.value,
       ],
     );
+
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       extendBodyBehindAppBar: true,
@@ -152,7 +181,7 @@ class ProfilePage extends HookWidget {
                           height: 5,
                         ),
                         CustomTextUtil(
-                          text1: "Dr.sabri sad abo gron",
+                          text1: fullName.value,
                           fontSize1: 14,
                         )
                       ],
@@ -231,6 +260,7 @@ class ProfilePage extends HookWidget {
                 hasLabel: false,
                 hintText: "Email",
                 controller: emailTextCtl,
+                enable: false,
               ),
               ////////////////////////////////////////////////
               /// Whats app number

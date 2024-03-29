@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:stc_training/features/account/profile_page.dart';
 import 'package:stc_training/features/authentication/login_auth_page.dart';
 import 'package:stc_training/features/class_room/class_room_page.dart';
 import 'package:stc_training/features/course/all_courses_page.dart';
@@ -16,6 +17,11 @@ class Routehelper {
   ///////////////////////////////////////////////
   static const String authLoginPage = '/auth_login-page';
   static String GoToAuthLoginPage() => authLoginPage;
+  ///////////////////////////////////////////////
+  /// Profile pages
+  ///////////////////////////////////////////////
+  static const String profilePage = '/profile-page';
+  static String GoToProfilePage() => profilePage;
   ///////////////////////////////////////////////
   /// Main Layout page
   ///////////////////////////////////////////////
@@ -82,6 +88,11 @@ class Routehelper {
       name: authLoginPage,
       page: () => LoginAuthPage(),
       // page: () => MainLayoutPage(),
+    ),
+    // ? Account Page
+    GetPage(
+      name: profilePage,
+      page: () => ProfilePage(),
     ),
 
     // ? Main Layout Page
