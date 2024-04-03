@@ -6,8 +6,6 @@ import 'package:stc_training/features/course/models/course_unit_content_model.da
 import 'package:stc_training/helper/enumerations.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:stc_training/utils/custom_btn_util.dart';
-import 'package:get/get.dart';
-import 'package:video_player/video_player.dart';
 
 class DialogHelper {
   //? Show Loading dialog

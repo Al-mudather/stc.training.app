@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:stc_training/helper/app_colors.dart';
@@ -69,6 +70,16 @@ void LOG_THE_DEBUG_DATA(
 //         return num;
 //       }
 //     },
+
+SvgPicture GET_the_stc_logo({double size = 60}) {
+  return SvgPicture.asset(
+    'assets/svgs/stc-logo.svg',
+    width: size,
+    height: size,
+    color: AppColors.primary,
+    fit: BoxFit.contain,
+  );
+}
 
 String GET_full_network_path({required String path}) {
   return '${AppConstants.FileUrl}${path}';
