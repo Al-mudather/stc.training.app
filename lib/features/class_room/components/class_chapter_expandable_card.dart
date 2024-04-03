@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:stc_training/features/class_room/components/class_chapter_item_content_comp.dart';
 import 'package:stc_training/features/class_room/controller/class_room_controller.dart';
 import 'package:stc_training/features/course/models/course_unit_content_model.dart';
 import 'package:stc_training/features/course/models/course_unit_model.dart';
@@ -65,7 +66,8 @@ class _ClassChapterExpandableCardState
           title: cardTitle(),
           children: List.generate(
             acceptedContents?.length ?? 0,
-            (index) => _EXPANDED_body_item(content: acceptedContents![index]),
+            (index) =>
+                ClassChapterItemContentComp(content: acceptedContents?[index]),
           ),
           onExpansionChanged: (bool expanded) {
             setState(() => isExpanded = expanded);
@@ -94,105 +96,6 @@ class _ClassChapterExpandableCardState
       ),
       child: Icon(icon, color: Colors.white),
     );
-  }
-
-  GestureDetector _EXPANDED_body_item({CourseUnitContentModel? content}) {
-    return GestureDetector(
-      onTap: () {
-        //Extract the video data and send it to the video player
-        Extract_the_video_data(content: content);
-      },
-      child: Container(
-        padding: const EdgeInsets.only(
-          left: 16,
-          right: 16,
-          top: 16,
-          bottom: 8,
-        ),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border(
-            top:
-                BorderSide(color: AppColors.brown.withOpacity(0.5), width: 0.5),
-          ),
-        ),
-        child: Container(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SvgPicture.asset('assets/svgs/opened_lock.svg'),
-              const SizedBox(
-                width: 5,
-              ),
-              Expanded(
-                child: CustomTextUtil(
-                  text1: "${content?.title}",
-                  fontSize1: 14,
-                  fontWeight1: FontWeight.w500,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  void Extract_the_video_data({CourseUnitContentModel? content}) {
-    //TODO: Go to the video player page
-    //Todo: Start the loading
-    try {
-      String? cipherIfram = content!.cipherIframe;
-      var cipherOtp, playbackInfo;
-      if (cipherIfram != null && cipherIfram.isNotEmpty) {
-        var otp = cipherIfram.split('otp=')[1].split('&');
-        cipherOtp = otp.first;
-        var info = cipherIfram.split('playbackInfo=')[1].split('"');
-        playbackInfo = info.first;
-      }
-
-      var contentData = jsonDecode('${content.modelValue}');
-      var video_type = contentData["video_type"];
-      var metaData = contentData['video_metadata'];
-      var video = contentData['video'];
-
-      var videoUuid;
-      if (video_type == 'TYPE_HASIF') {
-        videoUuid = metaData['videoData']['videoUuid'];
-      }
-
-      // classRoomCtl.SET_video_palyer_info_data(
-      //   loading: false,
-      //   videoName: '${content!.title}',
-      //   videoType: video_type,
-      //   cipherOtp: cipherOtp,
-      //   cipherPlayBackInfo: playbackInfo,
-      //   alhasifVideoUuid: videoUuid,
-      // );
-
-      if (video != null && video.toString().isNotEmpty) {
-        SEND_a_message_to_the_user(
-          message:
-              "Video is not supported on the phone, please watch it on the web version.",
-          messageLable: "Error",
-          backgroundColor: AppColors.errorLight,
-        );
-      } else {
-        Get.toNamed(
-          Routehelper.GoToClassRoomVideoPlayerPage(
-            videoTitle: '${content.title}',
-            unitContent: jsonEncode({
-              'video_type': video_type,
-              'cipherOtp': cipherOtp,
-              'playbackInfo': playbackInfo,
-              'videoUuid': videoUuid,
-            }),
-          ),
-        );
-      }
-    } catch (e) {
-      LOG_THE_DEBUG_DATA(messag: e, type: 'e');
-    }
   }
 
   Container timeRange(Map<dynamic, dynamic> item) {
