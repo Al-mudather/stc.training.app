@@ -8,6 +8,7 @@ import 'package:stc_training/features/course/my_courses_page.dart';
 import 'package:stc_training/features/marketing/my_marketing_page.dart';
 import 'package:stc_training/features/pdf/pdf_screen.dart';
 import 'package:stc_training/features/video_player/classRoomVideoPlayerPage.dart';
+import 'package:stc_training/features/video_player/offlineVideoPlayer.dart';
 import 'package:stc_training/features/video_player/videoPlayerPage.dart';
 import 'package:stc_training/layout/drawer_layout_page.dart';
 
@@ -79,6 +80,14 @@ class Routehelper {
     required String videoTitle,
   }) =>
       '$classRoomVideoPlayerPage?unitContent=$unitContent&&videoTitle=$videoTitle';
+  ///////////////////////////////////////////////
+  /// Offline Video Player page
+  ///////////////////////////////////////////////
+  static const String offlineVideoPlayerPage = '/offline-video-player-page';
+  static String GoToOfflineVideoPlayerPage({
+    required String localVideoPath,
+  }) =>
+      '$offlineVideoPlayerPage?localVideoPath=$localVideoPath';
   ////////////////////////////////////////////
   // ? Route Lists
   ////////////////////////////////////////////
@@ -152,6 +161,15 @@ class Routehelper {
       },
     ),
 
+    // ? Offline Video Player Page
+    GetPage(
+        name: offlineVideoPlayerPage,
+        page: () {
+          var localVideoPath = Get.parameters['localVideoPath'];
+          return OfflineVideoPlayer(
+            localVideoPath: localVideoPath!,
+          );
+        }),
     // ? Video Player Page
     GetPage(
         name: videoPlayerPage,

@@ -3,18 +3,19 @@ import 'dart:io';
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:stc_training/helper/methods.dart';
+import 'package:stc_training/utils/app_bar_util.dart';
 import 'package:video_player/video_player.dart';
 
-class PopUpVideoPlayerPage extends StatefulWidget {
-  const PopUpVideoPlayerPage({super.key, required this.localVideoPath});
+class OfflineVideoPlayer extends StatefulWidget {
+  const OfflineVideoPlayer({super.key, required this.localVideoPath});
 
   @override
-  PopUpVideoPlayerPageState createState() => PopUpVideoPlayerPageState();
+  State<OfflineVideoPlayer> createState() => _OfflineVideoPlayerState();
 
   final String localVideoPath;
 }
 
-class PopUpVideoPlayerPageState extends State<PopUpVideoPlayerPage> {
+class _OfflineVideoPlayerState extends State<OfflineVideoPlayer> {
   late VideoPlayerController _videoPlayerController;
   late ChewieController chewieController;
 
@@ -22,9 +23,9 @@ class PopUpVideoPlayerPageState extends State<PopUpVideoPlayerPage> {
   void initState() {
     super.initState();
 
-    // _videoPlayerController = VideoPlayerController.asset(widget.localVideoPath);
-    _videoPlayerController =
-        VideoPlayerController.file(File(widget.localVideoPath));
+    _videoPlayerController = VideoPlayerController.file(
+      File(widget.localVideoPath),
+    );
     chewieController = ChewieController(
       videoPlayerController: _videoPlayerController,
       aspectRatio: 3 / 2,
@@ -42,9 +43,11 @@ class PopUpVideoPlayerPageState extends State<PopUpVideoPlayerPage> {
 
   @override
   Widget build(BuildContext context) {
-    LOG_THE_DEBUG_DATA(messag: widget.localVideoPath);
-    return Material(
-      child: Center(
+    return Scaffold(
+      appBar: AppBarUtil(
+        barText: "Offline video",
+      ),
+      body: Center(
         child: Container(
           child: Chewie(
             controller: chewieController,

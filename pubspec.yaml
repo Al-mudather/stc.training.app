@@ -50,6 +50,8 @@ dependencies:
   dio: ^5.4.1
   open_file: ^3.3.2
   hive: ^2.2.3
+  flutter_download_manager: ^0.5.5
+  flutter_downloader: ^1.11.6
 
   # share_plus: ^7.2.1
   flutter_svg: ^2.0.4

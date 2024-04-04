@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_file_downloader/flutter_file_downloader.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:stc_training/features/course/models/course_unit_content_model.dart';
@@ -19,6 +20,10 @@ import 'package:path/path.dart' as Path;
 import 'package:dio/dio.dart';
 
 import 'package:open_file/open_file.dart';
+
+import 'package:flutter_download_manager/flutter_download_manager.dart';
+
+import 'package:flutter_downloader/flutter_downloader.dart';
 
 class ClassChapterItemContentComp extends StatefulWidget {
   const ClassChapterItemContentComp({super.key, required this.content});
@@ -82,7 +87,7 @@ class _ClassChapterItemContentCompState
     bool directoryExists = await directory.exists();
     if (!directoryExists) {
       //Todo: If the directory does not exists, create a new one
-      Directory myDir = await Directory(dirPath).create(recursive: true);
+      await Directory(dirPath).create(recursive: true);
       // LOG_THE_DEBUG_DATA(messag: myDir.path, type: 'i');
     }
   }
@@ -99,7 +104,7 @@ class _ClassChapterItemContentCompState
     bool directoryExists = await directory.exists();
     if (!directoryExists) {
       //Todo: If the directory does not exists, create a new one
-      Directory myDir = await Directory(dirPath).create(recursive: true);
+      await Directory(dirPath).create(recursive: true);
       // LOG_THE_DEBUG_DATA(messag: myDir.path, type: 'i');
     }
   }
@@ -132,9 +137,9 @@ playlist_480p.m3u8
     cancelToken = CancelToken();
 
     try {
-      // setState(() {
-      //   downloading = true;
-      // });
+      setState(() {
+        downloading = true;
+      });
       await Dio().download(
         // 'https://video.cdn1.stc.training/stream/hls/${videoUuid}/playlist_720p.m3u8',
         'https://video.cdn1.stc.training/stream/hls/${videoUuid}/playlist_480p.m3u8',
@@ -143,10 +148,6 @@ playlist_480p.m3u8
           // setState(() {
           //   progress = (count / total);
           // });
-          LOG_THE_DEBUG_DATA(
-              messag:
-                  'Progress = $count/$total ->> Count: $count -> total: $total',
-              type: 'e');
         },
         // cancelToken: cancelToken,
       );
@@ -155,9 +156,9 @@ playlist_480p.m3u8
       //   fileExists = true;
       // });
     } catch (e) {
-      // setState(() {
-      //   downloading = false;
-      // });
+      setState(() {
+        downloading = false;
+      });
       LOG_THE_DEBUG_DATA(messag: e, type: 'e');
     }
   }
@@ -167,11 +168,85 @@ playlist_480p.m3u8
     String appDocPath =
         await DirectoryPath().getApplicationDocumentsStoragePath();
     //Todo: Create the directory name
+    // LOG_THE_DEBUG_DATA(messag: 'appDocPath: $appDocPath');
     // String dirPath = "$appDocPath/video/$videoUuid/playlist_720p.m3u8";
     String dirPath = "$appDocPath/video/$videoUuid/playlist_480p.m3u8";
     File file = await File(dirPath);
     var file_720p = await file.readAsString();
     return file_720p;
+  }
+
+  DOWNLOAD_the_video_segments({required List<String> segmentsUrl}) async {
+    //Todo: Get the dircetory path
+    String appDocPath =
+        await DirectoryPath().getApplicationDocumentsStoragePath();
+    String dirPath = "$appDocPath/video/$videoUuid/";
+
+    // DownloadManager manager = DownloadManager();
+    // // manager.getAllDownloads();
+
+    // manager.addBatchDownloads(segmentsUrl, dirPath);
+
+    // ValueNotifier<double> downloadProgress =
+    //     manager.getBatchDownloadProgress(segmentsUrl);
+
+    setState(() {
+      downloading = true;
+      fileExists = false;
+    });
+
+    int count = 0;
+    for (var url in segmentsUrl) {
+      String fileName = Path.basename(url);
+
+      await Dio().download(
+        url,
+        dirPath + fileName,
+        onReceiveProgress: (count, total) {},
+        cancelToken: cancelToken,
+      );
+      count += 1;
+      setState(() {
+        progress = (count / segmentsUrl.length);
+      });
+
+      // final taskId = await FlutterDownloader.enqueue(
+      //   url: url,
+      //   savedDir: dirPath,
+      //   showNotification: true,
+      //   openFileFromNotification: true,
+      // );
+      // FlutterDownloader.registerCallback((id, status, progress) {
+      //   // Use this callback to update the UI or state with the download progress
+      //   LOG_THE_DEBUG_DATA(
+      //       messag:
+      //           'Download task ($id) is in status ($status) and progress ($progress)',
+      //       type: 'e');
+      // });
+    }
+
+    setState(() {
+      downloading = false;
+      fileExists = true;
+    });
+  }
+
+  DELETE_video_files_folder() async {
+    //Todo: Get the dircetory path
+    String appDocPath =
+        await DirectoryPath().getApplicationDocumentsStoragePath();
+    String dirPath = "$appDocPath/video/$videoUuid/";
+    final dir = Directory(dirPath);
+    if (dir.existsSync()) {
+      try {
+        dir.deleteSync(recursive: true);
+        setState(() {
+          fileExists = false;
+        });
+      } catch (e) {
+        LOG_THE_DEBUG_DATA(messag: e, type: 'e');
+      }
+    }
   }
 
   startDownload() async {
@@ -197,36 +272,49 @@ playlist_480p.m3u8
             'https://video.cdn1.stc.training/stream/hls/${videoUuid}/${name}')
         .toList();
 
-    LOG_THE_DEBUG_DATA(messag: segmentsUrls, type: 'd');
+    //Todo: Download all the video fiels
+    DOWNLOAD_the_video_segments(segmentsUrl: segmentsUrls);
+  }
 
-    // // Print the list
-    // print(tsFiles);
+  Future<bool> IS_the_video_offline_exists() async {
+    //Todo: Get the dircetory path
+    String appDocPath =
+        await DirectoryPath().getApplicationDocumentsStoragePath();
+    //Todo: Create the directory name
+    String dirPath = "$appDocPath/keys/$videoUuid";
 
-    // var storagePath = await DirectoryPath().getTemporaryPath();
-    // filePath = '$storagePath/$fileName ';
+    //Todo: Ckeck to see if the directory exists
+    final directory = Directory(dirPath);
+    bool directoryExists = await directory.exists();
+    return directoryExists;
   }
 
   checkFileExist() async {
-    var storagePath = await DirectoryPath().getTemporaryPath();
-    filePath = '$storagePath/$fileName ';
-    //Todo: Check to see if the file exists
-    bool fileExistCheck = await File(filePath).exists();
+    //Todo: Get the dircetory path
+    String appDocPath =
+        await DirectoryPath().getApplicationDocumentsStoragePath();
+    //Todo: Create the directory name
+    String dirPath = "$appDocPath/video/$videoUuid/";
+
+    //Todo: Ckeck to see if the directory exists
+    final directory = Directory(dirPath);
+    bool directoryExists = await directory.exists();
+
+    //ToDo: Check also if all files are been downloaded
+
     setState(() {
-      fileExists = fileExistCheck;
+      fileExists = directoryExists;
     });
   }
 
-  openFile() async {
+  PLAY_the_offline_video() async {
     try {
-      // var storagePath = await DirectoryPath().getTemporaryPath();
-      // filePath = '$storagePath/$fileName ';
-      filePath =
-          '/storage/emulated/0/Android/data/com.training.stc.stc_training/files/data/user/0/com.training.stc.stc_training/files/b880c5a624fea1bf640e14a5acf22e5b.m3u8';
+      String appDocPath =
+          await DirectoryPath().getApplicationDocumentsStoragePath();
+      String dirPath = "$appDocPath/video/$videoUuid/playlist.m3u8";
 
-      LOG_THE_DEBUG_DATA(messag: 'OK', type: 'e');
-      PopUpVideoPlayerPage(
-        localVideoPath: filePath,
-      );
+      Get.toNamed(
+          Routehelper.GoToOfflineVideoPlayerPage(localVideoPath: dirPath));
     } catch (e) {
       LOG_THE_DEBUG_DATA(messag: e, type: 'e');
     }
@@ -237,8 +325,7 @@ playlist_480p.m3u8
     return GestureDetector(
       onTap: () {
         //Extract the video data and send it to the video player
-        // Extract_the_video_data();
-        // openFile();
+        fileExists ? PLAY_the_offline_video() : Extract_the_video_data();
       },
       child: Container(
         padding: const EdgeInsets.only(
@@ -276,8 +363,7 @@ playlist_480p.m3u8
                 btnTitle: "",
                 btnType: BtnTypes.filledIcon,
                 onClicked: () async {
-                  startDownload();
-                  // openFile();
+                  fileExists ? PLAY_the_offline_video() : startDownload();
                 },
                 icon: fileExists
                     ? Icon(
@@ -293,12 +379,13 @@ playlist_480p.m3u8
                                 strokeWidth: 3,
                                 backgroundColor: Colors.grey,
                                 valueColor: const AlwaysStoppedAnimation<Color>(
-                                    AppColors.brown),
+                                  AppColors.primary,
+                                ),
                               ),
                               Text(
                                 "${(progress * 100).toStringAsFixed(2)}",
                                 style: TextStyle(
-                                  fontSize: 12,
+                                  fontSize: 10,
                                 ),
                               ),
                             ],
@@ -307,7 +394,34 @@ playlist_480p.m3u8
                             Icons.file_download,
                             color: AppColors.primary,
                           ),
-              )
+              ),
+              fileExists
+                  ? CustomBtnUtil(
+                      btnTitle: '',
+                      btnType: BtnTypes.filledIcon,
+                      icon: Icon(
+                        Icons.delete_forever,
+                        color: AppColors.errorDark,
+                      ),
+                      // onClicked: () => DELETE_video_files_folder(),
+                      onClicked: () {
+                        Get.defaultDialog(
+                          title: "Do You Realy Want to delete this video?",
+                          barrierDismissible: false,
+                          content: Container(),
+                          textConfirm: "Yes",
+                          textCancel: "No",
+                          confirmTextColor: Colors.white,
+                          buttonColor: AppColors.errorDark,
+                          onCancel: () => {},
+                          onConfirm: () async {
+                            DELETE_video_files_folder();
+                            Get.back();
+                          },
+                        );
+                      },
+                    )
+                  : Container()
             ],
           ),
         ),

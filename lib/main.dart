@@ -16,6 +16,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:vdocipher_flutter/vdocipher_flutter.dart';
 import 'firebase_options.dart';
 
+import 'package:flutter_downloader/flutter_downloader.dart';
+
 import 'dart:developer' as devtools show log;
 
 //tODO: 1) fix the graphql offline mode
@@ -38,6 +40,12 @@ void main() async {
   );
   // so we need to initialize Hive.
   await initHiveForFlutter();
+  await FlutterDownloader.initialize(
+      debug:
+          true, // optional: set to false to disable printing logs to console (default: true)
+      ignoreSsl:
+          true // option: set to false to disable working with http links (default: false)
+      );
 
   // await Hive.openBox<QueryResult>(graphQLCacheBox);
   // Load the dependences
