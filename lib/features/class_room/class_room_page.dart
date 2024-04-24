@@ -25,15 +25,9 @@ class ClassRoomPage extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    //TODO: Get the course by pk
-    //TODO: Get the enrollment by the course pk
-    //TODO: Fill the course data
-    //TODO: Get the course video based on the content
-
     ///////////////////////////////////////////////
     /// Parameters
     ///////////////////////////////////////////////
-    List<String> tabList = ["Information", "Courses"];
     Map<String, dynamic> result;
     ///////////////////////////////////////////////
     /// Controllers
@@ -87,24 +81,6 @@ class ClassRoomPage extends HookWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          //Todo: video player
-
-          // GetBuilder<ClassRoomController>(
-          //   builder: (controller) {
-          //     return controller.isLoading
-          //         ? Container(
-          //             height: 300,
-          //             width: double.maxFinite,
-          //             color: Colors.amber,
-          //           )
-          //         : SizedBox(
-          //             height: 300,
-          //             width: double.maxFinite,
-          //             child: VideoPlayerClassSection(),
-          //           );
-          //   },
-          // ),
-
           Container(
             margin: EdgeInsets.symmetric(horizontal: 10),
             child: Column(
@@ -112,15 +88,6 @@ class ClassRoomPage extends HookWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                // GetBuilder<ClassRoomController>(builder: (ctl) {
-                //   return Container(
-                //     child: CustomTextUtil(
-                //       text1: '${ctl.videoName ?? ''}',
-                //       textAlign: TextAlign.center,
-                //       fontSize1: 18,
-                //     ),
-                //   );
-                // }),
                 const SizedBox(
                   height: 20,
                 ),
@@ -146,7 +113,9 @@ class ClassRoomPage extends HookWidget {
                         coursePk: coursePk,
                       ),
                       ClassFilesCustomTabBarView(
-                          courseId: courseId, coursePk: coursePk),
+                        courseId: courseId,
+                        coursePk: coursePk,
+                      ),
                       ClassInfoTabBarView(),
                     ],
                   ),

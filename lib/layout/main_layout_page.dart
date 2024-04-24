@@ -3,7 +3,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:stc_training/features/category/category_page.dart';
-import 'package:stc_training/features/course/my_courses_page.dart';
+import 'package:stc_training/features/course/online_my_courses_page.dart';
+import 'package:stc_training/features/course/online_offline_my_courses.dart';
 import 'package:stc_training/features/home/home_page.dart';
 import 'package:stc_training/features/settings/controller/drawer_layout_controller.dart';
 import 'package:stc_training/helper/app_colors.dart';
@@ -26,11 +27,14 @@ class MainLayoutPage extends HookWidget {
     var _currentIndex = useState(0);
     var tabsPage = [
       const HomePage(),
-      MyCoursesPage(
+      OnlineOfflineMyCoursesPage(
         isPage: false,
       ),
       const CategoryPage(),
     ];
+    // MyCoursesPage(
+    //     isPage: false,
+    //   ),
     // Center(child: CustomTextUtil(text1: 'Coming Soon')),
     ////////////////////////////////////////////////
     /// Functions

@@ -13,8 +13,8 @@ import 'package:stc_training/utils/custom_btn_util.dart';
 import 'package:stc_training/utils/no_data_util.dart';
 import 'package:stc_training/utils/search_text_field_util.dart';
 
-class MyCoursesPage extends HookWidget {
-  MyCoursesPage({
+class OnlineMyCoursesPage extends HookWidget {
+  OnlineMyCoursesPage({
     super.key,
     this.isPage = true,
   });

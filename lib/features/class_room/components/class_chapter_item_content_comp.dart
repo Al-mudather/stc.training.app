@@ -4,12 +4,18 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:stc_training/features/course/controller/offline_courses_controller.dart';
+import 'package:stc_training/features/course/models/course_models.dart';
 import 'package:stc_training/features/course/models/course_unit_content_model.dart';
+import 'package:stc_training/features/course/models/course_unit_model.dart';
 import 'package:stc_training/helper/app_colors.dart';
 import 'package:stc_training/helper/directory_path.dart';
 import 'package:stc_training/helper/enumerations.dart';
 import 'package:stc_training/helper/methods.dart';
 import 'package:stc_training/routes/route_helper.dart';
+import 'package:stc_training/services/CRUD/offline_course_model.dart';
+import 'package:stc_training/services/CRUD/offline_unit_model.dart';
+import 'package:stc_training/services/CRUD/offline_video_model.dart';
 import 'package:stc_training/utils/custom_btn_util.dart';
 import 'package:stc_training/utils/custom_text_util.dart';
 import 'package:path/path.dart' as Path;
@@ -39,12 +45,18 @@ class _ClassChapterItemContentCompState
   late String videoUuid;
   var getPathFile = DirectoryPath();
 
+  final OfflineCoursesController offlineCoursectl =
+      Get.find<OfflineCoursesController>();
+
   @override
   void initState() {
     super.initState();
     var contentData = jsonDecode('${widget.content?.modelValue}');
     var metaData = contentData['video_metadata'];
-    // LOG_THE_DEBUG_DATA(messag: contentData);
+
+    CourseUnitModel? unit = widget.content!.courseUnit;
+
+    LOG_THE_DEBUG_DATA(messag: 'couse tite: ${unit!.course!.title}');
     setState(() {
       videoUuid = metaData['videoData']['videoUuid'];
       // netWorkFilePath = contentData['attachment'];
@@ -227,11 +239,77 @@ playlist_480p.m3u8
       // });
     }
 
+    // setState(() {
+    //   downloading = false;
+    //   fileExists = true;
+    // });
+
+    //todo: Store the video into the local database
+    CREATE_local_offline_video();
+
+    // SEND_a_message_to_the_user(
+    //   message:
+    //       "Video is donwloaded, enjoy offline mode... if the video is not working deleted and downloaded again ",
+    //   messageLable: "Success",
+    //   backgroundColor: AppColors.successLight,
+    // );
+  }
+
+  /////////////////////////////////////////
+  ///! The offline local video database
+  /////////////////////////////////////////
+  CREATE_local_offline_video() async {
+    String appDocPath =
+        await DirectoryPath().getApplicationDocumentsStoragePath();
+    String dirPath = "$appDocPath/video/$videoUuid/playlist.m3u8";
+    //todo: extract the video data and make the offline video model
+
+    //todo: extract the unit data and make the offline unit model
+    CourseUnitModel? unit = widget.content!.courseUnit;
+
+    //todo: extract the course data and make the offline course model
+    CourseModel? course = unit!.course;
+    OfflineCourseModel offlineCourse = OfflineCourseModel.fromJson({
+      'id': course!.id,
+      'pk': course.pk,
+      'totalHours': course.totalHours,
+      'title': course.title,
+      'profile': course.profile,
+      'cover': course.cover,
+      'courseHours': course.courseHours,
+    });
+    //todo: Create the course if not exists
+    OfflineCourseModel resultCourse =
+        await offlineCoursectl.createOfflineCourse(offlineCourse);
+    //todo: Create the unit if not exists
+    OfflineUnitModel offlineUnit = OfflineUnitModel.fromJson({
+      'pk': unit!.pk,
+      'id': unit.id,
+      'title': unit.title,
+      'isExternal': unit.isExternal,
+      'courseId': resultCourse.pk
+    });
+    OfflineUnitModel resultUnit =
+        await offlineCoursectl.createOfflineUnit(offlineUnit);
+    //todo: Create the video if not exists
+    OfflineVideoModel offlineVideo = OfflineVideoModel.fromJson({
+      'id': widget.content!.id,
+      'pk': widget.content!.pk,
+      'title': widget.content!.title,
+      'storagePath': dirPath,
+      'unitId': resultUnit.pk,
+    });
+    OfflineVideoModel resultVideo =
+        await offlineCoursectl.createOfflineVideo(offlineVideo);
+    LOG_THE_DEBUG_DATA(
+        messag:
+            'title: ${resultVideo.title} => path: ${resultVideo.storagePath}');
+    //todo: Change the downloading status
     setState(() {
       downloading = false;
       fileExists = true;
     });
-
+    //todo: notify the user
     SEND_a_message_to_the_user(
       message:
           "Video is donwloaded, enjoy offline mode... if the video is not working deleted and downloaded again ",

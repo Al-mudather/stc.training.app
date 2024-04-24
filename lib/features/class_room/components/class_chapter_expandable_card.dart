@@ -1,15 +1,9 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:stc_training/features/class_room/components/class_chapter_item_content_comp.dart';
 import 'package:stc_training/features/class_room/controller/class_room_controller.dart';
-import 'package:stc_training/features/course/models/course_unit_content_model.dart';
 import 'package:stc_training/features/course/models/course_unit_model.dart';
 import 'package:stc_training/helper/app_colors.dart';
-import 'package:stc_training/helper/methods.dart';
-import 'package:stc_training/routes/route_helper.dart';
 import 'package:stc_training/utils/custom_text_util.dart';
 
 class ClassChapterExpandableCard extends StatefulWidget {

@@ -4,7 +4,8 @@ import 'package:stc_training/features/authentication/login_auth_page.dart';
 import 'package:stc_training/features/class_room/class_room_page.dart';
 import 'package:stc_training/features/course/all_courses_page.dart';
 import 'package:stc_training/features/course/course_details_page.dart';
-import 'package:stc_training/features/course/my_courses_page.dart';
+import 'package:stc_training/features/course/online_my_courses_page.dart';
+import 'package:stc_training/features/course/online_offline_my_courses.dart';
 import 'package:stc_training/features/marketing/my_marketing_page.dart';
 import 'package:stc_training/features/pdf/pdf_screen.dart';
 import 'package:stc_training/features/video_player/classRoomVideoPlayerPage.dart';
@@ -139,8 +140,12 @@ class Routehelper {
     // ? My Courses page
     GetPage(
       name: myCoursesPage,
-      page: () => MyCoursesPage(),
+      page: () => OnlineOfflineMyCoursesPage(),
     ),
+    // GetPage(
+    //   name: myCoursesPage,
+    //   page: () => MyCoursesPage(),
+    // ),
 
     // ? 2 - The Pdf Screen page
     GetPage(

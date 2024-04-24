@@ -7,7 +7,7 @@ class OfflineVideoModel {
   String id;
   String title;
   String storagePath;
-  DownloadStatus downloadStatus;
+  // DownloadStatus downloadStatus;
   int unitId;
 
   OfflineVideoModel({
@@ -15,7 +15,7 @@ class OfflineVideoModel {
     required this.id,
     required this.title,
     required this.storagePath,
-    required this.downloadStatus,
+    // required this.downloadStatus,
     required this.unitId,
   });
 
@@ -25,9 +25,9 @@ class OfflineVideoModel {
         title = map[titleColumn] as String,
         storagePath = map[storagePathColumn] as String,
         // downloadStatus = map[downloadStatusColumn] as DownloadStatus;
-        downloadStatus = DownloadStatus.values.firstWhere((e) =>
-            e.toString() ==
-            'DownloadStatus.' + (map['downloadStatusColumn'] as String)),
+        // downloadStatus = DownloadStatus.values.firstWhere((e) =>
+        //     e.toString() ==
+        //     'DownloadStatus.' + (map['downloadStatusColumn'] as String)),
         unitId = map[unitIdColumn] as int;
 
   factory OfflineVideoModel.fromJson(Map<String, dynamic> json) {
@@ -36,7 +36,7 @@ class OfflineVideoModel {
       id: json['id'],
       title: json['title'],
       storagePath: json['storagePath'],
-      downloadStatus: json['downloadStatus'],
+      // downloadStatus: json['downloadStatus'],
       unitId: json['unitId'],
     );
   }
@@ -48,8 +48,8 @@ class OfflineVideoModel {
       'title': title,
       'storagePath': storagePath,
       'unitId': unitId,
-      'downloadStatus':
-          downloadStatus.toString().split('.').last // Convert enum to string
+      // 'downloadStatus':
+      //     downloadStatus.toString().split('.').last // Convert enum to string
     };
   }
 
@@ -69,4 +69,4 @@ const titleColumn = 'title';
 const storagePathColumn = 'storagePath';
 const downloadStatusColumn = 'downloadStatus';
 
-enum DownloadStatus { Downloaded, Downloading, NotDownloaded }
+// enum DownloadStatus { Downloaded, Downloading, NotDownloaded }

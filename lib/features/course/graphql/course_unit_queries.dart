@@ -38,6 +38,9 @@ class CourseUnitQueries {
                         course {
                           id
                           pk
+                          title,
+                          cover,
+                          profile
                         }
                       }
                     }
@@ -60,6 +63,9 @@ class CourseUnitQueries {
                       course {
                         id
                         pk
+                        title,
+                        cover,
+                        profile
                       }
                     }
                   }
@@ -121,6 +127,9 @@ class CourseUnitQueries {
                         course {
                           id
                           pk
+                          title,
+                          cover,
+                          profile
                         }
                       }
                     }
@@ -143,6 +152,9 @@ class CourseUnitQueries {
                       course {
                         id
                         pk
+                        title,
+                        cover,
+                        profile
                       }
                     }
                   }
