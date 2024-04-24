@@ -1,5 +1,6 @@
 import 'package:stc_training/features/course/models/course_unit_content_model.dart';
 import 'package:stc_training/services/CRUD/offline_course_model.dart';
+import 'package:stc_training/services/CRUD/offline_video_model.dart';
 
 //Todo: prepare the offline course unit content
 
@@ -34,7 +35,7 @@ class OfflineUnitModel {
   int? courseId;
   // OfflineCourseModel? course;
 
-  AllCourseUnitContentsModel? courseUnitContents;
+  List<OfflineVideoModel>? videos;
 
   OfflineUnitModel({
     this.pk,
@@ -42,7 +43,7 @@ class OfflineUnitModel {
     this.title,
     this.isExternal,
     // this.course,
-    this.courseUnitContents,
+    this.videos,
     this.courseId,
   });
 
@@ -52,27 +53,39 @@ class OfflineUnitModel {
     title = map[unitTitleColumn] as String;
     isExternal = map[unitIsExternalColumn] as bool;
     courseId = map[coursePkColumn] as int;
-    // course = map[unitIsCourseColumn] as OfflineCourseModel;
+    videos = (map['videos'] as List<dynamic>?)
+        ?.map((v) => OfflineVideoModel.fromJson(v))
+        .toList();
   }
 
-  OfflineUnitModel.fromJson(Map<String, dynamic> json) {
-    pk = json['pk'];
-    id = json['id'];
-    title = json['title'];
-    isExternal = json['isExternal'];
-    // if (json['course'] != null) {
-    //   course = OfflineCourseModel.fromJson(json['course']);
-    // }
+  // OfflineUnitModel.fromJson(Map<String, dynamic> json) {
+  //   pk = json['pk'];
+  //   id = json['id'];
+  //   title = json['title'];
+  //   isExternal = json['isExternal'];
+  //   // if (json['course'] != null) {
+  //   //   course = OfflineCourseModel.fromJson(json['course']);
+  //   // }
 
-    if (json['external'] != null) {
-      courseUnitContents = AllCourseUnitContentsModel.fromJson(
-          json['external']['courseunitcontentSet']);
-    } else {
-      if (json['courseunitcontentSet'] != null) {
-        courseUnitContents =
-            AllCourseUnitContentsModel.fromJson(json['courseunitcontentSet']);
-      }
-    }
+  //   if (json['videos'] != null) {
+  //     videos =
+  //     (json['videos'] as List<dynamic>?)
+  //         ?.map((v) => OfflineVideoModel.fromJson(v))
+  //         .toList();
+  //   }
+  // }
+
+  factory OfflineUnitModel.fromJson(Map<String, dynamic> json) {
+    return OfflineUnitModel(
+      pk: json['pk'],
+      id: json['id'],
+      title: json['title'],
+      isExternal: json['isExternal'] == 1,
+      courseId: json['courseId'],
+      videos: (json['videos'] as List<dynamic>?)
+          ?.map((v) => OfflineVideoModel.fromJson(v))
+          .toList(),
+    );
   }
 
   Map<String, dynamic> toMap() {

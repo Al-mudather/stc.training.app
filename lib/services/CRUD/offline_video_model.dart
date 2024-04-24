@@ -3,12 +3,12 @@ import 'package:stc_training/services/CRUD/offline_unit_model.dart';
 
 @immutable
 class OfflineVideoModel {
-  final int pk;
-  final String id;
-  final String title;
-  final String storagePath;
-  final DownloadStatus downloadStatus;
-  final int unitId;
+  int pk;
+  String id;
+  String title;
+  String storagePath;
+  DownloadStatus downloadStatus;
+  int unitId;
 
   OfflineVideoModel({
     required this.pk,
@@ -30,12 +30,24 @@ class OfflineVideoModel {
             'DownloadStatus.' + (map['downloadStatusColumn'] as String)),
         unitId = map[unitIdColumn] as int;
 
+  factory OfflineVideoModel.fromJson(Map<String, dynamic> json) {
+    return OfflineVideoModel(
+      pk: json['pk'],
+      id: json['id'],
+      title: json['title'],
+      storagePath: json['storagePath'],
+      downloadStatus: json['downloadStatus'],
+      unitId: json['unitId'],
+    );
+  }
+
   Map<String, dynamic> toMap() {
     return {
       'pk': pk,
       'id': id,
       'title': title,
       'storagePath': storagePath,
+      'unitId': unitId,
       'downloadStatus':
           downloadStatus.toString().split('.').last // Convert enum to string
     };

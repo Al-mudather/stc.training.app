@@ -53,6 +53,9 @@ class OfflineCourseModel {
     totalHours = map[courseTotalHourseColumn] as String;
     profile = map[courseProfileColumn] as String;
     cover = map[courseCoverColumn] as String;
+    units = (map['units'] as List<dynamic>?)
+        ?.map((u) => OfflineUnitModel.fromJson(u))
+        .toList();
   }
 
   OfflineCourseModel.fromJson(Map<String, dynamic> json) {
@@ -102,3 +105,5 @@ const courseHourseColumn = "courseHours";
 const courseTotalHourseColumn = "totalHours";
 const courseProfileColumn = "profile";
 const courseCoverColumn = "cover";
+
+const courseUnitsColumn = "units";

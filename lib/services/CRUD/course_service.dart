@@ -3,26 +3,46 @@ import 'dart:async';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' show join;
+import 'package:stc_training/services/CRUD/crud_exceptions.dart';
 import 'package:stc_training/services/CRUD/offline_course_model.dart';
 import 'package:stc_training/services/CRUD/offline_unit_model.dart';
 import 'package:stc_training/services/CRUD/offline_video_model.dart';
 
-class DatabaseAlreadyOpenException implements Exception {}
-
-class UnableToGetDocumentsDirectoryException implements Exception {}
-
-class DataBaseIsNotOpenException implements Exception {}
-
-class CouldNotDeleteVideoException implements Exception {}
-
-class CouldNotDeleteUnitException implements Exception {}
-
-class CouldNotDeleteCourseException implements Exception {}
-
-class CourseAlreadyExistsException implements Exception {}
-
 class CourseService {
   Database? _db;
+
+  // Get all courses with their associated units and videos
+  Future<List<OfflineCourseModel>> getAllCoursesWithDetails() async {
+    final db = _getDatabaseOrThrow();
+    List<Map<String, dynamic>> courseMaps = await db.query(offlineCourseTable);
+    List<OfflineCourseModel> courses = [];
+
+    for (var courseMap in courseMaps) {
+      OfflineCourseModel course = OfflineCourseModel.fromJson(courseMap);
+      List<Map<String, dynamic>> unitMaps = await db.query(offlineUnitTable,
+          where: 'courseId = ?', whereArgs: [course.pk]);
+
+      List<OfflineUnitModel> units = unitMaps
+          .map((unitMap) => OfflineUnitModel.fromJson(unitMap))
+          .toList();
+
+      for (OfflineUnitModel unit in units) {
+        List<Map<String, dynamic>> videoMaps = await db.query(offlineVideoTable,
+            where: 'unitId = ?', whereArgs: [unit.pk]);
+        List<OfflineVideoModel> videos = videoMaps
+            .map((videoMap) => OfflineVideoModel.fromJson(videoMap))
+            .toList();
+        unit.videos =
+            videos; // Assuming you add a 'videos' List<OfflineVideoModel> field in OfflineUnitModel
+      }
+
+      course.units =
+          units; // Assuming you add a 'units' List<OfflineUnitModel> field in OfflineCourseModel
+      courses.add(course);
+    }
+
+    return courses;
+  }
 
   //todo: CREATE cousre
   Future<bool> createOfflineCourse(OfflineCourseModel course) async {
@@ -37,14 +57,55 @@ class CourseService {
     if (results.isNotEmpty) {
       throw CourseAlreadyExistsException();
     }
-    return true;
-    // return await db.insert(
-    //   offlineCourseTable,
-    //   course
-    //       .toMap(), // Assuming toMap() method is properly implemented in OfflineCourseModel
-    //   conflictAlgorithm: ConflictAlgorithm
-    //       .replace, // To handle cases where the same PK might be inserted
-    // );
+
+    final courseId = await db.insert(
+      offlineCourseTable,
+      course
+          .toMap(), // Assuming toMap() method is properly implemented in OfflineCourseModel
+      conflictAlgorithm: ConflictAlgorithm
+          .replace, // To handle cases where the same PK might be inserted
+    );
+
+    return courseId == 1 ? true : false;
+  }
+
+  //todo: CREATE unit
+  Future<int> createOfflineUnit(OfflineUnitModel unit) async {
+    final db = _getDatabaseOrThrow();
+    //todo: make suer the course is exists fist
+    // First, check if the course exists
+    List<Map<String, dynamic>> course = await db
+        .rawQuery('SELECT pk FROM OfflineCourse WHERE pk = ?', [unit.courseId]);
+    if (course.isEmpty) {
+      // Handle the case where the course does not exist
+      // You could throw an exception, return an error code, or handle it in another appropriate way
+      throw CouldNotFindCourseException();
+    }
+
+    return await db.insert(
+      offlineUnitTable,
+      unit.toMap(), // Assuming toMap() method is implemented in OfflineUnitModel
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
+
+  //todo: CREATE video
+  Future<int> createOfflineVideo(OfflineVideoModel video) async {
+    final db = _getDatabaseOrThrow();
+    List<Map<String, dynamic>> unit = await db
+        .rawQuery('SELECT pk FROM OfflineUnit WHERE pk = ?', [video.unitId]);
+    if (unit.isEmpty) {
+      // Handle the case where the unit does not exist
+      // Could throw an exception, return an error code, or handle it another appropriate way
+      throw CouldNotFindUnitException();
+    }
+
+    return await db.insert(
+      offlineVideoTable,
+      video
+          .toMap(), // Assuming toMap() method is implemented in OfflineVideoModel
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
   }
 
   //todo: get single course
@@ -61,28 +122,44 @@ class CourseService {
     if (maps.isNotEmpty) {
       return OfflineCourseModel.fromJson(maps.first);
     }
-    return null;
+    throw CouldNotFindCourseException();
+    // return null;
   }
 
-  //todo: CREATE unit
-  Future<int> insertUnit(OfflineUnitModel unit) async {
+  //todo: get single unit
+  // Method to fetch a single course by its primary key
+  Future<OfflineUnitModel?> getUnit(int pk) async {
     final db = _getDatabaseOrThrow();
-    return await db.insert(
+    // final List<Map<String, dynamic>> maps = await db.rawQuery('SELECT * FROM OfflineCourse WHERE pk = ?', [pk]);
+    final List<Map<String, dynamic>> maps = await db.query(
       offlineUnitTable,
-      unit.toMap(), // Assuming toMap() method is implemented in OfflineUnitModel
-      conflictAlgorithm: ConflictAlgorithm.replace,
+      limit: 1,
+      where: 'pk = ?',
+      whereArgs: [pk],
     );
+    if (maps.isNotEmpty) {
+      return OfflineUnitModel.fromJson(maps.first);
+    }
+    throw CouldNotFindUnitException();
+    // return null;
   }
 
-  //todo: CREATE video
-  Future<int> insertVideo(OfflineVideoModel video) async {
+  //todo: get single video
+  // Method to fetch a single course by its primary key
+  Future<OfflineVideoModel?> getvideo(int pk) async {
     final db = _getDatabaseOrThrow();
-    return await db.insert(
-      'OfflineVideo',
-      video
-          .toMap(), // Assuming toMap() method is implemented in OfflineVideoModel
-      conflictAlgorithm: ConflictAlgorithm.replace,
+    // final List<Map<String, dynamic>> maps = await db.rawQuery('SELECT * FROM OfflineCourse WHERE pk = ?', [pk]);
+    final List<Map<String, dynamic>> maps = await db.query(
+      offlineVideoTable,
+      limit: 1,
+      where: 'pk = ?',
+      whereArgs: [pk],
     );
+    if (maps.isNotEmpty) {
+      return OfflineVideoModel.fromJson(maps.first);
+    }
+    throw CouldNotFindVideoException();
+    // return null;
   }
 
   //todo: delete course
