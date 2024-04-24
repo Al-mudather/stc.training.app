@@ -1,5 +1,6 @@
 import 'package:stc_training/features/category/models/category_models.dart';
 import 'package:stc_training/features/instructor/models/instructor_models.dart';
+import 'package:stc_training/helper/methods.dart';
 
 class AllCoursesModel {
   String? startCursor;
@@ -95,9 +96,10 @@ class CourseModel {
   }
 
   CourseModel.fromJson(Map<String, dynamic> json) {
+    // LOG_THE_DEBUG_DATA(messag: json);
     pk = json['pk'];
     period = json['period'];
-    totalHours = json['courseHours'];
+    totalHours = json['totalHours'];
     id = json['id'];
     title = json['title'];
     telegramLink = json['telegramLink'];
