@@ -305,10 +305,95 @@ class OfflineCoursesController extends GetxController {
 
     if (deletedCount != 1) {
       throw CouldNotDeleteVideoException();
-    }
+    } else {}
 
     //todo: update the UI
     update();
+  }
+
+  //todo: Delete the video and cascationg the deleteion to the unit amd the course
+  Future<void> removeVideo({required int videoId}) async {
+    final db = _getDatabaseOrThrow();
+
+    // Fetch the unit ID and course ID from the video before any deletion
+    var videoDetails = await db.query(offlineVideoTable,
+        columns: ['unitId'], where: 'pk = ?', whereArgs: [videoId]);
+    if (videoDetails.isEmpty) return; // Video not found
+    int unitId = videoDetails.first['unitId'] as int;
+
+    // Delete the specified video
+    await db.delete(offlineVideoTable, where: 'pk = ?', whereArgs: [videoId]);
+
+    // Check if the unit is now empty
+    var unitVideos = await db
+        .query(offlineVideoTable, where: 'unitId = ?', whereArgs: [unitId]);
+    if (unitVideos.isNotEmpty) return; // Unit still contains other videos
+
+    // Fetch the course ID before deleting the unit
+    var unitDetails = await db.query(offlineUnitTable,
+        columns: ['courseId'], where: 'pk = ?', whereArgs: [unitId]);
+    if (unitDetails.isEmpty) return; // No unit found
+    int courseId = unitDetails.first['courseId'] as int;
+
+    // Delete the empty unit
+    await db.delete(offlineUnitTable, where: 'pk = ?', whereArgs: [unitId]);
+
+    // Check if the course is now empty
+    var courseUnits = await db
+        .query(offlineUnitTable, where: 'courseId = ?', whereArgs: [courseId]);
+
+    if (courseUnits.isNotEmpty) return; // Course still contains other units
+    LOG_THE_DEBUG_DATA(messag: 'courseUnits => ${courseUnits}');
+
+    LOG_THE_DEBUG_DATA(messag: 'courseId => ${courseId}');
+    try {
+      // Delete the empty course
+      await db
+          .delete(offlineCourseTable, where: 'pk = ?', whereArgs: [courseId]);
+      // Now remove the course from the in-memory list.
+      _courses.removeWhere((course) => course.id == courseId);
+      _courses = [];
+      // Notify any listeners that the courses list has changed.
+    } catch (e) {
+      LOG_THE_DEBUG_DATA(messag: 'e => ${e}', type: 'e');
+    }
+
+    update();
+  }
+
+  Future<void> removeVideoV1({required int videoId}) async {
+    final db = _getDatabaseOrThrow();
+
+    // 1) Remove the specified video
+    await db.delete(offlineVideoTable, where: 'pk = ?', whereArgs: [videoId]);
+
+    // Check which unit this video belonged to
+    List<Map> result = await db.query(offlineVideoTable,
+        columns: ['unitId'], where: 'pk = ?', whereArgs: [videoId]);
+    if (result.isEmpty) return; // No video found, or it's already deleted.
+    int unitId = result.first['unitId'];
+
+    // 2) Check if the unit is now empty
+    result = await db.query(offlineVideoTable,
+        columns: ['pk'], where: 'unitId = ?', whereArgs: [unitId]);
+    if (result.isNotEmpty) return; // There are still other videos in the unit
+
+    // 3) If the unit is empty, delete it
+    await db.delete(offlineUnitTable, where: 'pk = ?', whereArgs: [unitId]);
+
+    // Check which course this unit belonged to
+    result = await db.query(offlineUnitTable,
+        columns: ['courseId'], where: 'pk = ?', whereArgs: [unitId]);
+    if (result.isEmpty) return; // No unit found, or it's already deleted.
+    int courseId = result.first['courseId'];
+
+    // 4) Check if there are any other units with the same course
+    result = await db.query(offlineUnitTable,
+        columns: ['pk'], where: 'courseId = ?', whereArgs: [courseId]);
+    if (result.isNotEmpty) return; // There are still other units in the course
+
+    // 5) If there are no units in the course, delete the course
+    await db.delete(offlineCourseTable, where: 'pk = ?', whereArgs: [courseId]);
   }
 
   Database _getDatabaseOrThrow() {

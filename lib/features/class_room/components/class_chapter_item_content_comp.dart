@@ -321,7 +321,8 @@ playlist_480p.m3u8
   DELETE_video_files_folder() async {
     //todo: delete the video from the database
     try {
-      offlineCoursectl.deleteVideo(videoPk: widget.content!.pk!);
+      // offlineCoursectl.deleteVideo(videoPk: widget.content!.pk!);
+      offlineCoursectl.removeVideo(videoId: widget.content!.pk!);
       //Todo: Get the dircetory path
       String appDocPath =
           await DirectoryPath().getApplicationDocumentsStoragePath();
