@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:stc_training/features/account/profile_page.dart';
 import 'package:stc_training/features/authentication/login_auth_page.dart';
 import 'package:stc_training/features/class_room/class_room_page.dart';
+import 'package:stc_training/features/class_room/offline_class_room_page.dart';
 import 'package:stc_training/features/course/all_courses_page.dart';
 import 'package:stc_training/features/course/course_details_page.dart';
 import 'package:stc_training/features/course/online_my_courses_page.dart';
@@ -52,6 +53,16 @@ class Routehelper {
     required String courseId,
   }) =>
       '$classRoomPage?coursePk=$coursePk&&courseId=$courseId';
+
+  ///////////////////////////////////////////////
+  /// Offline Course class page
+  ///////////////////////////////////////////////
+  static const String offlineClassRoomPage = '/offline-class-room-page';
+  static String GoToOfflineClassRoomPage({
+    required String coursePk,
+    required String courseId,
+  }) =>
+      '$offlineClassRoomPage?coursePk=$coursePk&&courseId=$courseId';
 
   ///////////////////////////////////////////////
   /// The Pdf Screen page
@@ -163,6 +174,14 @@ class Routehelper {
         var coursePk = Get.parameters['coursePk'];
         var courseId = Get.parameters['courseId'];
         return ClassRoomPage(coursePk: coursePk!, courseId: courseId!);
+      },
+    ),
+    GetPage(
+      name: offlineClassRoomPage,
+      page: () {
+        var coursePk = Get.parameters['coursePk'];
+        var courseId = Get.parameters['courseId'];
+        return OfflineClassRoomPage(coursePk: coursePk!, courseId: courseId!);
       },
     ),
 

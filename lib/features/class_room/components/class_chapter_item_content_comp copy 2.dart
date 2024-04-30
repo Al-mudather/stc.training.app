@@ -319,36 +319,20 @@ playlist_480p.m3u8
   }
 
   DELETE_video_files_folder() async {
-    //todo: delete the video from the database
-    try {
-      offlineCoursectl.deleteVideo(videoPk: widget.content!.pk!);
-      //Todo: Get the dircetory path
-      String appDocPath =
-          await DirectoryPath().getApplicationDocumentsStoragePath();
-      String dirPath = "$appDocPath/video/$videoUuid/";
-      final dir = Directory(dirPath);
-      if (dir.existsSync()) {
-        try {
-          dir.deleteSync(recursive: true);
-          setState(() {
-            fileExists = false;
-          });
-
-          SEND_a_message_to_the_user(
-            message: "Video is deleted",
-            messageLable: "Success",
-            backgroundColor: AppColors.successLight,
-          );
-        } catch (e) {
-          LOG_THE_DEBUG_DATA(messag: e, type: 'e');
-        }
+    //Todo: Get the dircetory path
+    String appDocPath =
+        await DirectoryPath().getApplicationDocumentsStoragePath();
+    String dirPath = "$appDocPath/video/$videoUuid/";
+    final dir = Directory(dirPath);
+    if (dir.existsSync()) {
+      try {
+        dir.deleteSync(recursive: true);
+        setState(() {
+          fileExists = false;
+        });
+      } catch (e) {
+        LOG_THE_DEBUG_DATA(messag: e, type: 'e');
       }
-    } catch (error) {
-      SEND_a_message_to_the_user(
-        message: "Can not delete the video: ${error}",
-        messageLable: "Error",
-        backgroundColor: AppColors.errorDark,
-      );
     }
   }
 

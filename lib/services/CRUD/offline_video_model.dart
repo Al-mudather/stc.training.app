@@ -6,6 +6,7 @@ class OfflineVideoModel {
   int pk;
   String id;
   String title;
+  String? videoUuid;
   String storagePath;
   // DownloadStatus downloadStatus;
   int unitId;
@@ -14,6 +15,7 @@ class OfflineVideoModel {
     required this.pk,
     required this.id,
     required this.title,
+    this.videoUuid,
     required this.storagePath,
     // required this.downloadStatus,
     required this.unitId,
@@ -23,6 +25,7 @@ class OfflineVideoModel {
       : id = map[idColumn] as String,
         pk = map[pkColumn] as int,
         title = map[titleColumn] as String,
+        videoUuid = map[videoUuidColumn] as String,
         storagePath = map[storagePathColumn] as String,
         // downloadStatus = map[downloadStatusColumn] as DownloadStatus;
         // downloadStatus = DownloadStatus.values.firstWhere((e) =>
@@ -35,6 +38,7 @@ class OfflineVideoModel {
       pk: json['pk'],
       id: json['id'],
       title: json['title'],
+      videoUuid: json['videoUuid'],
       storagePath: json['storagePath'],
       // downloadStatus: json['downloadStatus'],
       unitId: json['unitId'],
@@ -46,6 +50,7 @@ class OfflineVideoModel {
       'pk': pk,
       'id': id,
       'title': title,
+      'videoUuid': videoUuid,
       'storagePath': storagePath,
       'unitId': unitId,
       // 'downloadStatus':
@@ -66,6 +71,7 @@ class OfflineVideoModel {
 const idColumn = 'id';
 const pkColumn = 'pk';
 const titleColumn = 'title';
+const videoUuidColumn = 'videoUuid';
 const storagePathColumn = 'storagePath';
 const downloadStatusColumn = 'downloadStatus';
 

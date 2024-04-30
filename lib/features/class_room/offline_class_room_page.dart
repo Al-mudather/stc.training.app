@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:stc_training/features/class_room/offline/components/offline_chapters_custom_tab_bar_view.dart';
 import 'package:stc_training/features/class_room/sections/class_chapters_custom_tab_bar_view.dart';
 import 'package:stc_training/features/class_room/sections/class_files_custom_tab_bar_view.dart';
 import 'package:stc_training/features/class_room/sections/class_info_tab_bar_view.dart';
 import 'package:stc_training/features/course/components/course_class_loading_page_comp.dart';
+import 'package:stc_training/features/course/controller/offline_courses_controller.dart';
 import 'package:stc_training/features/course/hooks/get_course_data_by_pk_hook.dart';
 import 'package:stc_training/features/course/models/course_models.dart';
 import 'package:stc_training/helper/app_colors.dart';
@@ -13,8 +16,8 @@ import 'package:stc_training/utils/app_bar_util.dart';
 import 'package:stc_training/utils/custom_btn_util.dart';
 import 'package:stc_training/utils/small_text_util.dart';
 
-class ClassRoomPage extends HookWidget {
-  const ClassRoomPage({
+class OfflineClassRoomPage extends HookWidget {
+  const OfflineClassRoomPage({
     super.key,
     required this.coursePk,
     required this.courseId,
@@ -28,16 +31,17 @@ class ClassRoomPage extends HookWidget {
     ///////////////////////////////////////////////
     /// Parameters
     ///////////////////////////////////////////////
-    Map<String, dynamic> result;
     ///////////////////////////////////////////////
     /// Controllers
     ///////////////////////////////////////////////
-    //? Offline controller
+    // //? Offline controller
+    // final OfflineCoursesController offlineCoursectl =
+    //     Get.find<OfflineCoursesController>();
 
     PageController pageController = usePageController(initialPage: 0);
     var current_index = useState(0);
 
-    List tabs = ["Lessons", "Files", "Info"];
+    List tabs = ["Lessons"];
     ////////////////////////////////////////////////
     /// Functions
     ///////////////////////////////////////////////
@@ -45,37 +49,36 @@ class ClassRoomPage extends HookWidget {
     ////////////////////////////////////////////////
     /// Hook Functions
     ///////////////////////////////////////////////
-    // useEffect(() {
-    //   pageController.addListener(() {
-    //     LOG_THE_DEBUG_DATA(
-    //         messag: int.parse(pageController.page.toString()), type: 'e');
-    //   });
-    // }, [pageController]);
 
-    result = UseGet_course_data_pk_query_hook(
-      context: context,
-      coursePk: coursePk,
-    );
-    //? Get the course data
-    CourseModel? course = result['data'];
+    ////////////////////////////////////////////////
+    /// Data
+    ///////////////////////////////////////////////
 
     //Todo: Get all the chapters and there contents
     return Scaffold(
-      appBar: AppBarUtil(barText: 'Class Room Page'),
+      appBar: AppBarUtil(barText: 'Offline Class Room Page'),
       backgroundColor: AppColors.backgroundColor,
-      body: result['loading']
-          ? CourseClassLoadingPageComp()
-          : _CLASS_data(
-              course: course,
-              tabs: tabs,
-              current_index: current_index,
-              pageController: pageController,
-            ),
+      body: _CLASS_data(
+        tabs: tabs,
+        current_index: current_index,
+        pageController: pageController,
+      ),
     );
+    // return Scaffold(
+    //   appBar: AppBarUtil(barText: 'Offline Class Room Page'),
+    //   backgroundColor: AppColors.backgroundColor,
+    //   body: result['loading']
+    //       ? CourseClassLoadingPageComp()
+    //       : _CLASS_data(
+    //           course: course,
+    //           tabs: tabs,
+    //           current_index: current_index,
+    //           pageController: pageController,
+    //         ),
+    // );
   }
 
   SingleChildScrollView _CLASS_data({
-    CourseModel? course,
     required List<dynamic> tabs,
     required ValueNotifier<int> current_index,
     required PageController pageController,
@@ -90,15 +93,6 @@ class ClassRoomPage extends HookWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
-                CLASS_statistics(
-                  totalHours: '${course!.totalHours}',
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
                 _CLASS_tabs_container(tabs, current_index, pageController),
                 const SizedBox(
                   height: 10,
@@ -110,15 +104,10 @@ class ClassRoomPage extends HookWidget {
                     controller: pageController,
                     physics: NeverScrollableScrollPhysics(),
                     children: [
-                      ClassChapterCustomTabBarView(
+                      OfflineChapterCustomTabBarView(
                         courseId: courseId,
                         coursePk: coursePk,
                       ),
-                      ClassFilesCustomTabBarView(
-                        courseId: courseId,
-                        coursePk: coursePk,
-                      ),
-                      ClassInfoTabBarView(),
                     ],
                   ),
                 ),
@@ -130,17 +119,6 @@ class ClassRoomPage extends HookWidget {
           ),
         ],
       ),
-    );
-  }
-
-  Row CLASS_statistics({String? totalHours}) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        // _STATISTIC_item(name: "12 Lessons"),
-        _STATISTIC_item(name: "${totalHours} Hours"),
-        _STATISTIC_item(name: "Certificate"),
-      ],
     );
   }
 

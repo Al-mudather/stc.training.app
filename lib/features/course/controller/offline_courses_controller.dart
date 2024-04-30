@@ -11,12 +11,67 @@ import 'package:stc_training/services/CRUD/offline_video_model.dart';
 class OfflineCoursesController extends GetxController {
   Database? _db;
   List<OfflineCourseModel> _courses = [];
+  List<OfflineCourseModel> get courses => _courses;
 
   Future<void> _casheCourses() async {
     final allCourses = await getAllCoursesWithDetails();
     _courses = allCourses;
 
     update();
+  }
+
+  Future<List<OfflineUnitModel>> getAllOfflineCourseUnits({coursePk}) async {
+    final db = _getDatabaseOrThrow();
+    List<Map<String, dynamic>> unitMaps = await db
+        .query(offlineUnitTable, where: 'courseId = ?', whereArgs: [coursePk]);
+
+    if (unitMaps.isNotEmpty) {
+      List<OfflineUnitModel> units = unitMaps
+          .map((unitMap) => OfflineUnitModel.fromJson(unitMap))
+          .toList();
+      return units;
+    }
+    throw CouldNotFindUnitsException();
+  }
+
+  Future<List<OfflineUnitModel>> getAllOfflineCourseUnitsWithData(
+      {coursePk}) async {
+    final db = _getDatabaseOrThrow();
+    List<Map<String, dynamic>> unitMaps = await db
+        .query(offlineUnitTable, where: 'courseId = ?', whereArgs: [coursePk]);
+
+    if (unitMaps.isNotEmpty) {
+      List<OfflineUnitModel> units = unitMaps
+          .map((unitMap) => OfflineUnitModel.fromJson(unitMap))
+          .toList();
+
+      //Todo: get all the videos with that unit
+      for (OfflineUnitModel unit in units) {
+        List<Map<String, dynamic>> videoMaps = await db.query(offlineVideoTable,
+            where: 'unitId = ?', whereArgs: [unit.pk]);
+        List<OfflineVideoModel> videos = videoMaps
+            .map((videoMap) => OfflineVideoModel.fromJson(videoMap))
+            .toList();
+        unit.videos =
+            videos; // Assuming you add a 'videos' List<OfflineVideoModel> field in OfflineUnitModel
+      }
+
+      return units;
+    }
+    throw CouldNotFindUnitsException();
+  }
+
+  Future<List<OfflineVideoModel>> getAllOfflineUnitVideos({unitPk}) async {
+    final db = _getDatabaseOrThrow();
+    List<Map<String, dynamic>> videoMaps = await db
+        .query(offlineVideoTable, where: 'unitId = ?', whereArgs: [unitPk]);
+    if (videoMaps.isNotEmpty) {
+      List<OfflineVideoModel> videos = videoMaps
+          .map((videoMap) => OfflineVideoModel.fromJson(videoMap))
+          .toList();
+      return videos;
+    }
+    throw CouldNotFindVideosException();
   }
 
   // Get all courses with their associated units and videos
@@ -343,6 +398,7 @@ const createVideoTable = '''CREATE TABLE IF NOT EXISTS OfflineVideo (
     pk INTEGER PRIMARY KEY,
     id TEXT NOT NULL,
     title TEXT NOT NULL,
+    videoUuid TEXT,
     storagePath TEXT NOT NULL,
     unitId INTEGER NOT NULL,
     FOREIGN KEY (unitId) REFERENCES OfflineUnit(pk) ON DELETE CASCADE

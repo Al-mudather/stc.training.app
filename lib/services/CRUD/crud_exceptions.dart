@@ -16,4 +16,8 @@ class CouldNotFindCourseException implements Exception {}
 
 class CouldNotFindUnitException implements Exception {}
 
+class CouldNotFindUnitsException implements Exception {}
+
 class CouldNotFindVideoException implements Exception {}
+
+class CouldNotFindVideosException implements Exception {}
